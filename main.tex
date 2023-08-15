@@ -1,5 +1,7 @@
 \documentclass[numbers]{proposalnsf}
 
+\usepackage{code}
+
 \title{Collaborative Research CIRC: New: Medium: A Development and Experimental Environment for Meta-Fuzzing} 
 \author{Alex Groce, Claire Le Goues, etc.}
 \date{August 2023}
@@ -35,6 +37,46 @@ CISE; fuzzing, meta-fuzzing, ensemble methods, program transformations
 \newpage  
 %\pagenumbering{arabic}
 \pagenumbering{gobble}
+
+\section{Introduction}
+\label{sec:intro}
+
+Fuzzing \cite{fuzzoverview} is one of the most important recent advances in automated software testing.  Modern coverage-driven fuzzers, such as AFL or libFuzzer, generally work by maintaing a ``corpus'' of potentially interesting inputs for a program (the ``fuzzing target'').  The corpus may consist of a trivial input, or examples of real-world inputs (or test cases), initially.  The fuzzer then selects one such input, modifies it in some fashion, and submits the input to an instrumented version of the program being fuzzed.  If the execution produces novel behavior (e.g., covers new code or takes a new path through already-covered code), the modified input is added to the set of ``interesting'' inputs.   If the execution reveals a bug, of course, it is saved for inspection.   Fuzzers differ widely in their strategies for selecting among interesting inputs, modifying inputs, and determining what constitutes ``new'' behavior worth further exploring, but this broad picture of the basic structure of modern, effective fuzzers, is largely applicable, even to fuzzers making use of machine learning or symbolic execution techniques ``under the hood.''
+
+This basic approach has proved extremely effective in finding bugs, and in the shape of OSSFuzz (supported by Google, the Core Infrastructure Initiative and the OpenSSF), is used to probe a large number of critical open source systems, finding over 8,900 vulnerabilities and 28,000 bugs across 850 projects, to date.
+
+Fuzzing has unsurprisingly become a major topic of academic security and testing research, as a result of the obvious power and success of the basic technique.  However, most such research results in \emph{the development of a new fuzzer.}  The classic structure of a ``fuzzing paper'' is evaluation of a novel fuzzer developed by the academic researchers against a set of well-known fuzzers and recently published academic fuzzers.  Such work often results in the availability of new, powerful fuzzers, of course.  However, in some cases the underlying idea is a relatively isolated concept, that ends up being embedded in some cases in a technically less-than-sophisticated fuzzer.  E.g., the first release of the highly successful Eclipser fuzzer was very successful, due to the power of the lightweight ``symbolic-like'' method used to modify inputs in intelligent ways.  However, the research team acknowledged that their implementation of more mundane aspects of fuzzing was somewhat ad hoc, and the second version of Eclipser moved to using the widely used AFL fuzzer to support most aspects of fuzzing other than the core innovation.  Moreover, when a fuzzing advance is not adopted by other fuzzer developers, it can become ``stuck'' in an outdated fuzzer.  Fuzzing advances only appear in new fuzzers if future fuzzer developers adopt them as ``standard practice.''  To some extent, efforts such as AFLPlusPlus, a version of AFL incorporating many academic and industrial fuzzing advances, attempt to overcome this problem, and in fact AFLPlusPlus is a notably effective fuzzer.  However, there remain many individual programs where some other fuzzer outperforms AFLPlusPlus, and in fact use of many different, even sub-optimal, fuzzers is likely required for truly effective fuzzing.
+
+\emph{Meta-fuzzing} proposes another approach to improving fuzzing, by \emph{moving the fuzzing technique outside the fuzzer itself.}  The simplest such approaches to consider are ones based on altering the fuzzing target, which is of course common across many fuzzers.  A simple example is the idea of decomposing comparisons in a program.  Usually, a fuzzer can only observe if a program takes a given branch or not, at the binary level.  Decomposition breaks down CMP instructions into individual bit-level comparisons (or some other appropriate structuring) so that not only whether a branch was taken is visible, but how ``close'' a branch was to being taken (analogous to a branch distance in search-based testing).  There are various alternative versions of the basic idea, in e.g., Steelix and libFuzzer.  These are usually implemented as modifications to the fuzzer's custom instrumentation.  However, the basic idea can also be implemented by transforming the source code of a program to expose the structure of a comparison.  The DeepState property-driven fuzzing tool does this for its own assertion implementations.  Such a transform might take, e.g.:
+
+\begin{code}
+
+if (x == y)
+\end{code}
+
+\noindent where {\tt x} and {\tt y} are integer variables, and rewrite the code as:
+
+\begin{code}
+cmp\_x\_y = TRUE;
+bool cmp\_bit\_0 = bit(x, 0) == bit(y, 0);
+if (cmp\_bit\_0) \{cmp\_x\_y = FALSE;\}
+bool cmp\_bit\_1 = bit(x, 1) == bit(y, 0);
+if (cmp\_bit\_1) \{cmp\_x\_y = FALSE;\}
+$\ldots$
+if (cmp\_x\_y)
+\end{code}
+
+\noindent which will be highly inefficient, of course, but exposes to the fuzzer when it has ``almost'' solved an equality check.  The advantage of such an approach is that it enables \emph{any fuzzer} to make use of the power of decomposition, even if the fuzzer developers were unaware such a technique existed.
+  
+\subsection{Ensemble Fuzzing}
+
+\subsection{Target Transformations}
+
+
+\subsection{Universalized Custom Mutators}
+   
+\subsection{Examples of Possible Meta-Fuzzing Approaches}
+
 
 \section{Broader Impacts}
 
