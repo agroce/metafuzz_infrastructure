@@ -1,0 +1,53 @@
+\documentclass[numbers]{proposalnsf}
+
+\title{Collaborative Research CIRC: New: Medium: A Development and Experimental Environment for Meta-Fuzzing} 
+\author{Alex Groce, Claire Le Goues, etc.}
+\date{August 2023}
+
+\newcommand{\um}{\texttt{universalmutator}}
+
+\begin{document}
+
+\section*{Collaborative Research CIRC: New: Medium: A Development and Experimental Environment for Meta-Fuzzing}
+
+\subsection*{Overview}
+\vspace{-2mm}
+
+
+The complexity of modern software systems, and the need for widely used libraries and other ``code infrastructure'' to be absolutely reliable, demands effective \emph{testing}.  Bugs in code have increasing impact on society at large (e.g., numerous security breaches traceable to incorrect code, and very high economic cost.  Testing remains to this day the single most effective means of finding bugs when their cost is low.   Moreover, fuzzing, originally limited largely to the software security world, is the most promising new approach to massively automated and effective testing of software.   However, to date most fuzzing research, even if theoretically able to generalize to multiple underlying fuzzers, has been focused on \emph{producing a new fuzzer}.  That is, if a researcher (or security developer at, e.g., Google) devises a way to improve the effectiveness of fuzzing, the common practice is to implement a new, competing fuzzer, or modify a well-know existing fuzzer.  In some cases, this is appropriate: the approach defines a fuzzing technique.  However, the most promising fuzzing advances likely are \emph{meta-fuzzing} approaches that improve the performance, potentially, of \emph{all} fuzzers, without requiring modification of the underlying fuzzer itself.  Such techniques primarily include those that modify the source or binary of the fuzzing target to help the fuzzer, and techniques that make use of multiple fuzzers as ``black boxes'' that contribute to an ensemble fuzzing effort.  This proposal addresses the serious under-examination of such techniques, by aiming to construct a framework for development of meta-fuzzing approaches of these categories, making it easy to apply a technique to multiple fuzzers, and making it easy to evaluate/benchmark such techniques.  The ability to evaluate methods is necessary to enable ensemble methods that weight fuzzers by performance, and so is required for a meta-fuzzing development platform, in any case.
+
+\subsection*{Intellectual Merit} 
+\vspace{-2mm}
+The importance of fuzzing to future efforts to find subtle bugs in complex software systems is well-known.  This proposal aims primarily to boost research and development in the area of fuzzing methods that can work \emph{for any fuzzer}, including future, better, underlying fuzzing algorithms.  As part of that work, it also aims to standardize and advance the evaluation of fuzzing algorithms, at present a major bottleneck in fuzzing science advances.  We further expect meta-fuzzing approaches to be particular effective in improving understanding of general program dynamics, rather than tool-engineering-oriented fuzzing techniques.
+\subsection*{Broader Impacts}
+\vspace{-2mm}
+
+Correct software is increasingly important in our modern digital/networked society since ``software is eating the world'' and this process shows no sign of stopping or even decelerating. 
+Our project will benefit every area of society where software is employed since our project aims to improve a fundamental method for effective software testing.
+We expect that software security in particular will be advanced by the improvements made to the performance of fuzzing methods, and that meta-fuzzing may also help support the emerging focus on applying fuzzing to more functional properties of code.
+
+\paragraph{Keywords:}
+CISE; fuzzing, meta-fuzzing, ensemble methods, program transformations
+
+
+
+\pagenumbering{gobble}
+\newpage  
+%\pagenumbering{arabic}
+\pagenumbering{gobble}
+
+\section{Broader Impacts}
+
+\section{Results from Prior NSF Support}
+
+
+
+
+\newpage
+%\pagenumbering{roman}
+%\setcounter{page}{1} 
+%\bibliographystyle{unsrt}
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}
