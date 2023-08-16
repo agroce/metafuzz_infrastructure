@@ -74,10 +74,14 @@ While this particular technique, for efficiency reasons, is likely best implemen
 
 \subsection{Target Transformations}
 
-
 \subsection{Universalized Custom Mutators}
    
-\subsection{Examples of Possible Meta-Fuzzing Approaches}
+\subsection{Examples of Potential Meta-Fuzzing Applications}
+
+\subsection{The Problem of Evaluation}
+
+Evaluating fuzzers is, even in the current common setting, where evaluation is of a single ``new'' fuzzer, a complex problem, and many evaluations in the literature are insufficient or even incorrect.  Evaluating meta-fuzzing adds a further quantitative (and to some extent qualitative) element to this problem: rather than comparing a single fuzzer to a set of competing fuzzers across benchmarks, evaluating meta-fuzzing methods invovles evaluating a \emph{set} of fuzzers $F_1 \ldots F_n$ against $F'_1 \ldots F'_n$ (where some meta-fuzzing method has been applied), and determining the degree of improvement or degradation in effectiveness in each case.  This alone would make support for benchmarking and comparing fuzzers an important feature of any framework for meta-fuzzing research and development.  However, as noted above, ensemble methods are likely to also make use of fuzzer evaluations as part of a meta-fuzzing method, in order to allocate resources.  Therefore a major thrust of this effort is to adapt the aspects of the framework that support ensemble fuzzing to support measurements of fuzzer effectiveness as well.  This feature of course has applications beyond meta-fuzzing methods; traditional fuzzer evaluations can also be expected to benefit from a systematic, multi-measurement framework for running a set of fuzzers on multiple benchmarks.
+
 
 
 \section{Broader Impacts}
