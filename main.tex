@@ -2,7 +2,7 @@
 
 \usepackage{code}
 
-\title{Collaborative Research CIRC: New: Medium: A Development and Experimental Environment for Meta-Fuzzing} 
+\title{Collaborative Research: CIRC: New: Medium: A Development and Experimental Environment for Meta-Fuzzing} 
 \author{Alex Groce, Claire Le Goues, etc.}
 \date{August 2023}
 
@@ -10,7 +10,7 @@
 
 \begin{document}
 
-\section*{Collaborative Research CIRC: New: Medium: A Development and Experimental Environment for Meta-Fuzzing}
+\section*{Collaborative Research: CIRC: New: Medium: A Development and Experimental Environment for Meta-Fuzzing}
 
 \subsection*{Overview}
 \vspace{-2mm}
@@ -76,7 +76,10 @@ While this particular technique, for efficiency reasons, is likely best implemen
 
 \subsection{Universalized Custom Mutators}
    
-\subsection{Examples of Potential Meta-Fuzzing Applications}
+\subsection{An Example Meta-Fuzzing Application}
+
+The above discuss broad classes of meta-fuzzing approaches, and we have briefly discussed some general-purpose meta-fuzzing techniques (e.g., the use of program mutants to explore branches non-chronologically).  Meta-fuzzing can also be used for more domain-specific purposes, however.  Consider the problem of testing machine learning (ML) algorithms in general, and specifically neural network implementations.  Using off-the-shelf fuzzers directly on ML systems is usually ineffective, because the behavior of the system is not primarily encoded in the source code of the system, and thus visible to code coverage instrumentation.  Instead, \emph{data} in the form of a neural network, decision tree, etc. determines the system behavior.  The ``code'' to be explored is not visible to traditional compiler instrumentation.  A meta-fuzzing approach to this problem would be to define transformers that understand the nature of a machine learning implementation (the standard libraries used widely to implement ML systems) and use the data encodings to produce \emph{source mirrors} that take inputs to the ML algorithm and produce visible code coverage for a fuzzer.  
+
 
 \subsection{The Problem of Evaluation}
 
