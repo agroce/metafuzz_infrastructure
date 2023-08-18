@@ -70,24 +70,45 @@ if (cmp\_x\_y)
 
 While this particular technique, for efficiency reasons, is likely best implemented inside a fuzzer's instrumentation pass, other meta-fuzzing techniques are truly universal.  E.g., in recent work, PIs Groce and Le Goues proposed fuzzing based on program mutants \cite{}, which modifies a fuzzing target in a large variety of ways.  Results show that this approach, by allowing a fuzzer to explore program branches in non-chronological order, can improve the performance of even state-of-the-art fuzzers such as AFLPlusPlus, as benchmarked by Google's FuzzBench.
   
-\subsection{Ensemble Fuzzing}
+\paragraph{Ensemble Fuzzing.}
 
-\subsection{Target Transformations}
+\paragraph{Target Transformations.}
 
-\subsection{Universalized Custom Mutators}
+\paragraph{Universalized Custom Mutators.}
    
-\subsection{An Example Meta-Fuzzing Application}
-
-The above discuss broad classes of meta-fuzzing approaches, and we have briefly discussed some general-purpose meta-fuzzing techniques (e.g., the use of program mutants to explore branches non-chronologically).  Meta-fuzzing can also be used for more domain-specific purposes, however.  Consider the problem of testing machine learning (ML) algorithms in general, and specifically neural network implementations.  Using off-the-shelf fuzzers directly on ML systems is usually ineffective, because the behavior of the system is not primarily encoded in the source code of the system, and thus visible to code coverage instrumentation.  Instead, \emph{data} in the form of a neural network, decision tree, etc. determines the system behavior.  The ``code'' to be explored is not visible to traditional compiler instrumentation.  A meta-fuzzing approach to this problem would be to define transformers that understand the nature of a machine learning implementation (the standard libraries used widely to implement ML systems) and use the data encodings to produce \emph{source mirrors} that take inputs to the ML algorithm and produce visible code coverage for a fuzzer.  
+\paragraph{An Example Meta-Fuzzing Application.} The above summaries introduce broad classes of meta-fuzzing approaches, and we have briefly introduced some general-purpose meta-fuzzing techniques (e.g., the use of program mutants to explore branches non-chronologically).  Meta-fuzzing can also be used for more domain-specific purposes, however.  Consider the problem of testing machine learning (ML) algorithms in general, and specifically neural network implementations.  Using off-the-shelf fuzzers directly on ML systems is usually ineffective, because the behavior of the system is not primarily encoded in the source code of the system, and thus visible to code coverage instrumentation.  Instead, \emph{data} in the form of a neural network, decision tree, etc. determines the system behavior.  The ``code'' to be explored is not visible to traditional compiler instrumentation.  A meta-fuzzing approach to this problem would be to define transformers that understand the nature of a machine learning implementation (the standard libraries used widely to implement ML systems) and use the data encodings to produce \emph{source mirrors} that take inputs to the ML algorithm and produce visible code coverage for a fuzzer.  One aspect of our general meta-fuzzing infrastructure, discussed in more detail below, is additionally to support domain-specific fuzzing that falls outside the locus of ``fuzzing Linux applicaiton binaries'' previously centered in fuzzing benchmarking.
 
 
-\subsection{The Problem of Evaluation}
+\paragraph{The Problem of Evaluation.} Evaluating fuzzers is, even in the current common setting, where evaluation is of usually of a single ``new'' fuzzer, a complex problem, and many evaluations in the literature are insufficient or even incorrect.  Evaluating meta-fuzzing adds a further quantitative (and to some extent qualitative) element to this problem: rather than comparing a single fuzzer to a set of competing fuzzers across benchmarks, evaluating meta-fuzzing methods invovles evaluating a \emph{set} of fuzzers $F_1 \ldots F_n$ against $F'_1 \ldots F'_n$ (where some meta-fuzzing method has been applied), and determining the degree of improvement or degradation in effectiveness in each case.  This alone would make support for benchmarking and comparing fuzzers an important feature of any framework for meta-fuzzing research and development.  However, as noted above, ensemble methods are likely to also make use of fuzzer evaluations in order to allocate resources.  Therefore a major thrust of this effort is to adapt the aspects of the framework that support ensemble fuzzing to support measurements of fuzzer effectiveness as well.  This feature of course has applications beyond meta-fuzzing methods; traditional fuzzer evaluations can also be expected to benefit from a systematic, multi-measurement framework for running a set of fuzzers on multiple benchmarks.
 
-Evaluating fuzzers is, even in the current common setting, where evaluation is of a single ``new'' fuzzer, a complex problem, and many evaluations in the literature are insufficient or even incorrect.  Evaluating meta-fuzzing adds a further quantitative (and to some extent qualitative) element to this problem: rather than comparing a single fuzzer to a set of competing fuzzers across benchmarks, evaluating meta-fuzzing methods invovles evaluating a \emph{set} of fuzzers $F_1 \ldots F_n$ against $F'_1 \ldots F'_n$ (where some meta-fuzzing method has been applied), and determining the degree of improvement or degradation in effectiveness in each case.  This alone would make support for benchmarking and comparing fuzzers an important feature of any framework for meta-fuzzing research and development.  However, as noted above, ensemble methods are likely to also make use of fuzzer evaluations as part of a meta-fuzzing method, in order to allocate resources.  Therefore a major thrust of this effort is to adapt the aspects of the framework that support ensemble fuzzing to support measurements of fuzzer effectiveness as well.  This feature of course has applications beyond meta-fuzzing methods; traditional fuzzer evaluations can also be expected to benefit from a systematic, multi-measurement framework for running a set of fuzzers on multiple benchmarks.
+\subsection{Overview of Proposed Work}
 
+This project proposes, first, to create a reliable infrastructure for executing multiple fuzzers on a set of targets and collecting data from these executions.  Such data includes generated inputs and detected bugs, of course, but also measurements of fuzzer effectiveness, e.g., code coverage of corpuses and incremental code coverage.  This infrastructure will be able to run locally for debugging and quick turnaround, and will support cloud deployment for large-scale experiments. Critically, this infrastructure will be designed to support ensemble fuzzing and complex ensemble strategies, from the ground up; support for exchange of generated inputs and shifts in resource allocation will be built-in, rather than added on, and a high-level declarative language for describing ensemble strategies will allow researchers to explore the space of ensemble methods.
 
+A second key element of the proposed system is the development of tooling for expressing source and binary-level transformations to support meta-fuzzing methods that rely on modifying the target to be fuzzer.  Such methods may focus on making more behavior of a system visible to fuzzers within the paradigm of ``source coverage'' currently supported by essentially all modern fuzzers, or on enhancing oracles to enable all fuzzers to detect larger classes of bugs, or on transformations that target the underlying logic and bottlenecks of fuzzing, such as the non-chronological exploration of branches enabled by using program mutants.  This thrust, again, will focus on providing a way for researchers and developers to easily express such transforms and deploy them across a large set of fuzzers.
 
-\section{Broader Impacts}
+Finally, a smaller thrust will focus on allowing researchers and developers to write custom mutators for fuzzers in a fuzzer-independent way, with support for automatically generating wrappers to run these ``universalized'' mutators inside the large set of fuzzers (including AFLPlusPlus and libFuzzer) that support custom mutators.
+
+\subsection{Enabled Research Projects}
+
+\subsection{Team's Qualifications}
+
+\subsection{Intellectual Merit and Broader Impacts}
+
+\section{Key Deficiencies of Existing Infrastructure}
+
+\section{Proposed Infrastructure}
+
+\subsection{Thrust 1: A Foundation for Efficient Fuzzer Execution, Orchestration, and Evaluation}
+
+\subsection{Thrust 2: Expressive Source and Binary-Level Transformations to Enable Meta-Fuzzing}
+
+\subsection{Thrust 3: Universalized Custom Mutators}
+
+\section{Enabled Research Opportunities and Projects}
+
+\section{Project Organization Plan}
+
 
 \section{Results from Prior NSF Support}
 
