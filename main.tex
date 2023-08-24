@@ -97,7 +97,20 @@ Finally, a smaller thrust will focus on allowing researchers and developers to w
 
 \subsection{Team's Qualifications}
 
+PI Groce has long-standing experience in fuzzing and test generation research, including substantial practical experience as a lead for automated testing on NASA's Curiosity Mars Lander project.  He is the lead developer for multiple open source testing tools, including the DeepState unit fuzzing tool, which has over 750 stars.  
+
 \subsection{Intellectual Merit and Broader Impacts}
+
+\parabf{Intellectual merit.} The proposed work will advance the
+knowledge and understanding of software testing by enabling
+researchers and developers to conduct scalable experiments in meta-fuzzing.  Meta-fuzzing approaches rely on the development of theories and heuristics about the exploration of program behavior, or the optimal allocation of resources to fuzzing tools, that apply without reference to specific underlying fuzzing algorithms.  Such approaches therefore, in addition to providing practical tools for finding bugs in code, advance our knowledge of the behavior of software systems.
+
+\parabf{Broader impacts.} Advancing the effectiveness of fuzzing can improve software testing in general and
+thus software quality, benefiting (directly or indirectly) all
+segments of society that depend on software.  The grant
+will also support several graduate and undergraduate students, giving them experience with
+building software artifacts and performing empirical studies.
+
 
 \section{Key Deficiencies of Existing Infrastructure}
 
@@ -124,6 +137,12 @@ The key task in this thrust is twofold.  For both source and binary transforms, 
 This thrust will be divided into two sub-thrusts, one for source-level and one for binary-level transformations, with PI Groce coordinating work to determine if common DSL elements exist, i.e., transforms that can be applied at either level.
 
 \subsection{Thrust 3: Universalized Custom Mutators}
+
+This thrust is concerned with making it possible to write custom mutators for multiple fuzzers in a single format, with a wrapper (or source transform) specializing this to individual fuzzers.
+
+As a first task in this thrust, we propose to re-implement the compiler-fuzzing tool developed by PIs Groce and Le Goues as a custom mutator.  By focusing on a practical task, we will be able to best perceive difficulties and needs of custom mutator implementors, and can produce a library of useful byte and code-level mutators to be applied by users.
+
+\subsection{Thrust 4:  Domain-Specific Fuzzers (Cross-Cutting)}
 
 \section{Enabled Research Opportunities and Projects}
 
@@ -166,8 +185,20 @@ PIs Groce and Le Goues...
 
 \section{Results from Prior NSF Support}
 
-
-
+\paragraph{PI Groce:}
+The most relevant prior NSF support for PI Groce is CCF-
+CCF-2129446, ``Feedback-Driven Mutation Testing for Any Language,'' with a total budget of \$500,000 from 9/2021 until 8/2024,
+a collaborative proposal with PI Le Goues of Carnegie Mellon
+University. {\bf Intellectual Merit:} This project
+focuses on a synergistic approach for allowing developers
+to improve testing by using mutation testing to identify
+weaknesses in tests and to generate tests.  In its second
+year,  this project has already resulted in five
+publications~\cite{cc2022,seip2022,fuzzing22}. {\bf
+  Broader
+  Impact:}  Work from this project has already
+resulted in the reporting and correction of mulitple bugs in software
+systems, including widely used production compilers.
 
 \newpage
 %\pagenumbering{roman}
