@@ -20,6 +20,21 @@ Experimental Environment for Meta-Fuzzing}
 
 \begin{document}
 
+\cut{
+Cover Sheet
+Project Summary
+Table of Contents (automatically generated)
+Project Description
+References Cited
+Biographical Sketch(es)
+Budget and Budget Justification
+Current and Pending Support
+Facilities, Equipment and Other Resources
+Data Management Plan
+Postdoctoral Mentoring Plan (if applicable)
+Collaborators & Other Affiliations Information
+}
+
 \pagenumbering{roman}
 \input{cover}
 \newpage
@@ -31,11 +46,25 @@ Experimental Environment for Meta-Fuzzing}
 \setcounter{page}{1} 
 \input{description}
 
+%\input{refs}
+
+\pagenumbering{Alpha}
 \newpage
-%\pagenumbering{roman}
-%\setcounter{page}{1} 
-%\bibliographystyle{unsrt}
+\section*{References}
+\setcounter{page}{1}
+\bibliographystyle{unsrt}
 \bibliographystyle{plain}
 \bibliography{bibliography}
+
+
+\input{bios}
+\input{budget}
+\input{current}
+\input{facilities}
+\input{data-management}
+\input{mentoring}
+\input{collaborators}
+
+
 
 \end{document}
