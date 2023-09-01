@@ -3,6 +3,7 @@
 \usepackage{code}
 \usepackage{url}
 \usepackage{xcolor}
+\usepackage{fancyhdr}
 
 
 \title{Collaborative Research: CIRC: New: Medium: A Development and 
@@ -18,9 +19,16 @@ Experimental Environment for Meta-Fuzzing}
 
 \begin{document}
 
-\include{cover}
+\pagenumbering{roman}
+\input{cover}
+\newpage
+\input{summary}
+\newpage
 \tableofcontents
-\include{discussion}
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1} 
+\input{description}
 
 \newpage
 %\pagenumbering{roman}
