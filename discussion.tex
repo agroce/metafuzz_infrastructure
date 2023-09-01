@@ -2,63 +2,6 @@
 \section*{Collaborative Research: CIRC: New: Medium: A Development and 
 Experimental Environment for Meta-Fuzzing}
 
-\subsection*{Overview}
-\vspace{-2mm}
-
-
-The complexity of modern software systems, and the need for widely used 
-libraries and other ``code infrastructure'' to be reliable, demands effective 
-\emph{testing}.  Bugs in code have increasing impact on society at large (e.g., 
-numerous security breaches traceable to incorrect code have very high economic 
-cost).  Testing remains to this day the single most effective means of finding 
-bugs when their cost is low.   Moreover, fuzzing, originally limited largely to 
-the software security world, is the most promising new approach to massively 
-automated and effective testing of software.   However, to date most fuzzing 
-research, even if theoretically able to generalize to multiple underlying 
-fuzzers, has been focused on \emph{producing a new fuzzer}.  That is, if a 
-researcher (or security developer at, e.g., Google) devises a way to improve 
-the effectiveness of fuzzing, the common practice is to implement a new, 
-competing fuzzer, or modify a well-know existing fuzzer.  In some cases, this 
-is appropriate: the approach defines a fuzzing technique.  However, the most 
-promising fuzzing advances likely are \emph{meta-fuzzing} approaches that 
-improve the performance, potentially, of \emph{all} fuzzers, without requiring 
-modification of the underlying fuzzer itself.  Such techniques primarily 
-include those that modify the source or binary of the fuzzing target to help 
-the fuzzer, and techniques that make use of multiple fuzzers as ``black boxes'' 
-that contribute to an ensemble fuzzing effort.  This proposal addresses the 
-serious under-examination of such techniques, by aiming to construct a 
-framework for development of meta-fuzzing approaches of these categories, 
-making it easy to apply a technique to multiple fuzzers, and making it easy to 
-evaluate/benchmark such techniques.  The ability to evaluate methods is 
-necessary to enable ensemble methods that weight fuzzers by performance, and so 
-is required for a meta-fuzzing development platform, in any case.
-
-\subsection*{Intellectual Merit} 
-\vspace{-2mm}
-The importance of fuzzing to future efforts to find subtle bugs in complex 
-software systems is well-known.  This proposal aims primarily to boost research 
-and development in the area of fuzzing methods that can work \emph{for any 
-fuzzer}, including future, better, underlying fuzzing algorithms.  As part of 
-that work, it also aims to standardize and advance the evaluation of fuzzing 
-algorithms, at present a major bottleneck in fuzzing science advances.  We 
-further expect meta-fuzzing approaches to be particular effective in improving 
-understanding of general program dynamics, rather than 
-tool-engineering-oriented fuzzing techniques.
-\subsection*{Broader Impacts}
-\vspace{-2mm}
-
-Correct software is increasingly important in our modern digital/networked 
-society since ``software is eating the world'' and this process shows no sign 
-of stopping or even decelerating. 
-Our project will benefit every area of society where software is employed since 
-our project aims to improve a fundamental method for effective software testing.
-We expect that software security in particular will be advanced by the 
-improvements made to the performance of fuzzing methods, and that meta-fuzzing 
-may also help support the emerging focus on applying fuzzing to more functional 
-properties of code.
-
-\paragraph{Keywords:}
-CISE; fuzzing, meta-fuzzing, ensemble methods, program transformations
 
 
 
@@ -72,20 +15,19 @@ CISE; fuzzing, meta-fuzzing, ensemble methods, program transformations
 
 Fuzzing \cite{fuzzoverview} is one of the most important recent advances in 
 automated software testing.  Modern coverage-driven fuzzers, such as AFL or 
-libFuzzer, generally work by maintaing a ``corpus'' of potentially interesting 
-inputs for a program (the ``fuzzing target'').  The corpus may consist of a 
+libFuzzer, generally work by maintaing a set (called a corpus) of potentially interesting 
+inputs for the program being fuzzed (often referred to as the target).  The corpus may consist of a 
 trivial input, or examples of real-world inputs (or test cases), initially.  
 The fuzzer then selects one such input, modifies it in some fashion, and 
 submits the input to an instrumented version of the program being fuzzed.  If 
 the execution produces novel behavior (e.g., covers new code or takes a new 
 path through already-covered code), the modified input is added to the set of 
-``interesting'' inputs.   If the execution reveals a bug, of course, it is 
+likely-interesting inputs.   If the execution reveals a bug, of course, it is 
 saved for inspection.   Fuzzers differ widely in their strategies for selecting 
 among interesting inputs, modifying inputs, and determining what constitutes 
-``new'' behavior worth further exploring, but this broad picture of the basic 
+potentially interesting behavior worth further exploring, but this broad picture of the basic 
 structure of modern, effective fuzzers, is largely applicable, even to fuzzers 
-making use of machine learning or symbolic execution techniques ``under the 
-hood.''
+making use of machine learning or symbolic execution techniques.
 
 This basic approach has proved extremely effective in finding bugs, and in the 
 shape of OSSFuzz (supported by Google, the Core Infrastructure Initiative and 
@@ -95,21 +37,22 @@ finding over 8,900 vulnerabilities and 28,000 bugs across 850 projects, to date.
 Fuzzing has unsurprisingly become a major topic of academic security and 
 testing research, as a result of the obvious power and success of the basic 
 technique.  However, most such research results in \emph{the development of a 
-new fuzzer.}  The classic structure of a ``fuzzing paper'' is evaluation of a 
+new fuzzer.}  The most frequently seen kind of research paper in the field of fuzzing
+research evaluates a
 novel fuzzer developed by the academic researchers against a set of well-known 
 fuzzers and recently published academic fuzzers.  Such work often results in 
 the availability of new, powerful fuzzers, of course.  However, in some cases 
 the underlying idea is a relatively isolated concept, that ends up being 
 embedded in some cases in a technically less-than-sophisticated fuzzer.  E.g., 
 the first release of the highly successful Eclipser fuzzer was very successful, 
-due to the power of the lightweight ``symbolic-like'' method used to modify 
+due to the power of the lightweight semi-symbolic method used to modify 
 inputs in intelligent ways.  However, the research team acknowledged that their 
-implementation of more mundane aspects of fuzzing was somewhat ad hoc, and the 
+implementation of more mundane aspects of fuzzing was somewhat \emph{ad hoc}, and the 
 second version of Eclipser moved to using the widely used AFL fuzzer to support 
 most aspects of fuzzing other than the core innovation.  Moreover, when a 
-fuzzing advance is not adopted by other fuzzer developers, it can become 
-``stuck'' in an outdated fuzzer.  Fuzzing advances only appear in new fuzzers 
-if future fuzzer developers adopt them as ``standard practice.''  There have 
+fuzzing advance is not adopted by other fuzzer developers, it can
+essentially end up abandoned as part of an outdated fuzzer.  Fuzzing advances only appear in new fuzzers 
+if future fuzzer developers adopt them as standard practice.  There have 
 been some attempts to overcome this problem. For example, 
 FuzzFactory~\cite{fuzzfactory} is a meta-fork of AFL which enables researchers 
 to instatiate and compose fuzzers with custom feedback functions by only 
@@ -128,7 +71,7 @@ decomposing comparisons in a program.  Usually, a fuzzer can only observe if a
 program takes a given branch or not, at the binary level.  Decomposition breaks 
 down CMP instructions into individual bit-level comparisons (or some other 
 appropriate structuring) so that not only whether a branch was taken is 
-visible, but how ``close'' a branch was to being taken (analogous to a branch 
+visible, but how close a branch was to being taken (analogous to a branch 
 distance in search-based testing).  There are various alternative versions of 
 the basic idea, in e.g., Steelix and libFuzzer.  These are usually implemented 
 as modifications to the fuzzer's custom instrumentation.  However, the basic 
@@ -156,11 +99,10 @@ if (cmp\_x\_y)
 \end{code}
 
 \noindent which will be highly inefficient, of course, but exposes to the 
-fuzzer when it has ``almost'' solved an equality check.  The advantage of such 
+fuzzer when it has come close to solving an equality check.  The advantage of such 
 an approach is that it enables \emph{any fuzzer} to make use of the power of 
 decomposition, even if the fuzzer developers were unaware such a technique 
-existed. \jdh{Too many ``quoted'' words.  It is starting to feel like quotes 
-are used for emphasis.  Try to rephrase to more directly get the meaning.}
+existed. 
 
 While this particular technique, for efficiency reasons, is likely best 
 implemented inside a fuzzer's instrumentation pass, other meta-fuzzing 
@@ -211,9 +153,8 @@ dispenses with direct interaction with fuzzers at all.  As the example above
 suggests, one fuzzer-agnostic way to change the behavior of a fuzzer is to 
 change the fuzzing target itself.  This is most easily done at the source 
 level, in essence producing a (slightly) different program to fuzz.  In some 
-cases, though, binary transformation may be required for reasons of efficiency. 
- \jdh{Source is almost always faster than binary transform.... i'm not 
-convinced by this reasoning.} Transformations may be used to make aspects of 
+cases, though, binary transformation may be required because the
+source for a program is simply not available.   Transformations may be used to make aspects of 
 program behavior more visible as coverage, as in the simple example, or to 
 improve the oracle for fuzzing, transforming more behaviors into fuzzer-visible 
 crashes.  More ambitiously, as in the prior work of PIs Groce and Le Goues, a 
@@ -345,14 +286,12 @@ building software artifacts and performing empirical studies.
 \section{Key Deficiencies of Existing Infrastructure}
 
 To our knowledge, \emph{no} infrastructure exists for performing 
-fuzzing-specific source or binary transformations of programs, or writing 
-custom mutators that can be used by more than one fuzzer. \jdh{Is this really 
-true?  afl-clang and zafl produce instrumentated binaries that work with most 
-of the AFL/AFL++/hongfuzz family of fuzzers.  Further, the afl/afl++ family of 
-fuzzers can share input queues across the family alowing for ensemble fuzzing.  
-Since each member of the ensemble can fuzz a different binary, it's very close 
-to meta-fuzzing.  I get what you're saying, but I think it might be an 
-over-claim.}  These aspects of meta-fuzzing fit into the picture of a promising 
+\emph{fuzzing-specific} source or binary transformations of programs, or writing 
+custom mutators that can be used by more than one fuzzer.  While
+fuzzers can share corpuses, and their are commonalities to
+instrumentation formats across the AFL family, there is to our
+knowledge no tool support for exploiting these commonalities (e.g.,
+adding new instrumentations based on novel source patterns).  These aspects of meta-fuzzing fit into the picture of a promising 
 research area with, essentially, no available tooling beyond individual 
 fuzzers, outside the area of ensemble fuzzing.
 
@@ -379,7 +318,12 @@ has used FuzzBench, a service provided by Google.  However, FuzzBench is
 somewhat notoriously difficult to use and often produces failures, even for 
 ``core'' fuzzers such as aflplusplus, on some benchmarks, that prove difficult 
 to diagnose or debug.  It is at best highly unclear how much support Google 
-plans to devote to FuzzBench in the future.  The connection between fuzzer 
+plans to devote to FuzzBench in the future.  FuzzBench is also deeply
+tied to Google cloud infrastructure, which means that practical use of
+the system is not feasible if Kubernetes, openstack, AWS, or another
+cloud approach is better for a particular user.
+
+The connection between fuzzer 
 benchmarking and evaluation and ensemble fuzzing is, we note, clear enough that 
 an (abandoned) attempt was made by the FuzzBench team to transform FuzzBench 
 into an ensemble fuzzing tool (\url{}).   Other fuzzing benchmarks, such as 
@@ -389,12 +333,10 @@ for ensemble fuzzing (and general evaluation purposes).  PASTIS, FuzzBench, and
 MAGMA all may provide useful insights into possible approaches to the core 
 infrastructure of our ensemble fuzzing/fuzzer evaluation component, but none 
 are, themselves, currently suitable for the purpose, and the benchmarking 
-systems are even limited in usability for that purpose. 
-\jdh{FuzzBench is also tied to the google cloud infrastructure, which is hard 
-to stand up on it's own.  backending to Kubernetes, openstack, AWS, etc. would 
-be nice.  None of the above tell you how or help you figure out how to use 
-limited resources.  They all assume you just want to compare results given 
-fixed resources.}
+systems are even limited in usability for that purpose.   Their
+inherent focus on comparing fuzzers given fixed resources is not
+general-purpose enough to be suitable for allocating limited resources
+on the fly, as they stand.
 
 
 Source and binary transformation systems do exist, of course, but none are 
@@ -412,6 +354,10 @@ instrumentation is that it has to match what the run-time component expects.
 This changes even within variants of the same fuzzer.  
 We've had to change instrumentation styles between versions of afl++ to support 
 variable map sizes, etc.  }
+\adg{That's what I meant -- it needs to be aware of the fuzzers and
+  map size configs etc. to do this at binary level; at source,
+  presumably the instrumentation itself takes care of all that, given
+  a transform from some code/data element to a ``fake'' coverage structure}
 \section{Proposed Infrastructure}
 
 \subsection{Thrust 1: A Foundation for Efficient Fuzzer Execution, 
@@ -514,7 +460,18 @@ PIs Groce and Le Goues...
 % LocalWords:  timeline analyses RAs REU PIs Zhang Basecamp Groce Joda ASE FSE
 % LocalWords:  GitHub BitBucket
 
+\subsection{Advisory Council}
 
+During the second year of the project, once there is enough input from
+collaborators and structure to the project to make investment of time
+by members of the research community worthwhile, we will seek to form
+an external advisory council to provide input and guidance as to the
+community's needs and long-term maintenance and support for the
+infrastructure products of this proposal.  Further, we plan to explore
+all available
+long-term avenues for ensuring the continued existence and success of
+our infrastructure as a standalone open source framework, e.g.,
+potentially via NSF POSE.
 
 \section{Results from Prior NSF Support}
 
