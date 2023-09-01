@@ -10,3 +10,6 @@ view: main.pdf
 
 fold:
 	for i in *.tex; do fold -w 80 -s $$i >> $$i.new; mv $$i.new $$i; done
+
+clean:
+	rm -f *.aux *.log main.pdf *.bbl *.blg *.toc
