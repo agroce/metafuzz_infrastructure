@@ -360,25 +360,7 @@ variable map sizes, etc.  }
   a transform from some code/data element to a ``fake'' coverage structure}
 \section{Proposed Infrastructure}
 
-\subsection{Thrust 1: A Foundation for Efficient Fuzzer Execution, 
-Orchestration, and Evaluation}
-
-The execution of large sets of fuzzers for purposes of evaluating 
-(meta-)fuzzing approaches, or for less-explored but promising research such as 
-determining which kinds of fuzzers work best for broad classes of fuzzing 
-targets (e.g., compilers, media parsers, data structures, etc.) is essentially 
-the same core task as that required for sophisticated ensemble fuzzing.  The 
-only real difference is that a benchmarking run 1) runs all the fuzzers with 
-the same resource allocation and 2) there is no sharing of inputs between 
-fuzzers.  That is, fuzzer benchmarking is a simplified, restricted, version of 
-what is needed for a successful platform for implementing ensemble fuzzing.  
-The core needs are the same: ease of adding new fuzzers and including new 
-targets, ease of deployment to both local environments (for easy debugging or 
-use in developer ``unit fuzzing'') and the cloud (for large-scale fuzzing or 
-fuzzer evaluation), and ability to produce easily interpretable, statistically 
-usable, results (for both human consumption and resource allocation).
-
-[UVA can you talk more about how to go about this thrust?]
+\input{thrust1}
 
 \subsection{Thrust 2: Expressive Source and Binary-Level Transformations to 
 Enable Meta-Fuzzing}

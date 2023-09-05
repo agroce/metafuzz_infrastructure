@@ -18,3 +18,11 @@ usable, results (for both human consumption and resource allocation).
 
 \jdh{UVA can you talk more about how to go about this thrust?}
 
+fuzzers -- which fuzers to use, and how to extend infrastructure for new fuzzers.  This is really NAU?
+benchmarks -- standard fuzzing benchmarks, plus ability to add custom benchmarks.
+specification -- which backend to use, how to allocate resources, how a fuzzing campaign should look like, which mutators to use, which instrumentation to use.
+deployment -- VM allocation, software installation, efficient (semi-)automatic assignment of fuzzers based on fuzz campaign mapping
+cooperation -- how often to share, and what to share.  Sharing "architectures" (e.g., share on the same VM, vs. different VMs in same cluster vs VMs in different clusters vs VMs in different data centers)
+results -- collecting results (baseline results + user-specified extensions), statistical analysis
+
+
