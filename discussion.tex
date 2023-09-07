@@ -289,13 +289,16 @@ mutants.  This thrust, again, will focus on providing a way for researchers and
 developers to easily express such transforms and deploy them across a large set 
 of fuzzers.
 
-Finally, the proposed system will included facilities to allow researchers and developers to 
+Third, the proposed system will included facilities to allow researchers and developers to 
 write custom mutators for fuzzers in a fuzzer-independent way, with support for 
 automatically generating wrappers to run these ``universalized'' mutators 
 inside the large set of fuzzers (including AFLPlusPlus and libFuzzer) that 
 support custom mutators.
 
-\clg{Feels like domain-specificity is missing as a cross-cutting concern in this overview.}
+Finally, the proposed system will allow meta-fuzzing of domain-specific applications
+which traditionally have been incompatible with conventional fuzzing tools and
+benchmarking platforms that expect targets to be single-process programs with
+a well-defined input and execution interface.
 
 \subsection{Qualifications of the Project Team}
 
@@ -479,6 +482,35 @@ custom mutator implementors, and can produce a library of useful byte and
 code-level mutators to be applied by users.
 
 \subsubsection{Domain-Specific Fuzzers (Cross-Cutting)}
+
+Fuzz testing is useful in many domains where the target is not necessarily a single program that
+provides a well-defined input interface, as expected by conventional fuzzing tools such as
+AFLplusplus and libFuzzer. For example: web browsers, mobile applications, and spreadsheets 
+are reactive systems, always listening for user events. Further, conventional fuzzing tools 
+expect that programs terminate quickly after execution, and are easily reset 
+for the next trial in a fuzzing loop. However, in stateful domains like database systems 
+or networking controllers, a sequence of inputs may drive the target into different states
+depending on the order in which inputs are received. Effective fuzzing in such domains requires
+carefully defining what a single fuzzing trial looks like. Finally, whether source or binary 
+transforms are available, the behavior of programs in some domains may not be related to
+any sense of ``code coverage''. For example, in machine learning and data analytics domains,
+we may be more interested in the data-flow (e.g., neuron activations or 
+data-parallel join operations, respectively) rather than the control-flow in terms of 
+conditional jumps. For all these reasons, domain-specific fuzzing has so far been a niche where
+researchers are unable to use a common platform for exchanging results and re-using components
+such as algorithms, heuristics, and mutators.
+
+In this thrust, we propose to extend meta-fuzzing support to domain-specific applications by
+providing a set of interfaces that allow domain-specific targets to be configured on our
+infrastructure. The interfaces will allow researchers to define the notion of an ``input'',
+a ``trial'' (i.e., a single execution on a given input), and various domain-specific vocabulary
+for collecting feedback and evaluating the strength of candidate fuzzers (e.g., replacing ``code
+coverage'' with something else). 
+
+This thrust is cross-cutting because it enables the use of our proposed source and binary 
+transforms as well as custom mutators in addition to our fundamental evaluation infrastructure 
+on a variety of application domains which so far have been sidelined in the research community.
+
 
 \subsubsection{Benchmarks}
 
