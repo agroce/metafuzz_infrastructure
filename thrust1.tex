@@ -5,7 +5,7 @@ Orchestration, and Evaluation}
 \jdh{Make it clear that 
 1) big picture has user-provided compute resources, we aren't providing these for the world (fig caption and text body)
 2) public outreach includes some free cloud time for early adopters to address point 1.
-3) user-provided compute resources can be in a support cloud (Openstack, Azure, AWS) or just a user multi-core machine via Vagrant/Docker
+3) user-provided compute resources can be in a support cloud (OpenStack, Azure, AWS) or just a user multi-core machine via Vagrant/Docker
 }
 
 
@@ -22,38 +22,52 @@ mutators, benchmarks, input sharing, and new computation-providing backends
 
 We propose an infrastructure, as shown in Figure~\ref{fig:overview} 
 that meets these many various needs by focusing on 
-simplicity and extensibility.  We propose a simple API based on:
-on separating the provisioning of hardware resources,
-seperating instrumentation 
+simplicity and extensibility.  We propose an API based on:
+on separating the needs of each component as thoroughly as possible.
+For example, as the figure shows, input mutators are separated from the
+individual fuzzer and each supported fuzzer will need to leverage the API to
+mutate inputs.  Instrumentors (whether source or binary) will have to accept 
+from the fuzzer a domain-specific language on how to instrument the program
+and how to transform it for better fuzzing.  
 
-
-
-that installs an execution agent on the provisioned hardware.   
-
-The execution agent, running with elevated privileges, 
-talks to a centralized server to coordinate a fuzzing.  It reports back 
-available hardware resources.  The central server instructs execution agents on 
-packages to install, fuzzing campaigns to start, fuzzing parameters such as 
-which mutator to use,, during- and post-campaign statics to request, etc.  The 
-fuzzing-campaign director interacts with the server to configure, start, 
+Of particular note is the meta-fuzz coordinator server.
+The coordinator leverages the specifications
+of the compute resources to allocate compute containers (whether VMs, 
+docker containers, or something else) that run an execution agent 
+on the provisioned hardware.   The agent, running with elevated privileges, 
+connects to the coordinator server to know what fuzzing actions to take.
+The central server instructs agents to perform tasks such as 
+installing software; starting fuzzing campaign with fuzzing parameters such as 
+which mutator to use or how to exchange inputs; and post-campaign statistics to request.
+The fuzzing-campaign director interacts with the meta-fuzz server to configure, start, 
 monitor, interrupt, or gather statistics from a fuzzing campaign.  Further, a 
 campaign director can upload a previously created configuration to the server 
-to launch a campaign, allowing for repeatable operation..  
+to launch a campaign, allowing for repeatable operation and an easy mechanism to distribute
+repeatable science to the CISE community.  
 
-The infrastructure will come with pre-configured fuzzing campaigns, fuzzer 
-configurations, input sharing schemas, and VM images to allow easy adoption for 
-beginning users.  We plan to initially target OpenStack leveraging the UVA 
-hardware resources available, as well as CloudBank AWS/Azure.
+The figure shows a cloud providing compute resources for fuzzing campaigns.  
+We leverage the meta-fuzzing infrastructure's API here such that "cloud" can 
+mean practically anything the campaign director wants.  We definitely envision
+supporting common cloud provider infrastructures such as OpenStack or CloudBank, but
+also that a "cloud" can be as simple as the campaign-director's local, multi-core machine 
+with Vagrant and Docker installed.  Optimizing easy development, experimentation and repeatability
+of new techniques is key. 
 
-Lastly, the configuration options will focus on general meta-fuzzing strategies 
-to allow for easy user extensibility.  End-users will be able to easily create 
+To support these features, the infrastructure will come with pre-configured 
+fuzzing campaigns, fuzzer configurations, input sharing schemas, and VM images to allow easy adoption for 
+beginning users.  We plan to initially target Vagrant/Docker for single-machine operation, then OpenStack leveraging the UVA 
+hardware resources available, as well as finally CloudBank AWS/Azure.
+
+Lastly, we note that the infrastructure's configuration options will focus on general meta-fuzzing strategies 
+to allow for easy user extensibility and CISE-supported extensions.  
+End-users will be able to easily create 
 new fuzzing components (e.g., input mutator, code instrumentation type, input 
 sharing mechanisms) by writing new configuration files, schemas or 
-pre-configured machine images.  The collaborative effort will attempt to accept 
+pre-configured machine images.  The project will accept 
 community-submitted extensions to our proposed open-source infrastructure when 
-the project has achieved a minimal level of acceptance.
+the project has achieved a initial acceptance and such opportunities become available.
 
-The following thrusts describe in more detail how meta-fuzzing can be realized 
+The following sections describe more detail about how meta-fuzzing can be realized 
 in the proposed infrastructure.
 
 
@@ -71,11 +85,11 @@ in the proposed infrastructure.
 \includegraphics[width=\textwidth,trim={0.4in 1.25in 0.8in 2.0in},clip]{figures/mf-arch.pdf}
 %}
 
-\caption{Proposed Meta-fuzzing infrastucture overview.  
+\caption{Proposed Meta-fuzzing infrastructure overview.  
 A fuzz-campaign director interacts with the meta-fuzzer server to setup or replay a configured fuzzing campaign.  
 Built-in collections of of benchmarks, machine images, input sharing techniques, hardware resource requirements, input mutators, and other fuzzer configuration 
 allow for quick startup of fuzzing campaigns backended by popular cloud service providers as well as configurability and extensibility for custom fuzzing setups.  
-The system allows an experimentor to quickly and simply obtain results, or reproduce prior fuzzing campaigns.}
+The system allows an experimenter to quickly and simply obtain results, or reproduce prior fuzzing campaigns.}
 \label{fig:overview}
 \end{figure}
 
@@ -103,7 +117,7 @@ usable, results (for both human consumption and resource allocation).
 
 \jdh{UVA can you talk more about how to go about this thrust?}
 
-fuzzers -- which fuzers to use, and how to extend infrastructure for new 
+fuzzers -- which fuzzers to use, and how to extend infrastructure for new 
 fuzzers.  This is really NAU?
 benchmarks -- standard fuzzing benchmarks, plus ability to add custom 
 benchmarks.
