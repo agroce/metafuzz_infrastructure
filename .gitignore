@@ -5,3 +5,6 @@
 *.pdf
 *.toc
 
+main.fdb_latexmk
+main.fls
+main.synctex.gz
