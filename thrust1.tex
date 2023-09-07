@@ -1,6 +1,14 @@
 \cut{Thrust 1: A Foundation for Efficient Fuzzer Execution,
 Orchestration, and Evaluation}
 
+
+\jdh{Make it clear that 
+1) big picture has user-provided compute resources, we aren't providing these for the world (fig caption and text body)
+2) public outreach includes some free cloud time for early adopters to address point 1.
+3) user-provided compute resources can be in a support cloud (Openstack, Azure, AWS) or just a user multi-core machine via Vagrant/Docker
+}
+
+
 An infrastructure for (meta-)fuzzing research, 
 whether for evaluating large sets of fuzzers in a (meta-)fuzzing approaches, 
 evaluating architecture-specific fuzzing feature benefits, 
@@ -12,7 +20,8 @@ Further, this infrastructure needs to be easily extendable to support new input
 mutators, benchmarks, input sharing, and new computation-providing backends 
 (e.g., a new version of OpenStack.)
 
-We propose an infrastructure, as shown in Figure~\ref{fig:overview} that meets these many various needs by focusing on 
+We propose an infrastructure, as shown in Figure~\ref{fig:overview} 
+that meets these many various needs by focusing on 
 simplicity and extensibility.  We propose a simple API based on separating the 
 provisioning of hardware resources that installs an execution agent on the 
 provisioned hardware.   The execution agent, running with elevated privileges, 
