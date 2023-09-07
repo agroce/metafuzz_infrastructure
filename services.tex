@@ -1,6 +1,35 @@
+%\clg{from the call: ``describe services to be integrated into the infrastructure, including 
+%mechanisms by which researchers will gain access to the infrastructure;''}
+%\clg{I'm wondering if one of the subsections I initially grouped under 
+%tools/resources/datasets might fit better down here.}
 
-\clg{from the call: ``describe services to be integrated into the infrastructure, including 
-mechanisms by which researchers will gain access to the infrastructure;''}
-\clg{I'm wondering if one of the subsections I initially grouped under 
-tools/resources/datasets might fit better down here.}
+% User Services
+
+A good first impression will be key in engendering trust in our meta-fuzzing infrastructure.
+Thus, we will provide ready-made images (Docker or VM) so that users can experience
+the end-to-end system depicted in Figure~\ref{fig:overview}.
+We will provide a suite of such images, pre-configured with various combination of
+fuzzers (e.g., AFL++, LibAFL, libFuzzer), 
+fuzzing styles (e.g., whole program, library-based, source, binary), 
+and benchmarks (e.g, OSS Fuzz benchmarks).
+These images will also serve as examplars on how to use the meta-fuzzing software stack
+and will ship with accompanying instructions.
+In general, our tutorials and documentation of meta-fuzzing workflows will be
+represented and concretized in at least one set of images. 
+
+We will actively develop and maintain user documentation, cookbooks and tutorials throughout
+the duration of the project. We will support both users that want to just use the system
+as well as those researchers that wish to extend the system.
+
+We will host our software repository on github.com and use standard GitHub facilities
+to manage interactions with end users, e.g., issues, pull requests, discussions, feature requests.
+Over time, other researchers and practitioners will extend the base infrastructure with
+new fuzzers, benchmarks, transformations, heuristics to guide meta-fuzzing, etc. 
+While we can initially serve as gatekeepers to decide when contributions from the community
+should go into the mainline release, we will coordinate with our advisory board and community to
+articulate governance policies for the project.
+
+Note that unlike OSS Fuzz, our primary aim is not to provide fuzzing-as-a-service, but
+rather, to provide the software necessary to enable easy-to-deploy meta-fuzzing 
+capabilities (though, of course, our software could be used to power such a service).
 
