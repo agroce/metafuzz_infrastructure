@@ -1,6 +1,4 @@
 
-\section*{Collaborative Research: CIRC: New: Medium: A Development and 
-Experimental Environment for Meta-Fuzzing}
 
 
 
@@ -13,7 +11,7 @@ Experimental Environment for Meta-Fuzzing}
 \section{Introduction}
 \label{sec:intro}
 
-Fuzzing \cite{fuzzoverview} is one of the most important recent advances in 
+Fuzzing~\cite{fuzzoverview} is one of the most important recent advances in 
 automated software testing.  Modern coverage-driven fuzzers, such as AFL or 
 libFuzzer, generally work by maintaing a set (called a corpus) of potentially interesting 
 inputs for the program being fuzzed (often referred to as the target).  The corpus may consist of a 
@@ -218,7 +216,31 @@ effort is to adapt the aspects of the framework that support ensemble fuzzing
 to support measurements of fuzzer effectiveness as well.  This feature of 
 course has applications beyond meta-fuzzing methods; traditional fuzzer 
 evaluations can also be expected to benefit from a systematic, 
-multi-measurement framework for running a set of fuzzers on multiple benchmarks.
+multi-measurement framework for running a set of fuzzers on multiple
+benchmarks.
+
+\paragraph{The Big Picture.}  Meta-fuzzing is perhaps best understood
+as follows: a modern fuzzer is a tool that, fundamentally, takes in
+two kinds of input, and produces tests (new inputs) as outputs.  The
+two kinds of inputs are:  the corpus inputs/tests, and (less
+obviously) the target program to be fuzzed.
+Traditional fuzzing research changes the ``fuzzing function''
+itself, and thus must be implemented for every fuzzer to be
+used. Meta-fuzzing, in contrast, changes the \emph{inputs}, and so can
+be agnostic as to the underlying fuzzer.   Ensemble fuzzing works by
+changing the corpus inputs, drawing them from the outputs of another
+fuzzer.  Universal custom mutators (see below) change the set of
+inputs executed by the fuzzer, by adding transformations to the
+repertoire of multiple fuzzers.  Source and binary transformations
+modify the program to be fuzzer, either once (often to add coverage
+visibility or further ability to detect crashes) or by producing many
+verisons of a program, in order to allow fuzzers to better explore
+behaviors of the program.  Figure \ref{fig:meta} shows meta-fuzzing as
+a set of functions operating on fuzzer inputs.  The underlying concept
+of this proposal is that researchers need tool support to enable them
+effectively develop and evaluate functions for meta-fuzzing.
+
+\adg{Do we like this?   Jason can you draw a diagram if we do?}
 
 \subsection{Overview of Proposed Work}
 
@@ -254,10 +276,14 @@ inside the large set of fuzzers (including AFLPlusPlus and libFuzzer) that
 support custom mutators.
 
 
-\subsection{Team's Qualifications}
+\subsection{Qualifications of the Project Team}
+
 
 {\bf Lead PI Alex Groce} is a well-known expert in fuzzing and software testing in general. While he has been in academia since 2009, his research is informed by experience as the lead for testing fight software systems at NASA/JPL, including a lead role in testing the file systems for the Curiosity Rover. He has also continued to work on practical tools, as lead developer for four open source tools hosted on GitHub with over 100 stars. His expertise in fuzzing and practical testing is widely known, and in 2021 he was hired to perform an audit and contribute enhancements to the fuzz testing for the primary reference implementation for the Bitcoin blockchain, a critical system with more than 71 thousand GitHub stars, on which the validity of billions of dollars worth of financial transactions relies.
 
+Co-PI Padhye has substantial expertise in grey-box fuzz testing~\cite{perffuzz, jqf, zest, fuzzfactory, rlcheck, bigfuzz, bonsai, naturalfuzz, mu2}. In particular, his past work on controlling fuzzers' input search space~\cite{jqf, zest}, on customizing the feedback function in grey-box fuzzing algorithms~\cite{perffuzz, fuzzfactory, bonsai, mu2}, and on targeting domain-specific applications~\cite{partemu, bigfuzz, naturalfuzz} is particularly relevant to this project. Padhye has a track record in developing and maintaining open-source software such as JQF+Zest~\cite{jqf-github} (577 GitHub stars) and FuzzFactory~\cite{fuzzfactory} (225 GitHub stars).
+
+\clg{everyone else, too!}
 \subsection{Intellectual Merit and Broader Impacts}
 
 \paragraph{Intellectual merit.} The proposed work will advance the
@@ -354,11 +380,24 @@ variable map sizes, etc.  }
   map size configs etc. to do this at binary level; at source,
   presumably the instrumentation itself takes care of all that, given
   a transform from some code/data element to a ``fake'' coverage structure}
-\section{Proposed Infrastructure}
+
+\section{Infrastructure Description}
+
+\subsection{Fundamental infrastructure}
 
 \input{thrust1}
 
-\subsection{Thrust 2: Expressive Source and Binary-Level Transformations to 
+\subsection{Tools, resources, and datasets}
+
+\clg{FIXME: in general, this subsection is described in the call as ``Tools, resources, and 
+datasets: describe ancillary resources to be developed and integrated into the infrastructure 
+system;''. I therefore think that my placing all non-thrust 1 content into it is almost certainly
+wrong.  Some maybe should go in ``fundamental infrastructure'', other parts in ``User services.''}
+\clg{FIXME: This needs to include: ``Medium proposals should indicate items that 
+will be developed by the initial award, along with a vision for possible tools that 
+might be appropriate for future enhancements;" }
+
+\subsubsection{Expressive Source and Binary-Level Transformations to 
 Enable Meta-Fuzzing}
 
 The key task in this thrust is twofold.  For both source and binary transforms, 
@@ -379,7 +418,7 @@ for binary-level transformations, with PI Groce coordinating work to determine
 if common DSL elements exist, i.e., transforms that can be applied at either 
 level.
 
-\subsection{Thrust 3: Universalized Custom Mutators}
+\subsubsection{Universalized Custom Mutators}
 
 This thrust is concerned with making it possible to write custom mutators for 
 multiple fuzzers in a single format, with a wrapper (or source transform) 
@@ -391,11 +430,120 @@ practical task, we will be able to best perceive difficulties and needs of
 custom mutator implementors, and can produce a library of useful byte and 
 code-level mutators to be applied by users.
 
-\subsection{Thrust 4:  Domain-Specific Fuzzers (Cross-Cutting)}
+\subsubsection{Domain-Specific Fuzzers (Cross-Cutting)}
+
+\subsubsection{Benchmarks}
+
+\subsection{User services}
+\label{sec:user-services}
+\input{services}
+
+\subsection{Evaluation Metrics}
+\input{metrics}
+
+\subsection{Community engagement}
+
+\cut{
+From the call: ``: describe how the community will be engaged in the design,
+development, and management of the infrastructure, including plans for a
+Community Advisory Board;''
+
+Call says (not specifically referencing this subsection, but later), two things:
+(1) ``Means by which infrastructure utilization and user satisfaction will be
+evaluated and used to refine and improve subsequent infrastructure operations;"
+and (2) ``Community plans to provide long-term sustainability of the
+infrastructure;''
+
+Claire thinks it might make sense to put that content IN this section, but
+specifically label the paragraphs in question so they're easy to find.
+}
+
+Community engagement is critical to the long-term success and viability of any
+developed research infrastructure.  Our project includes specific development
+plans as well as plans for outreach activities to enhance community engagement.  
+Note that we are dedicating a portion of the project's CloudBank allocation to
+the community, to enable them to both try out and use the framework for their
+purposes, which constitutes a portion of our community engagement strategy and
+will contribute to building a community and sustaining the project longer term. 
+
+\paragraph{Community Advisory Board.} We have budgeted to invite a small group
+of senior stakeholders in the fuzzing and testing communities to serve as a
+Community Advisory Board to the project.  We include budget for travel to an
+annual meeting, as well as an honorarium. We plan to co-locate these meetings with
+other relevant PI or workshop meetings to minimize extraneous travel and
+inconvenience for the members of the Board.  In the first meeting, we will focus
+on eliciting guidance for capability design to support long-term research needs,
+ensuring relevance to the broader community.  In the second meeting, we will
+present intermediate implementation and design, to elicit early expert feedback
+and inform early revisions.  In the final meeting, we will focus on concretizing
+longer term open problems to be supported by future community or funded efforts. 
+
+\clg{I mention the letters of collaboration below. Note that they CANNOT be
+identified as potential community Board members. Is this an OK spot, or elsewhere?}
+
+\paragraph{Workshops.}  We have budgeted and plan for two workshops to
+facilitate community engagement.  The first, in year 1 of the project, will be
+small and focused, and likely invitation-only. The goal of the first workshop is
+to ideate with community stakeholders, specifically focusing on requirements
+elicitation and overall framework design, ensuring the needs of the community
+are met.  John Regehr (University of Utah) and Marcel Boehme (Max Planck
+Institute for Security \& Privacy) are two community members whose particular
+expertise we will seek; see the letters of collaboration that accompany this
+proposal.  We will additionally invite other community members of similar
+standing and experience for this early phase of requirements elicitation.   The
+second workshop, in year 3 of the project, will be larger, and open, to demonstrate the
+framework to the broader community, elicit feedback, and educate the community
+of the framework and its capabilities.  This second workshop will be co-located
+at a major conference in Software Engineering or Security, depending on timing
+and location, to ensure exposure to a broad audience of stakeholders in the
+relevant research communities. \clg{Dumb question, what are the best
+Fuzzing-specific workshops to name-check here?}
+
+\paragraph{Evaluation and Improvement.} Our engagement with the Community
+Advisory Board and the community via the planned workshops will provide one set
+of avenues for eliciting feedback about the framework to inform ongoing
+iteration.  \clg{TODO: more here, incorporating a reference to the section that
+Anh is writing about metrics?}  The provision of cloud credits to the community
+to use the framework will both build the community and enable means to elicit
+and quickly iterate on community feedback over the course of project
+development. 
+
+\paragraph{Long-term Sustainability.} Our deployment strategy uses
+well-understood open source strategies, namely providing access to the framework
+via GitHub.  We will follow established mechanisms, integrated into GitHub's
+platform, for release management, continuous integration, and bug reporting and
+bug fixing, as well as for eliciting and accepting contributions from community
+members via feature and Pull Requests. 
+
+As described in Section~\ref{sec:user-services}, we will provide facilities to
+deploy the framework to several cloud providers and dedicate a portion of the
+project's CloudBank allocation to the community.  The provision of generic cloud
+deployment strategies will support long term usage beyond the scope of this
+project.
+
+Additionally, we plan, in the third year of the project, to actively pursue
+additional funding avenues for ensuring the continued success and development of
+the infrastructure, including CIRC Enhancement proposals or via the NSF POSE
+program. 
+
+\subsection{Community outreach}
+
+From the call: ``describe plans for ongoing outreach to develop a diverse user
+community led by the Community Outreach Director (required for Grand proposals)
+and the outreach team:''
+
+\clg{The purpose of this subsection is a bit confusing --- the part I'm puzzled by
+is that only Grand proposals need a director, but this subsection seems required for all proposals.  That said,
+I don't understand why this subsection is required, or required to be different from the community 
+engagement subsection, for non-Grand proposals.}
 
 \section{Enabled Research Opportunities and Projects}
 
-\section{Project Organization Plan}
+From the call, must include: ``Compelling new CISE research opportunities enabled by the proposed infrastructure, including a description of the steps taken to identify the research opportunities enabled by the infrastructure, as well as evidence that a diverse community of users plan to use the capabilities provided;
+Examples of focused research projects or use cases that the infrastructure will enable, beyond the research of the PIs and co-PIs (note that the novelty and innovative aspects of the research must be evident, along with clear evidence that the proposed infrastructure is essential to moving CISE research frontiers forward);
+Description of the CISE research community and sub-disciplines that will use and benefit from the infrastructure; evidence that there is community support for the infrastructure, such as preliminary community activities and/or plans for its use;''
+
+\section{Project Management Plan}
 
 %Awardee institution(s) commitment to operating and maintaining the
 %infrastructure for its estimated useful life; and
@@ -404,12 +552,13 @@ code-level mutators to be applied by users.
 %the new or enhance the existing research infrastructure.
 \label{sec:plan}
 
-
+\clg{ALEX: if you draw me a bad hand-drawn gantt chart I can turn it into grotesque but visually-appealing latex.}
 Table~\ref{tab:plan} presents the high-level organization and timeline for the 
 proposed
 work. For each thrust or sub-thrust, one PI will lead the thrust or sub-thrust.
 
-
+\clg{We also need to include ``Commitment to share resources, participate in CIRC Virtual Organization, 
+and CIRC community PI meetings.'' somewhere in these 15 pages...this Section seems like an OK place to do it, I guess?}
 All implementation work will be coodinated by using a set of shared, public, 
 GitHub repositories.    We plan to start our
 infrastructure construction during summer when students are
@@ -432,26 +581,42 @@ underpinning of much future research in fuzzing, beyond meta-fuzzing.
 
 
 Some of the PIs are already actively collaborating.
-PIs Groce and Le Goues...
-
-
-% LocalWords:  timeline analyses RAs REU PIs Zhang Basecamp Groce Joda ASE FSE
-% LocalWords:  GitHub BitBucket
-
-\subsection{Advisory Council}
-
-During the second year of the project, once there is enough input from
-collaborators and structure to the project to make investment of time
-by members of the research community worthwhile, we will seek to form
-an external advisory council to provide input and guidance as to the
-community's needs and long-term maintenance and support for the
-infrastructure products of this proposal.  Further, we plan to explore
-all available
-long-term avenues for ensuring the continued existence and success of
-our infrastructure as a standalone open source framework, e.g.,
-potentially via NSF POSE.
+PIs Groce and Le Goues are the PIs on an ongoing NSF research project
+that also concerns program transformations with applications to
+fuzzing, as discussed in Prior Support, and have now collaborated on
+five publications as well as two released tools available on GitHub,
+each with more than 100 stars.
 
 \section{Results from Prior NSF Support}
+
+
+\cut{
+	(iii) Results from Prior NSF Support
+The purpose of this section is to assist reviewers in assessing the quality of prior work conducted with prior or current NSF funding. If any PI or co-PI identified on the proposal has received prior NSF support including:
+
+an award with an end date in the past five years; or
+
+any current funding, including any no cost extensions
+
+Information on the award is required for each PI and co-PI, regardless of whether the support was directly related to the proposal or not. In cases where the PI or any co-PI has received more than one award (excluding amendments to existing awards), they need only report on the one award that is most closely related to the proposal. Support means salary support, as well as any other funding awarded by NSF, including research, Graduate Research Fellowship, Major Research Instrumentation, conference, equipment, travel, and center awards, etc.
+
+The following information must be provided:
+
+(a) the NSF award number, amount and period of support;
+
+(b) the title of the project;
+
+(c) a summary of the results of the completed work, including accomplishments, supported by the award. The results must be separately described under two distinct headings: Intellectual Merit and Broader Impacts;
+
+(d) a listing of the publications resulting from the NSF award (a complete bibliographic citation for each publication must be provided either in this section or in the References Cited section of the proposal); if none, state “No publications were produced under this award.”
+
+(e) evidence of research products and their availability, including, but not limited to: data, publications, samples, physical collections, software, and models, as described in any Data Management Plan; and
+
+(f) if the proposal is for renewed support, a description of the relation of the completed work to the proposed work.
+
+If the project was recently awarded and therefore no new results exist, describe the major goals and broader impacts of the project. Note that the proposal may contain up to five pages to describe the results. Results may be summarized in fewer than five pages, which would give the balance of the 15 pages for the Project Description.
+}
+
 
 \paragraph{PI Groce:}
 The most relevant prior NSF support for PI Groce is CCF-
@@ -463,9 +628,61 @@ focuses on a synergistic approach for allowing developers
 to improve testing by using mutation testing to identify
 weaknesses in tests and to generate tests.  In its second
 year,  this project has already resulted in five
-publications~\cite{cc2022,seip2022,fuzzing22}. {\bf
+publications~\cite{cc2022,seip2022,fuzzing22,fse23,issre23}. {\bf
   Broader
   Impact:}  Work from this project has already
-resulted in the reporting and correction of mulitple bugs in software
+resulted in the reporting and correction of multiple bugs in software
 systems, including widely used production compilers.
+
+\paragraph{PI Le Goues:}
+The most relevant prior NSF support for PI Le Goues is CCF-
+CCF-2129388, ``Feedback-Driven Mutation Testing for Any Language,'' with a 
+total budget of \$500,000 from 9/2021 until 8/2024,
+a collaborative proposal with PI Groce of Northern Arizona University. {\bf Intellectual Merit:} This project
+focuses on a synergistic approach for allowing developers
+to improve testing by using mutation testing to identify
+weaknesses in tests and to generate tests.  In its second
+year,  this project has already resulted in five
+publications~\cite{cc2022,seip2022,fuzzing22,fse23,issre23}. {\bf
+  Broader
+  Impact:}  Work from this project has already
+resulted in the reporting and correction of multiple bugs in software
+systems, including widely used production compilers.
+
+%\paragraph{PI Jack Davidson:} Dr. Davidson has a 40-plus year history of leading 
+%and managing large successful collaborative projects.
+%He has overseen large, multi-institution projects funded by the DOD, IARPA, DARPA, ONR, and DHS. 
+%Most recently he was the PI of UVA's P-CORE project funded under the DARPA CHASE program.
+%This \$9.8M project consists of multiple partners including both academic and industry.  
+%Davidson has strong connections to the cybersecurity community and the CISE community in general.
+%He is the Director of UVA's National Center of Excellence in Cybersecurity in Cyber Defense (NCAE-CD) 
+%program as well as UVA's National Center of Academic Excellence in Research (NCAE-R) program.
+%Davidson is a Fellow of the ACM and a Life Fellow of the IEEE, and is current the Chair of 
+%ACM's Digital Library Board, which directs the development and operation of ACM's Digital 
+%Library Platform.
+
+\paragraph{PI Jack Davdison:}  The most relevant prior NSF support for PI Davdison is  
+\textbf{CCRI: Planning: Towards Building a Community Data Infrastructure for Cybersecurity Research  
+NSF Award \#2016431; Amount: \$100,000, PI: Jack W. Davidson; Period of Support: 10/01/2020 -- 09/31/2022}. 
+\textbf{Intellectual Merit}: This planning grant supported holding a virtual workshop that brought together a 
+diverse group of researchers and administrators (77 total) to discuss the data needs of the community and to 
+discuss legal, ethical, privacy, organizational and sustainability considerations of sharing data~\cite{CCRI-Planning-Report}.
+It is also supporting the organization of a workshop being held in conjunction with the International Conference on 
+Machine Learning (ICML 2022) which will be held on July 22, 2022 in Baltimore, Maryland.
+
+The ML4Cyber workshop aims to push the state-of-the-art in ML-based cybersecurity defenses by 
+increasing this cross-pollination, building a mutual comprehensive awareness of the problem and 
+solution spaces across the greater ML research and cybersecurity/ML-for-cybersecurity communities.
+\textbf{Broader Impacts}:
+
+In 2008, the U.S. National Academy of Engineering (NAE) named ``securing cyberspace'' 
+one of 14 challenges that, if met, would improve how we live.
+Understanding the data needs and requirements of cybersecurity researchers is 
+essential if we are to secure cyberspace.
+To be as inclusive as possible as input about data needs is sought, the grant is 
+supporting the organization of ML4Cyber by providing registration fees for 
+students and faculty with financial needs.
+Through this support we will encourage participation from under-represented groups.
+Graduate Students Supported: 1; Publications: 1~\cite{CCRI-Planning-Report}.
+
 
