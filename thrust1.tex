@@ -1,6 +1,69 @@
 \subsection{Thrust 1: A Foundation for Efficient Fuzzer Execution,
 Orchestration, and Evaluation}
 
+An infrastructure for (meta-)fuzzing research, 
+whether for evaluating large sets of fuzzers in a (meta-)fuzzing approaches, 
+evaluating architecture-specific fuzzing feature benefits, 
+or for less-explored but promising research such as determining which kinds of 
+fuzzers work best for broad classes of fuzzing, needs to be sufficiently 
+efficient, robust and configurable to support a variety of (possibly 
+unforeseen) requirements.  
+Further, this infrastructure needs to be easily extendable to support new input 
+mutators, benchmarks, input sharing, and new computation-providing backends 
+(e.g., a new version of OpenStack.)
+
+We propose an infrastructure, as shown in Figure~\ref{fig:overview} that meets these many various needs by focusing on 
+simplicity and extensibility.  We propose a simple API based on separating the 
+provisioning of hardware resources that installs an execution agent on the 
+provisioned hardware.   The execution agent, running with elevated privileges, 
+talks to a centralized server to coordinate a fuzzing.  It reports back 
+available hardware resources.  The central server instructs execution agents on 
+packages to install, fuzzing campaigns to start, fuzzing parameters such as 
+which mutator to use,, during- and post-campaign statics to request, etc.  The 
+fuzzing-campaign director interacts with the server to configure, start, 
+monitor, interrupt, or gather statistics from a fuzzing campaign.  Further, a 
+campaign director can upload a previously created configuration to the server 
+to launch a campaign, allowing for repeatable operation..  
+
+The infrastructure will come with pre-configured fuzzing campaigns, fuzzer 
+configurations, input sharing schemas, and VM images to allow easy adoption for 
+beginning users.  We plan to initially target OpenStack leveraging the UVA 
+hardware resources available, as well as CloudBank AWS/Azure.
+
+Lastly, the configuration options will focus on general meta-fuzzing strategies 
+to allow for easy user extensibility.  End-users will be able to easily create 
+new fuzzing components (e.g., input mutator, code instrumentation type, input 
+sharing mechanisms) by writing new configuration files, schemas or 
+pre-configured machine images.  The collaborative effort will attempt to accept 
+community-submitted extensions to our proposed open-source infrastructure when 
+the project has achieved a minimal level of acceptance.
+
+The following thrusts describe in more detail how meta-fuzzing can be realized 
+in the proposed infrastructure.
+
+
+\begin{figure}[htbp!]
+%\makebox[7in][7in]{to be filled in}
+\vbox to 7in {\vfil
+\hbox to 7in{a figure to be drawn later}%
+\vfil
+}
+
+\caption{Proposed Meta-fuzzing infrastucture overview.  
+A fuzz-campaign director interacts with the meta-fuzzer server to setup or replay a configured fuzzing campaign.  
+Built-in collections of of benchmarks, machine images, input sharing techniques, hardware resource requirements, input mutators, and other fuzzer configuration 
+allow for quick startup of fuzzing campaigns backended by popular cloud service providers as well as configurability and extensibility for custom fuzzing setups.  
+The system allows an experimentor to quickly and simply obtain results, or reproduce prior fuzzing campaigns.}
+\label{fig:overview}
+\end{figure}
+
+
+
+\cut{
+
+	\subsection{Thrust 1: A Foundation for Efficient Fuzzer Execution,
+Orchestration, and Evaluation}
+
 The execution of large sets of fuzzers for purposes of evaluating
 (meta-)fuzzing approaches, or for less-explored but promising research such as
 determining which kinds of fuzzers work best for broad classes of fuzzing
@@ -18,11 +81,19 @@ usable, results (for both human consumption and resource allocation).
 
 \jdh{UVA can you talk more about how to go about this thrust?}
 
-fuzzers -- which fuzers to use, and how to extend infrastructure for new fuzzers.  This is really NAU?
-benchmarks -- standard fuzzing benchmarks, plus ability to add custom benchmarks.
-specification -- which backend to use, how to allocate resources, how a fuzzing campaign should look like, which mutators to use, which instrumentation to use.
-deployment -- VM allocation, software installation, efficient (semi-)automatic assignment of fuzzers based on fuzz campaign mapping
-cooperation -- how often to share, and what to share.  Sharing "architectures" (e.g., share on the same VM, vs. different VMs in same cluster vs VMs in different clusters vs VMs in different data centers)
-results -- collecting results (baseline results + user-specified extensions), statistical analysis
+fuzzers -- which fuzers to use, and how to extend infrastructure for new 
+fuzzers.  This is really NAU?
+benchmarks -- standard fuzzing benchmarks, plus ability to add custom 
+benchmarks.
+specification -- which backend to use, how to allocate resources, how a fuzzing 
+campaign should look like, which mutators to use, which instrumentation to use.
+deployment -- VM allocation, software installation, efficient (semi-)automatic 
+assignment of fuzzers based on fuzz campaign mapping
+cooperation -- how often to share, and what to share.  Sharing "architectures" 
+(e.g., share on the same VM, vs. different VMs in same cluster vs VMs in 
+different clusters vs VMs in different data centers)
+results -- collecting results (baseline results + user-specified extensions), 
+statistical analysis
 
 
+}
