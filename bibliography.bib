@@ -915,20 +915,146 @@ pages = {105--156}
   howpublished = "\url{https://www.cprover.org/cbmc/}"
 }
 
+
+@misc{jqf-github,
+ author = {Padhye, Rohan},
+ howpublished = {\url{http://github.com/rohanpadhye/JQF}},
+ note = {Accessed September 1, 2023},
+ title = {{JQF}},
+ year = {2018}
+}
+
+@misc{fuzzfactory-github,
+ author = {Padhye, Rohan},
+ howpublished = {\url{http://github.com/rohanpadhye/FuzzFactory}},
+ note = {Accessed September 1, 2023},
+ title = {{FuzzFactory}},
+ year = {2019}
+}
+
+@inproceedings{perffuzz,
+ author = {Lemieux, Caroline and Padhye, Rohan and Sen, Koushik and Song, Dawn},
+ booktitle = {Proceedings of the 27th International Symposium on Software Testing and Analysis},
+ doi = {10.1145/3213846.3213874},
+ isbn = {978-1-4503-5699-2},
+ keywords = {algorithmic complexity, fuzz testing, performance, worst-case},
+ numpages = {12},
+ series = {ISSTA'18},
+ title = {PerfFuzz: Automatically Generating Pathological Inputs},
+ url = {http://doi.acm.org/10.1145/3213846.3213874},
+ year = {2018}
+}
+
+
+@inproceedings{zest,
+ author = {Padhye, Rohan and Lemieux, Caroline and Sen, Koushik and Papadakis, Mike and Le Traon, Yves},
+ title = {Semantic Fuzzing with {Zest}},
+ booktitle = {Proceedings of the 28th ACM SIGSOFT International Symposium on Software Testing and Analysis},
+ series = {ISSTA'19},
+ year = {2019},
+ isbn = {978-1-4503-6224-5},
+ location = {Beijing, China},
+ pages = {329--340},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/3293882.3330576},
+ doi = {10.1145/3293882.3330576},
+ acmid = {3330576},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Structure-aware fuzzing, property-based testing, random testing},
+} 
+
+@inproceedings{jqf,
+ author = {Padhye, Rohan and Lemieux, Caroline and Sen, Koushik},
+ booktitle = {Proceedings of the 28th ACM SIGSOFT International Symposium on Software Testing and Analysis},
+ doi = {10.1145/3293882.3339002},
+ isbn = {978-1-4503-6224-5},
+ keywords = {Coverage-guided fuzzing, QuickCheck, property-based testing},
+ numpages = {4},
+ pages = {398--401},
+ series = {ISSTA'19},
+ title = {{JQF}: Coverage-guided Property-based Testing in Java},
+ url = {http://doi.acm.org/10.1145/3293882.3339002},
+ year = {2019}
+}
+
 @article{fuzzfactory,
-author = {Padhye, Rohan and Lemieux, Caroline and Sen, Koushik and Simon, Laurent and Vijayakumar, Hayawardh},
-title = {FuzzFactory: Domain-Specific Fuzzing with Waypoints},
-year = {2019},
-issue_date = {October 2019},
+  title={{FuzzFactory}: domain-specific fuzzing with waypoints},
+  author={Padhye, Rohan and Lemieux, Caroline and Sen, Koushik and Simon, Laurent and Vijayakumar, Hayawardh},
+  journal={Proceedings of the ACM on Programming Languages},
+  volume={3},
+  number={OOPSLA},
+  pages={1--29},
+  year={2019},
+  articleno = {174},
+  numpages = {29},
+  url = {https://doi.org/10.1145/3360600},
+  doi = {10.1145/3360600},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+}
+
+
+@inproceedings{partemu,
+  title={Partemu: Enabling dynamic analysis of real-world trustzone software using emulation},
+  author={Harrison, Lee and Vijayakumar, Hayawardh and Padhye, Rohan and Sen, Koushik and Grace, Michael and Padhye, Rohan and Lemieux, Caroline and Sen, Koushik and Simon, Laurent and Vijayakumar, Hayawardh and others},
+  booktitle={Proceedings of the 29th USENIX Security Symposium},
+  series={USENIX Security 2020},
+  year={2020}
+}
+
+@inproceedings{rlcheck,
+  title={Quickly Generating Diverse Valid Test Inputs with Reinforcement Learning},
+  author={Reddy, Sameer and Lemieux, Caroline and Padhye, Rohan and Sen, Koushik},
+  booktitle={42nd International Conference on Software Engineering},
+  pages={23--29},
+  series = {ICSE '20},
+  year={2020},
+}
+
+
+@inproceedings{bigfuzz,
+  title={{BigFuzz}: Efficient Fuzz Testing for Data Analytics Using Framework Abstraction},
+  author={Zhang, Qian and Wang, Jiyuan and Gulzar, Muhammad Ali and Padhye, Rohan and Kim, Miryung},
+  booktitle={IEEE/ACM International Conference on Automated Software Engineering},
+  year={2020},
+  series={ASE'20},
+  organization={IEEE}
+}
+
+
+@inproceedings{naturalfuzz,
+author = {Kambhamettu, Rajeswari Hita and Billos, John and Oluwaseun-Apo, Tomi and Gafford, Benjamin and Padhye, Rohan and Hellendoorn, Vincent J.},
+title = {On the Naturalness of Fuzzer-Generated Code},
+year = {2022},
+isbn = {9781450393034},
 publisher = {Association for Computing Machinery},
 address = {New York, NY, USA},
-volume = {3},
-number = {OOPSLA},
-url = {https://doi.org/10.1145/3360600},
-doi = {10.1145/3360600},
-journal = {Proc. ACM Program. Lang.},
-month = {oct},
-articleno = {174},
-numpages = {29},
-keywords = {domain-specific fuzzing, frameworks, fuzz testing, waypoints}
+url = {https://doi.org/10.1145/3524842.3527972},
+doi = {10.1145/3524842.3527972},
+booktitle = {Proceedings of the 19th International Conference on Mining Software Repositories},
+pages = {506–510},
+numpages = {5},
+keywords = {predictability, generation-based fuzzing, neural language modeling, entropy},
+location = {Pittsburgh, Pennsylvania},
+series = {MSR '22}
+}
+
+@inproceedings{bonsai,
+  title={Growing a Test Corpus with {Bonsai Fuzzing}},
+  author={Vikram, Vasudev and Padhye, Rohan and Sen, Koushik},
+  booktitle={43rd International Conference on Software Engineering},
+  series = {ICSE '21},
+  year={2021}
+}
+
+
+@inproceedings{mu2,
+  title={Guiding Mutation Testing with Greybox Fuzzing},
+  author={Vikram, Vasudev and Laybourn, Isabella and Li, Ao and Nair, Nicole and OBrien, Kelton and Sanna, Rafaello and Padhye, Rohan},
+  year = {2023},
+  booktitle = {Proceedings of the 32nd ACM SIGSOFT International Symposium on Software Testing and Analysis},
+  series = {ISSTA'23},
+  doi = {10.1145/3597926.3598107},
+  url = {https://doi.org/10.1145/3597926.3598107}
 }
