@@ -43,11 +43,18 @@ in the proposed infrastructure.
 
 
 \begin{figure}[htbp!]
-%\makebox[7in][7in]{to be filled in}
-\vbox to 7in {\vfil
-\hbox to 7in{a figure to be drawn later}%
-\vfil
-}
+% placeholder
+%\vbox to 7in {\vfil
+%\hbox to 7in{a figure to be drawn later}%
+%\vfil
+%}
+
+
+% fbox to help visualizing trimming
+%\fbox{
+% Answer: [trim={left bottom right top},clip]
+\includegraphics[width=\textwidth,trim={0.4in 1.25in 0.8in 2.0in},clip]{figures/mf-arch.pdf}
+%}
 
 \caption{Proposed Meta-fuzzing infrastucture overview.  
 A fuzz-campaign director interacts with the meta-fuzzer server to setup or replay a configured fuzzing campaign.  
