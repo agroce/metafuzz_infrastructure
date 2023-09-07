@@ -12,3 +12,9 @@ Infrastructure-specific metrics will incorporate the number, size, and diversity
 When possible, we will keep track of the numbers and types of bugs uncovered using our software stack.
 We will also keep track of the number of citations and experiments enabled by our infrastructure, as well 
 as other indicators of interests such as social media mentions and blog posts.
+
+Lastly, we plan to keep track of the number of valid, tested configurations.  If our infrastructure truly supports a 
+mix-and-match approach to selecting and deploying meta-fuzzing configurations, the number of supported configurations 
+should grow exponentially every time a new configuration parameter is added.  If instead, we have a limited set of fixed
+fuzzing configurations, this metric would grow linearly.  This metric should allow us to verify we are succeeding at a truly
+flexible infrastructure.
