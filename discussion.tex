@@ -409,6 +409,8 @@ code-level mutators to be applied by users.
 \subsubsection{Domain-Specific Fuzzers (Cross-Cutting)}
 
 \subsection{User services}
+\label{sec:user-services}
+
 \clg{from the call: ``describe services to be integrated into the infrastructure, including 
 mechanisms by which researchers will gain access to the infrastructure;''}
 \clg{I'm wondering if one of the subsections I initially grouped under 
@@ -416,28 +418,99 @@ tools/resources/datasets might fit better down here.}
 
 \subsection{Community engagement}
 
+\cut{
+From the call: ``: describe how the community will be engaged in the design,
+development, and management of the infrastructure, including plans for a
+Community Advisory Board;''
 
-% LocalWords:  timeline analyses RAs REU PIs Zhang Basecamp Groce Joda ASE FSE
-% LocalWords:  GitHub BitBucket
+Call says (not specifically referencing this subsection, but later), two things:
+(1) ``Means by which infrastructure utilization and user satisfaction will be
+evaluated and used to refine and improve subsequent infrastructure operations;"
+and (2) ``Community plans to provide long-term sustainability of the
+infrastructure;''
 
-\paragraph{Advisory council.}
-During the second year\clg{Fixme: call says meeting with advisory council every year (and we budgeted for it).} of the project, once there is enough input from
-collaborators and structure to the project to make investment of time
-by members of the research community worthwhile, we will seek to form
-an external advisory council to provide input and guidance as to the
-community's needs and long-term maintenance and support for the
-infrastructure products of this proposal.  Further, we plan to explore
-all available
-long-term avenues for ensuring the continued existence and success of
-our infrastructure as a standalone open source framework, e.g.,
-potentially via NSF POSE.
-Call says (not specifically referencing this subsection, but later), two things: (1) ``Means by which infrastructure utilization and user satisfaction will be evaluated and used to refine and improve subsequent infrastructure operations;"
-and (2) ``Community plans to provide long-term sustainability of the infrastructure;''
+Claire thinks it might make sense to put that content IN this section, but
+specifically label the paragraphs in question so they're easy to find.
+}
 
-Claire thinks it might make sense to put that content IN this section, but specifically label the paragraphs in question so they're easy to find.
+Community engagement is critical to the long-term success and viability of any
+developed research infrastructure.  Our project includes specific development
+plans as well as plans for outreach activities to enhance community engagement.  
+Note that we are dedicating a portion of the project's CloudBank allocation to
+the community, to enable them to both try out and use the framework for their
+purposes, which constitutes a portion of our community engagement strategy and
+will contribute to building a community and sustaining the project longer term. 
+
+\paragraph{Community Advisory Board.} We have budgeted to invite a small group
+of senior stakeholders in the fuzzing and testing communities to serve as a
+Community Advisory Board to the project.  We include budget for travel to an
+annual meeting, as well as an honorarium. We plan to co-locate these meetings with
+other relevant PI or workshop meetings to minimize extraneous travel and
+inconvenience for the members of the Board.  In the first meeting, we will focus
+on eliciting guidance for capability design to support long-term research needs,
+ensuring relevance to the broader community.  In the second meeting, we will
+present intermediate implementation and design, to elicit early expert feedback
+and inform early revisions.  In the final meeting, we will focus on concretizing
+longer term open problems to be supported by future community or funded efforts. 
+
+\clg{I mention the letters of collaboration below. Note that they CANNOT be
+identified as potential community Board members. Is this an OK spot, or elsewhere?}
+
+\paragraph{Workshops.}  We have budgeted and plan for two workshops to
+facilitate community engagement.  The first, in year 1 of the project, will be
+small and focused, and likely invitation-only. The goal of the first workshop is
+to ideate with community stakeholders, specifically focusing on requirements
+elicitation and overall framework design, ensuring the needs of the community
+are met.  John Regehr (University of Utah) and Marcel Boehme (Max Planck
+Institute for Security \& Privacy) are two community members whose particular
+expertise we will seek; see the letters of collaboration that accompany this
+proposal.  We will additionally invite other community members of similar
+standing and experience for this early phase of requirements elicitation.   The
+second workshop, in year 3 of the project, will be larger, and open, to demonstrate the
+framework to the broader community, elicit feedback, and educate the community
+of the framework and its capabilities.  This second workshop will be co-located
+at a major conference in Software Engineering or Security, depending on timing
+and location, to ensure exposure to a broad audience of stakeholders in the
+relevant research communities. \clg{Dumb question, what are the best
+Fuzzing-specific workshops to name-check here?}
+
+\paragraph{Evaluation and Improvement.} Our engagement with the Community
+Advisory Board and the community via the planned workshops will provide one set
+of avenues for eliciting feedback about the framework to inform ongoing
+iteration.  \clg{TODO: more here, incorporating a reference to the section that
+Anh is writing about metrics?}  The provision of cloud credits to the community
+to use the framework will both build the community and enable means to elicit
+and quickly iterate on community feedback over the course of project
+development. 
+
+\paragraph{Long-term Sustainability.} Our deployment strategy uses
+well-understood open source strategies, namely providing access to the framework
+via GitHub.  We will follow established mechanisms, integrated into GitHub's
+platform, for release management, continuous integration, and bug reporting and
+bug fixing, as well as for eliciting and accepting contributions from community
+members via feature and Pull Requests. 
+
+As described in Section~\ref{sec:user-services}, we will provide facilities to
+deploy the framework to several cloud providers and dedicate a portion of the
+project's CloudBank allocation to the community.  The provision of generic cloud
+deployment strategies will support long term usage beyond the scope of this
+project.
+
+Additionally, we plan, in the third year of the project, to actively pursue
+additional funding avenues for ensuring the continued success and development of
+the infrastructure, including CIRC Enhancement proposals or via the NSF POSE
+program. 
 
 \subsection{Community outreach}
 
+From the call: ``describe plans for ongoing outreach to develop a diverse user
+community led by the Community Outreach Director (required for Grand proposals)
+and the outreach team:''
+
+\clg{The purpose of this subsection is a bit confusing --- the part I'm puzzled by
+is that only Grand proposals need a director, but this subsection seems required for all proposals.  That said,
+I don't understand why this subsection is required, or required to be different from the community 
+engagement subsection, for non-Grand proposals.}
 
 \section{Enabled Research Opportunities and Projects}
 
