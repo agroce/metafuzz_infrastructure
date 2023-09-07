@@ -22,9 +22,15 @@ mutators, benchmarks, input sharing, and new computation-providing backends
 
 We propose an infrastructure, as shown in Figure~\ref{fig:overview} 
 that meets these many various needs by focusing on 
-simplicity and extensibility.  We propose a simple API based on separating the 
-provisioning of hardware resources that installs an execution agent on the 
-provisioned hardware.   The execution agent, running with elevated privileges, 
+simplicity and extensibility.  We propose a simple API based on:
+on separating the provisioning of hardware resources,
+seperating instrumentation 
+
+
+
+that installs an execution agent on the provisioned hardware.   
+
+The execution agent, running with elevated privileges, 
 talks to a centralized server to coordinate a fuzzing.  It reports back 
 available hardware resources.  The central server instructs execution agents on 
 packages to install, fuzzing campaigns to start, fuzzing parameters such as 
