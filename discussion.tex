@@ -356,11 +356,16 @@ variable map sizes, etc.  }
   map size configs etc. to do this at binary level; at source,
   presumably the instrumentation itself takes care of all that, given
   a transform from some code/data element to a ``fake'' coverage structure}
-\section{Proposed Infrastructure}
+
+\section{Infrastructure Description}
+
+\subsection{Fundamental infrastructure}
 
 \input{thrust1}
 
-\subsection{Thrust 2: Expressive Source and Binary-Level Transformations to 
+\subsection{Tools, resources, and datasets}
+
+\subsubsection{Expressive Source and Binary-Level Transformations to 
 Enable Meta-Fuzzing}
 
 The key task in this thrust is twofold.  For both source and binary transforms, 
@@ -381,7 +386,7 @@ for binary-level transformations, with PI Groce coordinating work to determine
 if common DSL elements exist, i.e., transforms that can be applied at either 
 level.
 
-\subsection{Thrust 3: Universalized Custom Mutators}
+\subsubsection{Universalized Custom Mutators}
 
 This thrust is concerned with making it possible to write custom mutators for 
 multiple fuzzers in a single format, with a wrapper (or source transform) 
@@ -393,11 +398,44 @@ practical task, we will be able to best perceive difficulties and needs of
 custom mutator implementors, and can produce a library of useful byte and 
 code-level mutators to be applied by users.
 
-\subsection{Thrust 4:  Domain-Specific Fuzzers (Cross-Cutting)}
+\subsubsection{Domain-Specific Fuzzers (Cross-Cutting)}
+
+\subsection{User services}
+\clg{I'm wondering if one of the subsections I initially grouped under tools/resources/datasets might fit better down here.}
+
+\subsection{Community engagement}
+
+
+% LocalWords:  timeline analyses RAs REU PIs Zhang Basecamp Groce Joda ASE FSE
+% LocalWords:  GitHub BitBucket
+
+\paragraph{Advisory council.}
+During the second year\clg{Fixme: call says meeting with advisory council every year (and we budgeted for it).} of the project, once there is enough input from
+collaborators and structure to the project to make investment of time
+by members of the research community worthwhile, we will seek to form
+an external advisory council to provide input and guidance as to the
+community's needs and long-term maintenance and support for the
+infrastructure products of this proposal.  Further, we plan to explore
+all available
+long-term avenues for ensuring the continued existence and success of
+our infrastructure as a standalone open source framework, e.g.,
+potentially via NSF POSE.
+Call says (not specifically referencing this subsection, but later), two things: (1) ``Means by which infrastructure utilization and user satisfaction will be evaluated and used to refine and improve subsequent infrastructure operations;"
+and (2) ``Community plans to provide long-term sustainability of the infrastructure;''
+
+Claire thinks it might make sense to put that content IN this section, but specifically label the paragraphs in question so they're easy to find.
+
+\subsection{Community outreach}
+
 
 \section{Enabled Research Opportunities and Projects}
 
-\section{Project Organization Plan}
+From the call, must include: ``Compelling new CISE research opportunities enabled by the proposed infrastructure, including a description of the steps taken to identify the research opportunities enabled by the infrastructure, as well as evidence that a diverse community of users plan to use the capabilities provided;
+Examples of focused research projects or use cases that the infrastructure will enable, beyond the research of the PIs and co-PIs (note that the novelty and innovative aspects of the research must be evident, along with clear evidence that the proposed infrastructure is essential to moving CISE research frontiers forward);
+Description of the CISE research community and sub-disciplines that will use and benefit from the infrastructure; evidence that there is community support for the infrastructure, such as preliminary community activities and/or plans for its use;''
+
+
+\section{Project Management Plan}
 
 %Awardee institution(s) commitment to operating and maintaining the
 %infrastructure for its estimated useful life; and
@@ -437,21 +475,6 @@ Some of the PIs are already actively collaborating.
 PIs Groce and Le Goues...
 
 
-% LocalWords:  timeline analyses RAs REU PIs Zhang Basecamp Groce Joda ASE FSE
-% LocalWords:  GitHub BitBucket
-
-\subsection{Advisory Council}
-
-During the second year of the project, once there is enough input from
-collaborators and structure to the project to make investment of time
-by members of the research community worthwhile, we will seek to form
-an external advisory council to provide input and guidance as to the
-community's needs and long-term maintenance and support for the
-infrastructure products of this proposal.  Further, we plan to explore
-all available
-long-term avenues for ensuring the continued existence and success of
-our infrastructure as a standalone open source framework, e.g.,
-potentially via NSF POSE.
 
 \section{Results from Prior NSF Support}
 
