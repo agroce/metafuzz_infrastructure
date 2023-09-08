@@ -1,0 +1,25 @@
+
+
+For binary-only program instrumentation, Comby is unsuitable as it requires source to operate.
+Instead, we leverage the robust binary rewriting techniques provided by Zipr.~\cite{hawkins2017zipr, hiser2017zipr++,zipr}
+Zipr has undergone rigorous third-party evaluation involving thousands of binaries spanning across about 50 unique programs
+compiled with various compilers and compiler flags and seen no failures.~\cite{schulte2022broad}
+Zipr's plug-in architecture allows arbitrary insert, delete, or modification of 
+code or data items as well as allowing plugins to be composed, making it ideal for meta-fuzzing.  
+In fact, PI Davidson and the UVA senior personnel,
+Dr. Hiser and Dr. Nguyen-Tuong, have already leveraged it to build an 
+AFL-compatible instrumentation plugin for Zipr, called
+Zafl.~\cite{zafl}  
+Experiments show that Zafl instrumentation provides the same
+coverage and bug-finding effectiveness as compiler-inserted instrumentation.~\cite{nagy2021breaking}
+Zafl also supports input-program mutation to enable faster fuzzing with techniques such as Intel LAF 
+(which converts word-length \textit{cmp} instructions to byte-compare instructions similar to what was 
+shown in Section~\ref{sec:intro}) or adding temporary breakpoint instructions to
+run most coverage tracing at zero overhead.~\cite{intel2016circumventing,nagy2021same}
+Zafl has the program mutation and instrumentation passes in separate Zipr plugins, allowing a user to mix-and-match
+transforms (in a very meta-fuzzing manner) to suit the needs of their program.
+
+As part of this effort, we will integrate Zipr and Zafl and allow people to extend the binary-only fuzzing
+capabilities by adding new plugins to the infrastructure.  We do not expect significant effort to be used to 
+develop these already robust components, allowing the infrastructure to leverage their capabilities in to help
+build future binary-only meta-fuzzing transformations.
