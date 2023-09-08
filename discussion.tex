@@ -72,7 +72,7 @@ into a notably effective fuzzer.  However, there remain many individual
 programs on which some other fuzzer outperforms AFL++. Indeed, the use and
 composition of 
 many different, even sub-optimal, fuzzers is likely required for truly 
-effective fuzzing~\cite{enfuzz,UsesDiversity,ensemble,pastis}, a key
+effective fuzzing~\cite{chen2019enfuzz,UsesDiversity,ensemble,pastis}, a key
 motivation for the infrastructure this project proposes to build.
 
 \paragraph{Meta-fuzzing.}
@@ -149,7 +149,7 @@ FuzzFactory domains (such as breaking down CMP operations and tracking
 \texttt{malloc}'d memory), can produce results that are better than applying 
 each transformation individually.
 
-\paragraph{Ensemble Fuzzing.}   Ensemble fuzzing \cite{enfuzz,ensemble,pastis} is an 
+\paragraph{Ensemble Fuzzing.}   Ensemble fuzzing \cite{chen2019enfuzz,ensemble,pastis} is an 
 approach that recognizes the need for
 diverse methods for test generation, at least in the context of
 fuzzing.   Inspired by ensemble methods in machine learning 
