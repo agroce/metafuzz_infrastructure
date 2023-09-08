@@ -66,10 +66,10 @@ comparing a single new fuzzer to a set of existing fuzzers.
 There have been some attempts to overcome this problem. For example, 
 FuzzFactory~\cite{fuzzfactory} is a generalized fork of AFL which enables researchers 
 to instantiate and compose fuzzers with custom feedback functions by only 
-instrumenting the target program. Another prominent example is AFLPlusPlus~\cite{AFLplusplus}, a 
+instrumenting the target program. Another prominent example is AFL++~\cite{AFLplusplus}, a 
 version of AFL incorporating many academic and industrial fuzzing advances, 
 into a notably effective fuzzer.  However, there remain many individual 
-programs on which some other fuzzer outperforms AFLPlusPlus. Indeed, the use and
+programs on which some other fuzzer outperforms AFL++. Indeed, the use and
 composition of 
 many different, even sub-optimal, fuzzers is likely required for truly 
 effective fuzzing~\cite{enfuzz,UsesDiversity,ensemble,pastis}, a key
@@ -124,7 +124,7 @@ techniques are truly universal.  For example, in recent work, PIs Groce and Le G
 proposed fuzzing based on program mutants~\cite{fuzzing22}, which modifies a fuzzing 
 target in a large variety of ways.  Results show that this approach, by 
 allowing a fuzzer to explore program branches in non-chronological order, can 
-improve the performance of even state-of-the-art fuzzers such as AFLPlusPlus, 
+improve the performance of even state-of-the-art fuzzers such as AFL++, 
 as benchmarked by Google's FuzzBench.  The particular approach taken
 by this work was inspired by T-Fuzz~\cite{tfuzz}, which in some sense
 clearly was \emph{conceived} as a meta-fuzzing approach, but implemented as a
@@ -188,7 +188,7 @@ transformation, would not have been executed yet, improving fuzzer
 effectiveness dramatically in some cases.
 
 \paragraph{Universalized Custom Mutators.}  One feature supported by
-the widely used fuzzers AFLPlusPlus and libFuzzer as well as the promising
+the widely used fuzzers AFL++ and libFuzzer as well as the promising
 new fuzzer Centipede (which backs Google's FuzzTest
 project~\cite{fuzztest}) is the introduction of custom mutators:  user-written 
 additional ways to modify inputs to generate new inputs.  While changing the 
@@ -199,7 +199,7 @@ agnostic.  For example, PIs Groce and Le Goues introduced custom mutators for
 fuzzing compilers that resulted in the detection of hundreds of subtle compiler 
 bugs \cite{cc2022}. These were unfortunately implemented in a standalone variant of the 
 original AFL fuzzer, but would be more widely used and more effective if 
-implemented as custom mutators for libFuzzer, AFLPlusPlus, and Centipede.  We propose to support 
+implemented as custom mutators for libFuzzer, AFL++, and Centipede.  We propose to support 
 research along these lines by allowing users to write a single custom mutator 
 in a generic byte-based framework, and provide wrappers to integrate such 
 mutators into all fuzzers that support custom mutators.
@@ -278,7 +278,7 @@ repertoire of multiple fuzzers.  Source and binary transformations
 modify the program to be fuzzer, either once (often to add coverage
 visibility or further ability to detect crashes) or by producing many
 verisons of a program, in order to allow fuzzers to better explore
-behaviors of the program.  Figure \ref{fig:meta} shows meta-fuzzing as
+behaviors of the program.  Figure~\ref{fig:meta} shows meta-fuzzing as
 a set of functions operating on fuzzer inputs.  The underlying concept
 of this proposal is that researchers need tool support to enable them
 effectively develop and evaluate functions for meta-fuzzing.
@@ -316,7 +316,7 @@ of fuzzers.
 Third, the proposed system will included facilities to allow researchers and developers to 
 write custom mutators for fuzzers in a fuzzer-independent way, with support for 
 automatically generating wrappers to run these ``universalized'' mutators 
-inside the fuzzers (including AFLPlusPlus and libFuzzer) that 
+inside the fuzzers (including AFL++ and libFuzzer) that 
 support custom mutators.
 
 Finally, the proposed system will allow meta-fuzzing of domain-specific applications
@@ -331,7 +331,8 @@ in general. While he has been in academia since 2009, his research is informed
 by experience as the lead for testing fight software systems at NASA/JPL,
 including a lead role in testing the file systems for the Curiosity Rover. He
 has also continued to work on practical tools, as lead developer for four open
-source tools hosted on GitHub with over 100 stars. His expertise in fuzzing and
+source tools hosted on GitHub with over 100 stars (one with over 700
+stars). His expertise in fuzzing and
 practical testing is widely known, and in 2021 he was hired to perform an audit
 and contribute enhancements to the fuzz testing for the primary reference
 implementation for the Bitcoin blockchain, a critical system with more than 71
@@ -406,7 +407,7 @@ In ensemble fuzzing, in addition to some deprecated projects, or ones of
 limited applicability, there is the PASTIS framework~\cite{pastis}.  PASTIS was used to place first, tied 
 with {\tt afltrusttrust} in the bug-detection category of the 2023 SBFT fuzzing 
 competition~\cite{toolcomp}.  However, PASTIS at present only supports
-AFLPlusPlus, Honggfuzz, 
+AFL++, Honggfuzz, 
 and the symbolic execution tool TritonDSE.  Infrastructure to add more fuzzers, 
 however, is present.  More importantly, PASTIS uses an extremely simple 
 strategy:  it shares all seeds detected with all fuzzers and symbolic execution 
@@ -423,7 +424,7 @@ infrastructure to perform any evaluation of the fuzzers being used in the
 ensemble, or of the whole strategy.  The SBFT contest and some recent research 
 has used FuzzBench, a service provided by Google~\cite{metzman2021fuzzbench}.  However, FuzzBench is 
 somewhat notoriously difficult to use and often produces failures, even for 
-``core'' fuzzers such as AFLPlusPlus, on some benchmarks, that prove difficult 
+``core'' fuzzers such as AFL++, on some benchmarks, that prove difficult 
 to diagnose or debug.  It is at best highly unclear how much support Google 
 plans to devote to FuzzBench in the future.  FuzzBench is also deeply
 tied to Google cloud infrastructure, which means that practical use of
@@ -465,13 +466,6 @@ target completely unusable, by always triggering a crash of the target.
 
 \subsection{Tools, resources, and datasets}
 
-\clg{FIXME: in general, this subsection is described in the call as ``Tools, resources, and 
-datasets: describe ancillary resources to be developed and integrated into the infrastructure 
-system;''. I therefore think that my placing all non-thrust 1 content into it is almost certainly
-wrong.  Some maybe should go in ``fundamental infrastructure'', other parts in ``User services.''}
-\clg{FIXME: This needs to include: ``Medium proposals should indicate items that 
-will be developed by the initial award, along with a vision for possible tools that 
-might be appropriate for future enhancements;" }
 
 \subsubsection{Expressive Source and Binary-Level Transformations to 
 Enable Meta-Fuzzing}
