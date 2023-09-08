@@ -54,11 +54,11 @@ most aspects of fuzzing other than the core innovation.
 %
 Moreover, fuzzing advances only appear in new fuzzers 
 if later fuzzer developers adopt them as standard practice. When a 
-fuzzing advance is not so adopted, it can
+fuzzing advance is not adopted, it can
 essentially end up abandoned as part of an outdated fuzzer.   
 
 There have been some attempts to overcome this problem. For example, 
-FuzzFactory~\cite{fuzzfactory} is a meta-fork of AFL which enables researchers 
+FuzzFactory~\cite{fuzzfactory} is a meta-fork \jdh{what is a meta-fork? reword} of AFL which enables researchers 
 to instantiate and compose fuzzers with custom feedback functions by only 
 instrumenting the target program. Another prominent example is AFLPlusPlus~\cite{ref-fixme}, a 
 version of AFL incorporating many academic and industrial fuzzing advances, 
@@ -114,7 +114,7 @@ existed.
 While this particular technique, for efficiency reasons, is likely best 
 implemented inside a fuzzer's instrumentation pass, other meta-fuzzing 
 techniques are truly universal.  For example, in recent work, PIs Groce and Le Goues 
-proposed fuzzing based on program mutants \cite{}, which modifies a fuzzing 
+proposed fuzzing based on program mutants~\cite{fixme}, which modifies a fuzzing 
 target in a large variety of ways.  Results show that this approach, by 
 allowing a fuzzer to explore program branches in non-chronological order, can 
 improve the performance of even state-of-the-art fuzzers such as AFLPlusPlus, 
