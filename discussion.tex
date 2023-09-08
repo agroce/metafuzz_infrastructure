@@ -514,17 +514,6 @@ behavior, to be translated into a static coverage construct in code.
 %story.  So, question for UVA: how best to configure or express a system of
 %binary-level transformations for this purpose?}
 
-\cut{
-\clg{FIXME: To implement and express binary transforms, we will.....?}
-In this context, it's especially critical that binary transformations identify
-and avoid changing fuzzer-introduced 
-instrumentation code.  This, as with custom mutators,\clg{Alex: use before
-defined, I think, since that's the next section?} will require 
-in-depth examination of the internals of popular fuzzers.\clg{Alex: is there a
-way to make this sound robust to introduction of new/future fuzzers?}  We also hope to 
-propose standards for tools in future to ``watermark'' fuzzer instrumentation 
-that should not be changed by meta-fuzzing transforms.
-}
 \input{binary-xform}
 
 This work will be divided into two sub-thrusts, one for source-level and one 
@@ -537,7 +526,19 @@ level.
 
 This thrust is concerned with making it possible to write custom mutators for 
 multiple fuzzers in a single format, with a wrapper (or source transform) 
-specializing this to individual fuzzers.
+specializing this to individual fuzzers.  This is not as simple as it
+seems; the interface for custom mutators in libFuzzer and Centipede is
+relatively simple, a transformation of a byte buffer; in contrast,
+AFL++ supports a complex API using standalone libraries for custom
+mutators, requiring substantial effort on the part of implementors at
+the gain of additional functionality.  A workable solution for fuzzing
+advances that can be represented as mutators (which might even extend
+to methods such as Eclipser's approximation of symbolic execution)
+needs to accomodate developers who only need a ``libFuzzer'' style
+mutator, and automatically supply AFL++ with derived versions for
+other calls, as well as those wishing to define the full AFL++ API but
+derive a libFuzzer mutator. For the former, automatically applying
+AFL++ {\tt afl\_realloc} calls when needed is also critical.
 
 As a first task in this thrust, we propose to re-implement the compiler-fuzzing 
 tool developed by PIs Groce and Le Goues as a custom mutator.  By focusing on a 
@@ -620,14 +621,12 @@ on eliciting guidance for capability design to support long-term research needs,
 ensuring relevance to the broader community.  In the second meeting, we will
 present intermediate implementation and design, to elicit early expert feedback
 and inform early revisions.  In the final meeting, we will focus on concretizing
-longer term open problems to be supported by future community or funded efforts. 
-
-\clg{I mention the letters of collaboration below. Note that they CANNOT be
-identified as potential community Board members. Is this an OK spot, or elsewhere?}
+longer term open problems to be supported by future community or
+funded efforts.
 
 \paragraph{Workshops.}  We have budgeted and plan for two workshops to
 facilitate community engagement.  The first, in year 1 of the project, will be
-small and focused, and likely invitation-only. The goal of the first workshop is
+smaller and more focused, and likely invitation-only. The goal of the first workshop is
 to ideate with community stakeholders, specifically focusing on requirements
 elicitation and overall framework design, ensuring the needs of the community
 are met.  John Regehr (University of Utah) and Marcel Boehme (Max Planck
@@ -640,14 +639,12 @@ framework to the broader community, elicit feedback, and educate the community
 of the framework and its capabilities.  This second workshop will be co-located
 at a major conference in Software Engineering or Security, depending on timing
 and location, to ensure exposure to a broad audience of stakeholders in the
-relevant research communities. \clg{Dumb question, what are the best
-Fuzzing-specific workshops to name-check here?}
+relevant research communities. 
 
 \paragraph{Evaluation and Improvement.} Our engagement with the Community
 Advisory Board and the community via the planned workshops will provide one set
 of avenues for eliciting feedback about the framework to inform ongoing
-iteration.  \clg{TODO: more here, incorporating a reference to the section that
-Anh is writing about metrics?}  The provision of cloud credits to the community
+iteration. The provision of cloud credits to the community
 to use the framework will both build the community and enable means to elicit
 and quickly iterate on community feedback over the course of project
 development. 
@@ -672,21 +669,26 @@ program.
 
 \subsection{Community outreach}
 
-From the call: ``describe plans for ongoing outreach to develop a diverse user
-community led by the Community Outreach Director (required for Grand proposals)
-and the outreach team:''
 
-\clg{The purpose of this subsection is a bit confusing --- the part I'm puzzled by
-is that only Grand proposals need a director, but this subsection seems required for all proposals.  That said,
-I don't understand why this subsection is required, or required to be different from the community 
-engagement subsection, for non-Grand proposals.}
 
 \section{Enabled Research Opportunities and Projects}
 
-\anh{From the call, must include: ``Compelling new CISE research opportunities enabled by the proposed infrastructure, including a description of the steps taken to identify the research opportunities enabled by the infrastructure, as well as evidence that a diverse community of users plan to use the capabilities provided;
-Examples of focused research projects or use cases that the infrastructure will enable, beyond the research of the PIs and co-PIs (note that the novelty and innovative aspects of the research must be evident, along with clear evidence that the proposed infrastructure is essential to moving CISE research frontiers forward);
-Description of the CISE research community and sub-disciplines that will use and benefit from the infrastructure; evidence that there is community support for the infrastructure, such as preliminary community activities and/or plans for its use;''
-}
+Based on our examination of past fuzzing research that either is
+clearly meta-fuzzing (all ensemble methods) or could (and should)
+have been implemented as a meta-fuzzing method, we expect a
+considerable fragment of future fuzzing research to 1) make
+use of our infrasructure to make implementation both much easier and
+more general and 2) to evaluate fuzzing research more effectively.
+Offering a solution to all fuzzing researchers to perform
+high-quality~\cite{HicksFuzzing} evaluations in any suitable
+environment, from local machine to any cloud platform, should increase
+the production of all fuzzing research and development, even when
+meta-fuzzing is not an appropriate paradigm.  Given that fuzzing is
+one of the most active areas of research in computer science (note
+that the 2022 International Conference on Software Engineering, which
+covers a very broad array of SE topics, had more than 20 papers
+specifically on fuzzing), the impact on research productivity should
+be large.
 
 \section{Project Management Plan}
 
