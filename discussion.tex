@@ -685,6 +685,54 @@ Description of the CISE research community and sub-disciplines that will use and
 %the new or enhance the existing research infrastructure.
 \label{sec:plan}
 
+
+The outline of the chart is:
+
+Let's do two charts.
+
+First, a thrust table, which I am now writing:
+
+
+\begin{table}
+  \begin{tabular}{|l|}
+    \hline
+    Thrust 1: Fundamental Infrastructure: Ensemble Fuzzing and
+    Fuzzer Evaluation \\ Lead: UVA; Secondary: NAU (User / Ensemble
+    Strategy DSL)\\
+    \hline
+    Thrust 2: Tools and Resources: Source and Binary Transformations \\ Lead: CMU (Le
+    Goues); Secondary: NAU and UVA (Binary Transformations)\\
+    \hline
+    Thrust 3: Tools and Resources: Universalized Custom Mutators \\ Lead: NAU\\
+    \hline
+    Thrust 4: Tools and Resources: Domain-Specific Fuzzers
+    (Cross-Cutting) \\ Lead: CMU (Padhye) \\
+    \hline
+    
+  \end{tabular}
+  \caption{\label {tab:thrusts} Project Thrusts and Core Responsibilties}
+\end{table}
+
+Table~\ref{tab:thrusts} shows a broad picture of the structuring of
+responsibility for the project.  A key feature of each thrust is early
+development of \emph{paradigmatic problems}, relatively simple but
+non-trivial exemplars of meta-fuzzing methods (simplified from the
+existing work on the topic) that can motivate tool and infrastructure design.
+                        
+  Plan should have a thign for each thrust.
+
+  Year 1 part 1 should have ``requirement solicitation (including
+  outreach) and design, construction of paradigmatic problems'' for all
+  thrusts, but thrust 1 should halfway say ``Prototype
+  implementation''
+
+  Year 2 everyone should be on Prototype Implementation, Design
+  Revision or the like
+
+  Year 3 should be Feedback from Users, Documentation, Final Release
+  of Tools
+
+
 \clg{ALEX: if you draw me a bad hand-drawn gantt chart I can turn it into grotesque but visually-appealing latex.}
 Table~\ref{tab:plan} presents the high-level organization and timeline for the 
 proposed
@@ -698,11 +746,28 @@ infrastructure construction during summer when students are
 not busy with courses and can focus on
 building (and scaling) solid tooling.  The major thrusts can all operate in 
 parallel, though fuzzer benchmarking is useful for evaluating experimental 
-implementations using the tools developed.
+implementations using the tools developed.  PIs will coordinate with
+each other via
+weekly zoom meeetings, as well as with the larger CIRC community via the
+CIRC Virtual Organization and the CIRC PI meetings.  The PIs have
+already established a Slack channel for project discussions, as well.
+PI Groce will coordinate project usage of Cloudbank resources.
+
+Collaboration on the fundamental infrastructure and tools will in
+essence also follow the model of the provision of these products to
+the community: no ongoing services with operating expenses will be
+involved, rather all infrastructure is available as software hosted on
+GitHub.  The project expects to use issues, PRs and, best practice
+development (e.g., early investment in CI)
+for internal efforts, as well as to engage with the community
 
 
-This project will fund one graduate student per PI each year
-(four total).  We will
+This project will fund one graduate student per PI each year for all
+PIs but PI Groce, who will fund two students due to his overall
+direction responsibilites and roles in multiple thrusts, and PI
+Groce's students will serve as experimental users of early prototypes
+of tools as well
+(five total).  We will
 involve starting graduate students, each for 1-2 years: once they
 improve the infrastructure and learn how to use it for their research,
 they will move on to research projects, while new
@@ -751,12 +816,11 @@ If the project was recently awarded and therefore no new results exist, describe
 }
 
 
-\paragraph{PI Groce:}
-The most relevant prior NSF support for PI Groce is CCF-
-CCF-2129446, ``Feedback-Driven Mutation Testing for Any Language,'' with a 
+\paragraph{PI Groce and PI Le Goues:}
+The most relevant prior NSF support for PI Groce and PI Le Goues is CCF-
+CCF-2129446/CCF-2129388, ``Feedback-Driven Mutation Testing for Any Language,'' with a 
 total budget of \$500,000 from 9/2021 until 8/2024,
-a collaborative proposal with PI Le Goues of Carnegie Mellon
-University. {\bf Intellectual Merit:} This project
+a collaborative proposal between the two PIs. {\bf Intellectual Merit:} This project
 focuses on a synergistic approach for allowing developers
 to improve testing by using mutation testing to identify
 weaknesses in tests and to generate tests.  In its second
@@ -767,6 +831,7 @@ publications~\todo{\cite{cc2022,seip2022,fuzzing22,fse23,issre23}}. {\bf
 resulted in the reporting and correction of multiple bugs in software
 systems, including widely used production compilers.
 
+\cut{
 \clg{Todo: probably merge these two.}
 \paragraph{PI Le Goues:}
 The most relevant prior NSF support for PI Le Goues is CCF-
@@ -782,6 +847,7 @@ publications~\todo{\cite{cc2022,seip2022,fuzzing22,fse23,issre23} really the sam
   Impact:}  Work from this project has already
 resulted in the reporting and correction of multiple bugs in software
 systems, including widely used production compilers.
+}
 
 \paragraph{PI Padhye:}
 
