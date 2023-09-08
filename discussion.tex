@@ -461,23 +461,65 @@ might be appropriate for future enhancements;" }
 \subsubsection{Expressive Source and Binary-Level Transformations to 
 Enable Meta-Fuzzing}
 
-The key task in this thrust is twofold.  For both source and binary transforms, 
-identifying and implementing (likely in the form of a DSL) the most important 
-transforms common to meta-fuzzing algorithm is important.  Forcing users to 
-construct complex ways to express that some dynamic data's value or behavior 
-should be made visible as a static coverage construct in code for each such 
-transform, for example, is both likely to frustrate exploration of such 
-techniques and result in buggy implementations.  Secondarily, for binary 
-transforms, an effort to identify and avoid changing fuzzer-introduced 
-instrumentation code is critical.  This, as with custom mutator, wil require 
-in-depth examination of the internals of popular fuzzers.  We also hope to 
+The key problem in enabling target transformation to enable meta-fuzzing is to
+provide a flexible, expressive mechanism for describing a wide range of useful
+transformations, at both the source and binary level.  It is important that this
+mechanism be natural and accessible to users; forcing users to 
+construct complex ways to express each transform will frustrate exploration of such 
+techniques and result in buggy implementations. 
+
+For source-level transformations, we will incorporate (and lightly extend) the
+Comby tool and language~\cite{rvt-ppc,comby-github} into the metafuzzing
+framework.  Comby is a tool and language for declarative syntactic program
+transformation that applies to multiple languages. Comby is both more usable and
+more powerful in terms of the types of transformations that it can express than
+regular expressions, while being more efficient and general than heavyweight
+language-specific approaches. The key innovation is to convert declarative
+transformation templates into parsers that directly match and transform source
+code of interest. Parser combinators~\cite{Hutton96monadicparser} define how to
+match nested structures (much like traditional AST visitor traversals) but
+without the need to define or build an intermediate AST. This is highly
+performant and largely language agnostic, and allows users to express desired
+transformations in natural syntax that is very close to the underlying source
+language. 
+
+To ease the use of Comby in this context, we will implement a set of wrapper
+macros for Comby customized to the particular task of converting desired
+properties into static, coverage-visible code constructs.  We will additionally
+produce a library of existing transformations that are useful or common in prior
+meta-fuzzing approaches, both to amortize uptake and demonstrate the use of the
+approach.  
+
+As part of this effort, we will identify important transforms common to current
+and upcoming meta-fuzzing algorithms.  We will use these existing desired
+transforms to inform our design of the Comby templates that enable their
+application. These templates will effectively serve as a DSL that enables users
+to concisely describe desired predicates over some dynamic data value or
+behavior, to be translated into a static coverage construct in code. 
+
+\clg{Question: OK, in the above I basically said we'll make a bunch of Comby macros that can
+express many different types of transformations, including extant
+transformations and potentially new ones.  I thought this seemed less
+complicated than saying we'll make a NEW DSL.  But, if we want to express all
+transforms, binary or source, in a COMMON DSL, that's a slightly different
+story.  So, question for UVA: how best to configure or express a system of
+binary-level transformations for this purpose?}
+
+\clg{FIXME: To implement and express binary transforms, we will.....?}
+In this context, it's especially critical that binary transformations identify
+and avoid changing fuzzer-introduced 
+instrumentation code.  This, as with custom mutators,\clg{Alex: use before
+defined, I think, since that's the next section?} will require 
+in-depth examination of the internals of popular fuzzers.\clg{Alex: is there a
+way to make this sound robust to introduction of new/future fuzzers?}  We also hope to 
 propose standards for tools in future to ``watermark'' fuzzer instrumentation 
 that should not be changed by meta-fuzzing transforms.
 
-This thrust will be divided into two sub-thrusts, one for source-level and one 
+This work will be divided into two sub-thrusts, one for source-level and one 
 for binary-level transformations, with PI Groce coordinating work to determine 
 if common DSL elements exist, i.e., transforms that can be applied at either 
 level.
+
 
 \subsubsection{Universalized Custom Mutators}
 
@@ -725,6 +767,7 @@ publications~\todo{\cite{cc2022,seip2022,fuzzing22,fse23,issre23}}. {\bf
 resulted in the reporting and correction of multiple bugs in software
 systems, including widely used production compilers.
 
+\clg{Todo: probably merge these two.}
 \paragraph{PI Le Goues:}
 The most relevant prior NSF support for PI Le Goues is CCF-
 CCF-2129388, ``Feedback-Driven Mutation Testing for Any Language,'' with a 
