@@ -260,7 +260,18 @@ a set of functions operating on fuzzer inputs.  The underlying concept
 of this proposal is that researchers need tool support to enable them
 effectively develop and evaluate functions for meta-fuzzing.
 
-\adg{Do we like this?   Jason can you draw a diagram if we do?}
+%\adg{Do we like this?   Jason can you draw a diagram if we do?}
+\begin{figure}
+\centering
+% fbox to help visualizing trimming
+%\fbox{
+% Answer: [trim={left bottom right top},clip]
+\includegraphics[width=0.8\textwidth,trim={0.3in 3.0in 1.2in 1.4in},clip]{figures/fuzzer-arch.pdf}
+%}
+\caption{A view of a generic meta-fuzzer.}
+\label{fig:meta}
+\end{figure}
+
 
 \subsection{Overview of Proposed Work}
 
