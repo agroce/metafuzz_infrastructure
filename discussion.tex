@@ -239,6 +239,26 @@ evaluations can also be expected to benefit from a systematic,
 multi-measurement framework for running a set of fuzzers on multiple
 benchmarks.
 
+\begin{figure}
+% placeholder 
+%\vbox to 7in {\vfil 
+%\hbox to 7in{a figure to be drawn later}%
+%\vfil 
+%}
+
+
+% fbox to help visualizing trimming 
+%\fbox{
+% Answer: [trim={left bottom right top},clip]
+\includegraphics[width=\textwidth]{bigpic.png}
+%}
+
+\caption{An overview of meta-fuzzing functionalities and how they 
+  interact with a targeted fuzzer.}
+\label{fig:meta}
+\end{figure}
+
+
 \paragraph{The Big Picture.}  Meta-fuzzing is perhaps best understood
 as follows: a modern fuzzer is a tool that, fundamentally, takes in
 two kinds of input, and produces tests (new inputs) as outputs.  The
@@ -260,7 +280,8 @@ a set of functions operating on fuzzer inputs.  The underlying concept
 of this proposal is that researchers need tool support to enable them
 effectively develop and evaluate functions for meta-fuzzing.
 
-\adg{Do we like this?   Jason can you draw a diagram if we do?}
+
+
 
 \subsection{Overview of Proposed Work}
 
