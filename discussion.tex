@@ -316,7 +316,7 @@ of fuzzers.
 Third, the proposed system will included facilities to allow researchers and developers to 
 write custom mutators for fuzzers in a fuzzer-independent way, with support for 
 automatically generating wrappers to run these ``universalized'' mutators 
-inside the large set of fuzzers (including AFLPlusPlus and libFuzzer) that 
+inside the fuzzers (including AFLPlusPlus and libFuzzer) that 
 support custom mutators.
 
 Finally, the proposed system will allow meta-fuzzing of domain-specific applications
@@ -395,7 +395,7 @@ building software artifacts and performing empirical studies.
 To our knowledge, \emph{no} infrastructure exists for performing 
 \emph{fuzzing-specific} source or binary transformations of programs, or writing 
 custom mutators that can be used by more than one fuzzer.  While
-fuzzers can share corpuses, and their are commonalities to
+fuzzers can share corpuses, and there are commonalities to
 instrumentation formats across the AFL family, there is to our
 knowledge no tool support for exploiting these commonalities (e.g.,
 adding new instrumentations based on novel source patterns).  These aspects of meta-fuzzing fit into the picture of a promising 
@@ -420,10 +420,10 @@ ensemble fuzzing.
 
 Because PASTIS performs no resource allocation, it also relies on other 
 infrastructure to perform any evaluation of the fuzzers being used in the 
-ensemble, or of the whole strategy.  The SBST contest and some recent research 
-has used FuzzBench, a service provided by Google.  However, FuzzBench is 
+ensemble, or of the whole strategy.  The SBFT contest and some recent research 
+has used FuzzBench, a service provided by Google~\cite{metzman2021fuzzbench}.  However, FuzzBench is 
 somewhat notoriously difficult to use and often produces failures, even for 
-``core'' fuzzers such as aflplusplus, on some benchmarks, that prove difficult 
+``core'' fuzzers such as AFLPlusPlus, on some benchmarks, that prove difficult 
 to diagnose or debug.  It is at best highly unclear how much support Google 
 plans to devote to FuzzBench in the future.  FuzzBench is also deeply
 tied to Google cloud infrastructure, which means that practical use of
@@ -432,9 +432,9 @@ cloud approach is better for a particular user.
 
 The connection between fuzzer 
 benchmarking and evaluation and ensemble fuzzing is, we note, clear enough that 
-an (abandoned) attempt was made by the FuzzBench team to transform FuzzBench 
-into an ensemble fuzzing tool (\url{}).   Other fuzzing benchmarks, such as 
-MAGMA, are often tied to a specific set of benchmarks, with manual effort to 
+an (abandoned) attempt was made to transform FuzzBench 
+into a rudimentary ensemble fuzzing tool~\cite{fuzzbenchensemble}.   Other fuzzing benchmarks, such as 
+MAGMA~\cite{MAGMA}, are often tied to a specific set of benchmarks, with manual effort to 
 make them fit into the framework, and so are not obviously suitable as a basis 
 for ensemble fuzzing (and general evaluation purposes).  PASTIS, FuzzBench, and 
 MAGMA all may provide useful insights into possible approaches to the core 
