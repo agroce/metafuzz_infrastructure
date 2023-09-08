@@ -24,6 +24,68 @@ location = {Seoul, South Korea},
 series = {ICSE '20}
 }
 
+@article{mcminn2004search,
+  title={Search-based software test data generation: a survey},
+  author={McMinn, Phil},
+  journal={Software testing, Verification and reliability},
+  volume={14},
+  number={2},
+  pages={105--156},
+  year={2004},
+  publisher={Wiley Online Library}
+}
+
+@inproceedings{DeepState,
+  author = "Peter Goodman and Alex Groce",
+  year = 2018,
+  title = "{DeepState}: Symbolic Unit Testing for {C} and {C++}",
+  booktitle = "NDSS Workshop on Binary Analysis Research"
+  }
+
+@inproceedings{libFuzzer,
+  title={Continuous Fuzzing with libFuzzer and AddressSanitizer},
+  author={Serebryany, Kostya},
+  booktitle={Cybersecurity, Development (SecDev), IEEE},
+  pages={157--157},
+  year={2016},
+  organization={IEEE}
+}
+
+
+@inproceedings{Steelix,
+  title={Steelix: program-state based binary fuzzing},
+  author={Li, Yuekang and Chen, Bihuan and Chandramohan, Mahinthan and Lin, Shang-Wei and Liu, Yang and Tiu, Alwen},
+  booktitle={Proceedings of the 2017 11th Joint Meeting on Foundations of Software Engineering},
+  pages={627--637},
+  year={2017},
+  organization={ACM}
+}
+
+@inproceedings {AFLplusplus,
+author = {Andrea Fioraldi and Dominik Maier and Heiko Ei{\ss}feldt and Marc Heuse},
+title = {{AFL++}: Combining Incremental Steps of Fuzzing Research},
+booktitle = {14th {USENIX} Workshop on Offensive Technologies ({WOOT} 20)},
+year = {2020},
+publisher = {{USENIX} Association},
+month = aug,
+}
+
+@misc{aflfuzz,
+  title = "american fuzzy lop (2.35b)",
+  author = "Michal Zalewski",
+  howpublished = "\url{http://lcamtuf.coredump.cx/afl/}",
+  year = 2014,
+  month = "November"
+}
+
+
+@inproceedings{Eclipser,
+ author = {Choi, Jaeseung and Jang, Joonun and Han, Choongwoo and Cha, Sang Kil},
+ title = {Grey-box Concolic Testing on Binary Code},
+ booktitle = {International Conference on Software Engineering},
+ year = {2019},
+ pages = {736--747}
+} 
 
 @inproceedings{seip2022,
   title = "Looking for Lacunae in Bitcoin Core’s Fuzzing Efforts",
@@ -410,6 +472,30 @@ keywords = {Automated test generation, static code metrics, testing heuristics}
   year={2017}
 }
 
+@article{levine2017rotting,
+  title={Rotting bandits},
+  author={Levine, Nir and Crammer, Koby and Mannor, Shie},
+  journal={Advances in neural information processing systems},
+  volume={30},
+  year={2017}
+}
+
+@misc{toolcomp,
+      title={SBFT Tool Competition 2023 -- Fuzzing Track}, 
+      author={Dongge Liu and Jonathan Metzman and Marcel Böhme and Oliver Chang and Abhishek Arya},
+      year={2023},
+      eprint={2304.10070},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE}
+}
+
+@misc{pastis,
+  howpublished="\url{https://github.com/quarkslab/pastis}",
+  title="PASTIS Ensemble Fuzzing",
+  year=2023,
+  author="Quarkslab"
+  }
+
 @misc{oyente-code,
   title={Oyente: an analysis tool for smart contracts},
   author={Melon Project},
@@ -417,6 +503,26 @@ keywords = {Automated test generation, static code metrics, testing heuristics}
   year={2017}
 }
 
+@article{FuzzerHicks,
+  title={Evaluating Fuzz Testing},
+  author={Klees, George and Ruef, Andrew and Cooper, Benji and Wei, Shiyi and Hicks, Michael},
+  journal={arXiv preprint arXiv:1808.09700},
+  year={2018}
+}
+
+@misc{fuzztest,
+  title="FuzzTest",
+  author="Google",
+  howpublished="\url{https://github.com/google/fuzztest}"
+  }
+
+@misc{ensemble,
+  author = "Alan Cao",
+  title = "{DeepState} Now Supports Ensemble Fuzzing",
+  howpublished = {\url{https://blog.trailofbits.com/2019/09/03/deepstate-now-supports-ensemble-fuzzing/}},
+  month = "August",
+  year = 2019
+  }
 
 @misc{etherscan,
   title={Verified contracts synced from Etherscan},
@@ -425,12 +531,6 @@ keywords = {Automated test generation, static code metrics, testing heuristics}
   year={2018}
 }
 
-@misc{aflfuzz,
-  title = "american fuzzy lop (2.35b)",
-  author = "Michal Zalewski",
-  howpublished = "\url{http://lcamtuf.coredump.cx/afl/}",
-  note = "Accessed December 20, 2016"
-}
 
 @inproceedings{ClaessenH00,
 author    = {Koen Claessen and
@@ -646,6 +746,36 @@ pages = "19--28",
   booktitle={NDSS Workshop on Binary Analysis Research},
   year={2018}
 }
+
+
+@inproceedings{UsesDiversity,
+  author       = {Alex Groce},
+  editor       = {Wolfgang De Meuter and
+                  Elisa L. A. Baniassad},
+  title        = {Let a thousand flowers bloom: on the uses of diversity in software
+                  testing},
+  booktitle    = {Onward! 2021: Proceedings of the 2021 {ACM} {SIGPLAN} International
+                  Symposium on New Ideas, New Paradigms, and Reflections on Programming
+                  and Software, Virtual Event / Chicago, IL, USA, October 20-22, 2021},
+  pages        = {136--144},
+  publisher    = {{ACM}},
+  year         = {2021},
+  url          = {https://doi.org/10.1145/3486607.3486772},
+  doi          = {10.1145/3486607.3486772},
+  timestamp    = {Thu, 04 Nov 2021 16:14:49 +0100},
+  biburl       = {https://dblp.org/rec/conf/oopsla/Groce21.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@INPROCEEDINGS{tfuzz,
+  author={Peng, Hui and Shoshitaishvili, Yan and Payer, Mathias},
+  booktitle={2018 IEEE Symposium on Security and Privacy (SP)}, 
+  title={{T-Fuzz}: Fuzzing by Program Transformation}, 
+  year={2018},
+  volume={},
+  number={},
+  pages={697-710},
+  doi={10.1109/SP.2018.00056}}
 
 @inproceedings{jiang:ase:2018,
   author = {Jiang, Bo and Liu, Ye and Chan, W. K.},

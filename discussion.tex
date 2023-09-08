@@ -45,28 +45,35 @@ However, in many cases,
 the underlying novelty is a relatively isolated concept that ends up being 
 embedded in some cases in a more mature but otherwise technically
 less-than-sophisticated fuzzer.  For example, 
-the first release of the highly successful Eclipser fuzzer~\cite{ref-fixme} was very successful, 
+the first release of the highly successful Eclipser fuzzer~\cite{Eclipser} was very successful, 
 due to the power of the lightweight semi-symbolic method used to modify 
 inputs in intelligent ways.  However, the research team acknowledged that their 
 implementation of more mundane aspects of fuzzing was somewhat \emph{ad hoc}.  The 
-second version of Eclipser moved to using the widely used AFL fuzzer~\cite{ref-fixme} to support 
+second version of Eclipser moved to using the widely used AFL fuzzer~\cite{aflfuzz} to support 
 most aspects of fuzzing other than the core innovation.  
 %
 Moreover, fuzzing advances only appear in new fuzzers 
 if later fuzzer developers adopt them as standard practice. When a 
 fuzzing advance is not adopted, it can
-essentially end up abandoned as part of an outdated fuzzer.   
+essentially end up abandoned as part of an outdated fuzzer.   It is
+not obvious that researchers \emph{want} to implement new ideas as
+(potentially abandoned) forks of existing fuzzers, or as novel,
+simple, fuzzers.  Instead, they do not know of any other option,
+realistically.  Moreover, researchers are likely aware that fuzzer
+evaluation, already a difficult task, is easiest in the context of
+comparing a single new fuzzer to a set of existing fuzzers.
 
 There have been some attempts to overcome this problem. For example, 
-FuzzFactory~\cite{fuzzfactory} is a meta-fork \jdh{what is a meta-fork? reword} of AFL which enables researchers 
+FuzzFactory~\cite{fuzzfactory} is a generalized fork of AFL which enables researchers 
 to instantiate and compose fuzzers with custom feedback functions by only 
-instrumenting the target program. Another prominent example is AFLPlusPlus~\cite{ref-fixme}, a 
+instrumenting the target program. Another prominent example is AFLPlusPlus~\cite{AFLplusplus}, a 
 version of AFL incorporating many academic and industrial fuzzing advances, 
 into a notably effective fuzzer.  However, there remain many individual 
 programs on which some other fuzzer outperforms AFLPlusPlus. Indeed, the use and
 composition of 
 many different, even sub-optimal, fuzzers is likely required for truly 
-effective fuzzing.
+effective fuzzing~\cite{enfuzz,UsesDiversity,ensemble,pastis}, a key
+motivation for the infrastructure this project proposes to build.
 
 \paragraph{Meta-fuzzing.}
 These previous efforts generally represent examples of 
@@ -79,12 +86,12 @@ program takes a given branch or not at the binary level.  Decomposition breaks
 down CMP instructions into individual bit-level comparisons (or some other 
 appropriate structuring) such that, beyond whether or not a branch was taken,
 how \emph{close} the branch is to being taken is also visible to the fuzzer  (analogous to a branch 
-distance in search-based testing~\cite{ref-fixme}).  There exist various alternative versions of 
-the basic idea, in e.g., Steelix~\cite{ref-fixme} and
-libFuzzer~\cite{ref-fixme}, which are usually implemented 
+distance in search-based testing~\cite{mcminn2004search}).  There exist various alternative versions of 
+the basic idea, in e.g., Steelix~\cite{Steelix} and
+libFuzzer~\cite{libFuzzer}, which are usually implemented 
 as modifications to the fuzzer's custom instrumentation approach.  However, the basic 
 idea can also be implemented by transforming the source code of a program to 
-expose the structure of a comparison.  The DeepState~\cite{ref-fixme} property-driven fuzzing 
+expose the structure of a comparison.  The DeepState~\cite{DeepState} property-driven fuzzing 
 tool does this for its own assertion implementations, as does FuzzFactory in 
 its \texttt{CMP} domain.  Such a transform might take, e.g.:
 
@@ -114,19 +121,21 @@ existed.
 While this particular technique, for efficiency reasons, is likely best 
 implemented inside a fuzzer's instrumentation pass, other meta-fuzzing 
 techniques are truly universal.  For example, in recent work, PIs Groce and Le Goues 
-proposed fuzzing based on program mutants~\cite{fixme}, which modifies a fuzzing 
+proposed fuzzing based on program mutants~\cite{fuzzing22}, which modifies a fuzzing 
 target in a large variety of ways.  Results show that this approach, by 
 allowing a fuzzer to explore program branches in non-chronological order, can 
 improve the performance of even state-of-the-art fuzzers such as AFLPlusPlus, 
-as benchmarked by Google's FuzzBench.
+as benchmarked by Google's FuzzBench.  The particular approach taken
+by this work was inspired by T-Fuzz~\cite{tfuzz}, which in some sense
+clearly was \emph{conceived} as a meta-fuzzing approach, but implemented as a
+fairly complex standalone
+tool that as a result of this choice is no longer maintained or usable.  A key
+goal of this project is to avoid \emph{lost work} such as is
+represented by T-Fuzz, by providing tooling offering fuzzer developers
+tools for implementation and evaluation that are more powerful and
+even more convenient than the unfortunate baseline of ``forking and hacking AFL and benchmarking
+the resulting tool.''
 
-\clg{TODO: in general, I think this intro is citing us a bit too much/exclusively --- if other
-people aren't doing relevant work, why do we need to build research
-infrastructure to support them? I'm not
-deep enough in the fuzz literature to fix this.  So I'll add notes where I feel
-like reference to work by others would help, and someone who knows better can
-either kill those todos, or add references and then delete the todos.} 
-\clg{This paragraph is one example.}
 A core tenet of meta-fuzzing is that the fuzzing tool need not be aware of what 
 the program transformation is trying to achieve. For example, in the 
 FuzzFactory framework~\cite{fuzzfactory}, co-PI Padhye demonstrated that new 
@@ -140,8 +149,7 @@ FuzzFactory domains (such as breaking down CMP operations and tracking
 \texttt{malloc}'d memory), can produce results that are better than applying 
 each transformation individually.
 
-\clg{Anyone besides chen2019 worth citing here?}
-\paragraph{Ensemble Fuzzing.}   Ensemble fuzzing \cite{chen2019enfuzz} is an 
+\paragraph{Ensemble Fuzzing.}   Ensemble fuzzing \cite{enfuzz,ensemble,pastis} is an 
 approach that recognizes the need for
 diverse methods for test generation, at least in the context of
 fuzzing.   Inspired by ensemble methods in machine learning 
@@ -157,10 +165,8 @@ overall perform poorly for some targets, and when the worst fuzzers perform
 well.  The future of fuzzing likely lies in ensemble methods, but the 
 implementations proposed thus far tend to 1) not be supported long, and soon 
 fail to work at all 2) and/or are limited to very simple naive strategies for 
-allocating resources and sharing seeds.\clg{examples?}  This
-project\clg{FIXME/note, possibly for others: it's strange that this is the first
-time we've introduced the idea of ``this project'', or its goals.  I'm not sure
-how to fix this. } aims to make it easy to 
+allocating resources and sharing seeds. This
+project aims to make it easy to 
 experiment with \emph{sophisticated} ensemble fuzzing approaches, without 
 worrying about the infrastructure of executing fuzzers or extracting feedback 
 to use in resource allocation.
@@ -181,22 +187,23 @@ mutants allows fuzzers to detect ways to cover branches that, without
 transformation, would not have been executed yet, improving fuzzer 
 effectiveness dramatically in some cases.
 
-\paragraph{Universalized Custom Mutators.}  One feature supported by several 
-widely used fuzzers\clg{which ones? References.} is the introduction of custom mutators:  user-written 
+\paragraph{Universalized Custom Mutators.}  One feature supported by
+the widely used fuzzers AFLPlusPlus and libFuzzer as well as the promising
+new fuzzer Centipede (which backs Google's FuzzTest
+project~\cite{fuzztest}) is the introduction of custom mutators:  user-written 
 additional ways to modify inputs to generate new inputs.  While changing the 
 mutation strategy of a particular fuzzer can be a highly fuzzer-specific 
 method, focusing on some unusual coverage or ``magic byte identification'' 
 element of the particular fuzzer, many custom mutators are naturally fuzzer 
 agnostic.  For example, PIs Groce and Le Goues introduced custom mutators for 
 fuzzing compilers that resulted in the detection of hundreds of subtle compiler 
-bugs \cite{cc2022}. \clg{others to cite?} These were implemented in a standalone variant of the 
+bugs \cite{cc2022}. These were unfortunately implemented in a standalone variant of the 
 original AFL fuzzer, but would be more widely used and more effective if 
-implemented as custom mutators for a variety of fuzzers.  We propose to support 
+implemented as custom mutators for libFuzzer, AFLPlusPlus, and Centipede.  We propose to support 
 research along these lines by allowing users to write a single custom mutator 
 in a generic byte-based framework, and provide wrappers to integrate such 
-mutators into all fuzzers that support custom mutators (including many of the 
-most popular and powerful fuzzers \clg{which ones?}).
-   
+mutators into all fuzzers that support custom mutators.
+
 \paragraph{Domain-Specific Meta-Fuzzing.} The above summaries introduce 
 broad classes of meta-fuzzing approaches, and we briefly introduced  
 general-purpose meta-fuzzing techniques (e.g., the use of program mutants to 
@@ -214,7 +221,7 @@ learning implementation (the standard libraries used widely to implement ML
 systems) and use the data encodings to produce \emph{source mirrors} that take 
 inputs to the ML algorithm and produce visible code coverage for a fuzzer.  One 
 aspect of our general meta-fuzzing infrastructure, discussed in more detail 
-below, isto additionally to support domain-specific fuzzing that falls outside 
+below, is to additionally to support domain-specific fuzzing that falls outside 
 the locus of ``fuzzing Linux application binaries'' previously centered in 
 fuzzing benchmarking.
 
@@ -222,7 +229,7 @@ fuzzing benchmarking.
 \paragraph{The Problem of Evaluation.} Evaluating fuzzers is, even in the 
 current common setting, where evaluation is usually of a single ``new'' fuzzer, 
 a complex problem. Many evaluations in the literature are insufficient or even 
-incorrect.  Evaluating meta-fuzzing adds a further quantitative (and to some 
+incorrect~\cite{FuzzerHicks}.  Evaluating meta-fuzzing adds a further quantitative (and to some 
 extent qualitative) element to this problem: rather than comparing a single 
 fuzzer to a set of competing fuzzers across benchmarks, evaluating meta-fuzzing 
 methods involves evaluating a \emph{set} of fuzzers $F_1 \ldots F_n$ against 
@@ -237,9 +244,23 @@ to support measurements of fuzzer effectiveness as well.  This feature of
 course has applications beyond meta-fuzzing methods; traditional fuzzer 
 evaluations can also be expected to benefit from a systematic, 
 multi-measurement framework for running a set of fuzzers on multiple
-benchmarks.
+benchmarks.  However, our central motivation is that we expect that the complexities of running
+meta-fuzzer evaluations have tended to discourage implementation of
+clearly-meta-fuzzing ideas in any form but that of a single new fuzzer
+or fuzzer fork.
 
 
+%\adg{Do we like this?   Jason can you draw a diagram if we do?}
+\begin{figure}
+\centering
+% fbox to help visualizing trimming
+%\fbox{
+% Answer: [trim={left bottom right top},clip]
+\includegraphics[width=0.8\textwidth,trim={0.3in 3.0in 1.2in 1.4in},clip]{figures/fuzzer-arch.pdf}
+%}
+\caption{A view of a generic meta-fuzzer.}
+\label{fig:meta}
+\end{figure}
 
 \paragraph{The Big Picture.}  Meta-fuzzing is perhaps best understood
 as follows: a modern fuzzer is a tool that, fundamentally, takes in
@@ -262,17 +283,6 @@ a set of functions operating on fuzzer inputs.  The underlying concept
 of this proposal is that researchers need tool support to enable them
 effectively develop and evaluate functions for meta-fuzzing.
 
-%\adg{Do we like this?   Jason can you draw a diagram if we do?}
-\begin{figure}
-\centering
-% fbox to help visualizing trimming
-%\fbox{
-% Answer: [trim={left bottom right top},clip]
-\includegraphics[width=0.8\textwidth,trim={0.3in 3.0in 1.2in 1.4in},clip]{figures/fuzzer-arch.pdf}
-%}
-\caption{A view of a generic meta-fuzzer.}
-\label{fig:meta}
-\end{figure}
 
 
 
@@ -393,10 +403,10 @@ research area with, essentially, no available tooling beyond individual
 fuzzers, outside the area of ensemble fuzzing.
 
 In ensemble fuzzing, in addition to some deprecated projects, or ones of 
-limited applicability, there is the PASTIS framework 
-(https://github.com/quarkslab/pastis).  PASTIS was used to place first, tied 
-with {\tt afltrusttrust} in the bug-detection category of the 2023 SBST fuzzing 
-competition.  However, PASTIS at present only supports aflplusplus, Honggfuzz, 
+limited applicability, there is the PASTIS framework~\cite{pastis}.  PASTIS was used to place first, tied 
+with {\tt afltrusttrust} in the bug-detection category of the 2023 SBFT fuzzing 
+competition~\cite{toolcomp}.  However, PASTIS at present only supports
+AFLPlusPlus, Honggfuzz, 
 and the symbolic execution tool TritonDSE.  Infrastructure to add more fuzzers, 
 however, is present.  More importantly, PASTIS uses an extremely simple 
 strategy:  it shares all seeds detected with all fuzzers and symbolic execution 
@@ -405,7 +415,7 @@ Given the critical problem of fuzzer saturation, in settings with limited CPU
 resources (essentially all settings, given the number of available viable 
 fuzzers and resource hunger of fuzzers), in the long run applying more 
 sophisticated methods, e.g., from multi-armed bandit optimization (and in 
-particular ``rotting bandit'' \cite{}) settings is critical for effective 
+particular ``rotting bandit'' \cite{levine2017rotting}) settings is critical for effective 
 ensemble fuzzing.
 
 Because PASTIS performs no resource allocation, it also relies on other 
@@ -446,15 +456,6 @@ transforms are to avoid modifying code that the fuzzer relies on working in a
 certain way.  In the extreme case, rather than simply producing incorrect 
 instrumentation (e.g., coverage) results, such modifications could make a 
 target completely unusable, by always triggering a crash of the target.
-\jdh{I don't understand this paragraph.  The problem with (binary- or source-) 
-instrumentation is that it has to match what the run-time component expects.  
-This changes even within variants of the same fuzzer.  
-We've had to change instrumentation styles between versions of afl++ to support 
-variable map sizes, etc.  }
-\adg{That's what I meant -- it needs to be aware of the fuzzers and
-  map size configs etc. to do this at binary level; at source,
-  presumably the instrumentation itself takes care of all that, given
-  a transform from some code/data element to a ``fake'' coverage structure}
 
 \section{Infrastructure Description}
 
