@@ -1,32 +1,46 @@
-PIs, co-PIs, and Senior Personnel, and the specific role of each person.
+\documentclass[11pt]{article}
 
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{tabularx}
+\pagenumbering{gobble}
 
-NAU
+\begin{document}
+\centerline{\noindent{\large{\textbf{Project Roles and Responsibilities}}}}
 
-PI Alex Groce
-Year 1, one month, responsibilities:  Supervise project startup, work on source-level transformations and custom mutators
-Year 2, one month, responsibilities:  Supervise project direction, lead outreach, work on source-level transformations and custom mutators
-Year 3, one month, responsibilities:  Supervise project completion and finalization, lead outreach, work on source-level transformations and custom mutators
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+Name & Role & Year &  Months & Responsibilities \\\midrule
+\multicolumn{5}{c}{\textbf{Northern Arizona University}} \\\midrule
+\multirow{3}{*}{Alex Groce} & \multirow{3}{*}{PI} & 1  & 1 & Supervise project startup, work on source-level transformations and custom mutators \\
+                            &                     & 2  & 1 & Supervise project direction, lead outreach, work on source-level transformations and custom mutators \\
+                            &                     & 3  & 1 & Supervise project completion and finalization, lead outreach, work on source-level transformations and custom mutators \\\midrule
+ \multicolumn{5}{c}{\textbf{Carnegie Mellon University}} \\\midrule
+ \multirow{3}{*}{Claire Le Goues} & \multirow{3}{*}{PI} & 1  &  0.5 & Supervise CMU team, advise student on source-level transformation for meta-fuzzing \\
+                                  &                     & 2  &  0.75 &Supervise CMU team, advise student on source-level transformation for custom mutators, workshop planning  \\
+                                  &                     & 3  &  0.75 & Supervise CMU team, advise student on domain specific fuzzing, workshop planning and execution  \\
+ \multirow{3}{*}{Rohan Padhye}    & \multirow{3}{*}{co-PI} & 1 & 0.5 & Co-advise student, workshop execution   \\
+                                  &                     & 2  &  0.5  & Co-advise student, workshop execution  \\
+                                  &                     & 3  &  0.5 &  Co-advise student, workshop execution \\\bottomrule
+% \end{tabularx}
 
+% \centerline{\noindent{{\emph{Table continues...}}}}
 
-CMU
+% \begin{tabularx}{\textwidth}{llllX}
+% \toprule
+Name & Role & Year &  Months & Responsibilities \\\midrule
+\multicolumn{5}{c}{\textbf{University of Virgninia}} \\\midrule
+\multirow{3}{*}{Jack W. Davidson}& \multirow{3}{*}{PI} & 1  & 1 & Supervise UVA team, coordinate public workshop development with development. \\
+                                 &                     & 2  & 1 &  Supervise UVA team, workshop coordination and meta-fuzzing promotion.\\
+                                 &                     & 3  & 1 &  Supervise UVA team, develop education materials for university classroom. \\
+\multirow{3}{*}{Jason D. Hiser}  & \multirow{3}{*}{\parbox{1.75cm}{Senior \\ Personnel}} & 1 & 2   &  Meta-fuzzing backend API integration and development. \\
+                                 &                     & 2  & 2 & Binary transformation for meta-fuzzing. \\
+                                 &                     & 3  & 2 & Meta-fuzzing coordination experiments at scale. \\\midrule
+\multirow{3}{*}{Anh Nguyen-Tuong}& \multirow{3}{*}{\parbox{1.75cm}{Senior \\ Personnel}} & 1 & 2  &  Workshop development \& presentations. \\
+                                 &                     & 2  & 2 & Meta-fuzzing training material development. \\
+                                 &                     & 3  & 2 &  Community support/debugging for meta-fuzzing end users. \\\bottomrule
+\end{tabularx}
 
-
-UVA
-
-PI Jack W. Davidson
-
-Year 1,  one month, Supervise UVA team, coordinate public workshop develompment with development.
-Year 2,  one month, Supervise UVA team, workshop coordination and meta-fuzzing promotion.
-Year 3,  one month, Supervise UVA team, develop meta-fuzzing education materials for university classroom.
-
-Senior Personnel Jason D. Hiser
-Year 1,  two months, Meta-fuzzing backend API integration and development.
-Year 2,  two months, Binary-transformation for meta-fuzzing.
-Year 3,  two months, Meta-fuzzing coordination experiments at scale.
-
-Senior Personnel Anh Nguyen-Tuong
-Year 1,  two months, Workshop development \& presentations.
-Year 2,  two months, Meta-fuzzing training material development.
-Year 3,  two months, Community support/debugging for meta-fuzzing end users.
-
+\end{document}
