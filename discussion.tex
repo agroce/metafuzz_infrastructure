@@ -575,7 +575,7 @@ infrastructure on a variety of application domains which so far have been
 sidelined in the research community.
 
 \subsection{Tools, resources, and datasets}
-The full meta-fuzzing software stack presented in the preceding section will be delivered via GitHub as code, data and documentation artifacts. By design, our framework is designed to be extensible for all common facets of the fuzzing operational lifecycle. Thus, incorporating enhancements (e.g., new fuzzers, new transformations, new forms of feedback, new benchmarks, new ensemble methods, etc.) will be a continual and ongoing process, initially performed by our team, but if truly successful, by the community at large. 
+The full meta-fuzzing software stack presented in the preceding section will be delivered via GitHub or open source repositories as code, data and documentation artifacts. By design, our framework is designed to be extensible for all common facets of the fuzzing operational lifecycle. Thus, incorporating enhancements (e.g., new fuzzers, new transformations, new forms of feedback, new benchmarks, new ensemble methods, etc.) will be a continual and ongoing process, initially performed by our team, but if truly successful, by the community at large. 
 
 %\subsubsection{Benchmarks}
 
@@ -623,8 +623,8 @@ present intermediate implementation and design, to elicit early expert feedback
 and inform early revisions.  In the final meeting, we will focus on concretizing
 longer term open problems to be supported by future community or funded efforts. 
 
-\clg{I mention the letters of collaboration below. Note that they CANNOT be
-identified as potential community Board members. Is this an OK spot, or elsewhere?}
+%\clg{I mention the letters of collaboration below. Note that they CANNOT be
+%identified as potential community Board members. Is this an OK spot, or elsewhere?}
 
 \paragraph{Workshops.}  We have budgeted and plan for two workshops to
 facilitate community engagement.  The first, in year 1 of the project, will be
@@ -641,14 +641,15 @@ framework to the broader community, elicit feedback, and educate the community
 of the framework and its capabilities.  This second workshop will be co-located
 at a major conference in Software Engineering or Security, depending on timing
 and location, to ensure exposure to a broad audience of stakeholders in the
-relevant research communities. \clg{Dumb question, what are the best
-Fuzzing-specific workshops to name-check here?}
+relevant research communities. 
+\clg{Dumb question, what are the best Fuzzing-specific workshops to name-check here?}
 
 \paragraph{Evaluation and Improvement.} Our engagement with the Community
 Advisory Board and the community via the planned workshops will provide one set
 of avenues for eliciting feedback about the framework to inform ongoing
-iteration.  \clg{TODO: more here, incorporating a reference to the section that
-Anh is writing about metrics?}  The provision of cloud credits to the community
+iteration and keep track of progress (see Section~\ref{sec:metrics}).  
+%\clg{TODO: more here, incorporating a reference to the section that Anh is writing about metrics?}  
+The provision of cloud credits to the community
 to use the framework will both build the community and enable means to elicit
 and quickly iterate on community feedback over the course of project
 development. 
@@ -710,13 +711,11 @@ The outline of the chart is:
     Fuzzer Evaluation & Lead: UVA; Secondary: NAU (User / Ensemble
     Strategy DSL)\\
    \hline
-   \multicolumn{2}{c}{} \\
-   \hline
-   \multicolumn{2}{|c|}{Tools and Resources} \\
-   \hline
     Source and Binary Transformations & Lead: CMU (Le
     Goues); Secondary: NAU and UVA (Binary Transformations)\\
+   \hline
     Universalized Custom Mutators & Lead: NAU\\
+   \hline
      Domain-Specific Fuzzers (Cross-Cutting) & Lead: CMU (Padhye) \\
    \hline
   \end{tabularx}
@@ -836,7 +835,7 @@ focuses on a synergistic approach for allowing developers
 to improve testing by using mutation testing to identify
 weaknesses in tests and to generate tests.  In its second
 year,  this project has already resulted in five
-publications~\todo{\cite{cc2022,seip2022,fuzzing22,fse23,issre23}}. {\bf
+publications~\cite{cc2022,seip2022,fuzzing22,fse23,issre23}. {\bf
   Broader
   Impact:}  Work from this project has already
 resulted in the reporting and correction of multiple bugs in software
