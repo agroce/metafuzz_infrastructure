@@ -136,7 +136,7 @@ program locations---can be instantiated by only transforming the target program
 and using an API to send domain-specific feedback from program execution in the 
 form of key-value maps. Padhye also demonstrated that composing program 
 transformations, achieved by combining key-value maps across multiple 
-FuzzFatory domains (such as breaking down CMP operations and tracking 
+FuzzFactory domains (such as breaking down CMP operations and tracking 
 \texttt{malloc}'d memory), can produce results that are better than applying 
 each transformation individually.
 
@@ -354,8 +354,8 @@ Co-PI Davidson, and key Senior Personnel Hiser and Nguyen-Tuong have significant
 experience with binary program transformations, and both source-based~\cite{ahmed2021bigmap} and binary-only fuzzing~\cite{nagy2021breaking,nagy2021same}.
 Their open-source Zipr binary rewriting infrastructure has been used in several
 projects to retrofit binaries with security hardening transformations~\cite{zipr,hawkins2017zipr,hawkins2017securing,hiser2017zipr++,schulte2022broad}, including
-the DARPA Cyber Grand Challenge~\cite{nguyen2018xandra}, and more recently, an NSF project to automatically harden and diversify VM images~\cite{davidson2023helix++}
-to protect open-science infrastructures. 
+the DARPA Cyber Grand Challenge~\cite{nguyen2018xandra}, and more recently, an NSF project to automatically harden and diversify VM images
+to protect open-science infrastructures~\cite{davidson2023helix++}. 
 Zipr provides the technological foundation for ZAFL, their highly-efficient AFL-compatible open source binary fuzzer~\cite{zafl}.
 Key to ZAFL's efficacy is the integration and stacking of modular fuzzing-enhancing program transformations~\cite{nagy2021breaking,nagy2021same}.
 
@@ -511,13 +511,13 @@ application. These templates will effectively serve as a DSL that enables users
 to concisely describe desired predicates over some dynamic data value or
 behavior, to be translated into a static coverage construct in code. 
 
-\clg{Question: OK, in the above I basically said we'll make a bunch of Comby macros that can
-express many different types of transformations, including extant
-transformations and potentially new ones.  I thought this seemed less
-complicated than saying we'll make a NEW DSL.  But, if we want to express all
-transforms, binary or source, in a COMMON DSL, that's a slightly different
-story.  So, question for UVA: how best to configure or express a system of
-binary-level transformations for this purpose?}
+%\clg{Question: OK, in the above I basically said we'll make a bunch of Comby macros that can
+%express many different types of transformations, including extant
+%transformations and potentially new ones.  I thought this seemed less
+%complicated than saying we'll make a NEW DSL.  But, if we want to express all
+%transforms, binary or source, in a COMMON DSL, that's a slightly different
+%story.  So, question for UVA: how best to configure or express a system of
+%binary-level transformations for this purpose?}
 
 \cut{
 \clg{FIXME: To implement and express binary transforms, we will.....?}
