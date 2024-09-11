@@ -8,30 +8,27 @@
 \vspace{-2mm}
 The complexity of modern software systems, and the need for widely used 
 libraries and other ``code infrastructure'' to be reliable, demands effective 
-\emph{testing}.  Bugs in code have increasing impact on society at large (e.g., 
-numerous security breaches traceable to incorrect code have very high economic 
-cost).  Testing remains to this day the single most effective means of finding 
+\emph{testing}.  Testing remains to this day the single most effective means of finding 
 bugs when their incurred costs are low.   Moreover, fuzzing, originally limited largely to 
 the software security world, is the most promising new approach to massively 
 automated and effective testing of software.   However, to date most fuzzing 
 research, even if theoretically able to generalize to multiple underlying 
-fuzzers, has been focused on \emph{producing a new fuzzer}.  That is, if a 
-researcher (or security developer at, e.g., Google) devises a way to improve 
+fuzzers, has been focused on \emph{producing a new fuzzer}.  If a 
+researcher or security practitioner devises a way to improve 
 the effectiveness of fuzzing, the common practice is to implement a new, 
 competing fuzzer, or modify a well-known existing fuzzer.  In some cases, this 
-is appropriate: the approach defines a fuzzing technique.  However, the most 
-promising fuzzing advances likely are \emph{meta-fuzzing} approaches that 
-improve the performance, potentially, of \emph{all} fuzzers, without requiring 
-modification of the underlying fuzzer itself.  Such techniques primarily 
+is neccessary.  However, the most 
+promising fuzzing advances are often \emph{meta-fuzzing} approaches that 
+improve the performance of \emph{all} fuzzers, without requiring 
+modification of the underlying fuzzer.  Such techniques primarily 
 include those that modify the source or binary of the fuzzing target to help 
 the fuzzer, and techniques that make use of multiple fuzzers as ``black boxes'' 
 that contribute to an ensemble fuzzing effort.  This proposal addresses the 
-serious under-examination of such techniques, by aiming to construct a 
-framework for development of meta-fuzzing approaches of these categories, 
-making it easy to apply a technique to multiple fuzzers, and making it easy to 
-evaluate/benchmark such techniques.  The ability to evaluate methods is 
-necessary to enable ensemble methods that weight fuzzers by performance, and so 
-is required for a meta-fuzzing development platform, in any case.
+serious under-examination of these techniques, by aiming to construct a 
+framework for development and \emph{evaluation} of meta-fuzzing approaches of
+these categories.   The ability to evaluate methods is 
+necessary to enable ensemble methods that weight fuzzers by
+performance, and more generally benefits the entire fuzzing research community.
 
 \subsection*{Intellectual Merit} 
 \vspace{-2mm}
@@ -42,22 +39,27 @@ fuzzer}, including future, better, underlying fuzzing algorithms.  As part of
 that work, it also aims to standardize and advance the evaluation of fuzzing 
 algorithms, at present a major bottleneck in fuzzing science advances.  We 
 further expect meta-fuzzing approaches to be particularly effective in improving 
-understanding of general program dynamics, rather than 
-tool-engineering-oriented fuzzing techniques.
+understanding of general program dynamics.
 
 \subsection*{Broader Impacts}
 \vspace{-2mm}
-Correct software is increasingly important in our modern digital/networked 
-society because ``software is eating the world'' and this process shows no sign 
-of stopping or even decelerating. 
+Correct software is increasingly important in our modern digital/networked
+society and this process shows no sign
+of stopping or even decelerating.
 This project will benefit every area of society where software is employed because it aims to improve a fundamental method for effective software testing.
-Software security, in particular, will be advanced by the 
-improvements made to the performance of fuzzing methods, and that meta-fuzzing 
-may also help support the emerging focus on applying fuzzing to more functional 
+Software security, in particular, will be advanced by the
+improvements made to  fuzzing methods, and meta-fuzzing
+will support an emerging focus on fuzzing for functional
 properties of code.
-A significant part of this effort is building a diverse and inclusive community of fuzzing and software testing researchers that work together to support the advance of fuzzing science. 
+A significant part of this effort is building a diverse and inclusive community of fuzzing and software testing researchers that work together to support the advance of fuzzing science.
 Consequently, community outreach, education, and dissemination activities are major components of this effort.
-Diversity-enhancing activities for all aspects of this project are planned through the diversity, equity, and inclusion centers at CMU, NAU and UVA.
+Diversity-enhancing activities for this project are planned through
+the diversity, equity, and inclusion centers at CMU, NAU and UVA.  NAU has been designated as a Hispanic serving-institution, with over 25\% student Hispanic enrollment.
+Both CMU and UVA have verified broadening participation plans (BPCs).
+CMU's BPC activities include developing undergraduate student scaffolding programs, events, and conferences that include a focus on undergraduate research and education experiences.
+UVA is fortunate to have five nearby HBCUs: Hampton University, Norfolk State University, Virginia State University, Virginia Union University, and Virginia University of Lynchburg.
+As part of UVA's BPC activities, CS faculty have established long-term relationships to encourage student engagement in computer science education and research.
+Co-PI Davidson currently has a joint project with Norfolk State that involves undergraduate students in cybersecurity and previously had a joint cybersecurity education project with Virginia State.
 
 \paragraph{Keywords:}
 CISE; fuzzing, meta-fuzzing, ensemble methods, program transformations
