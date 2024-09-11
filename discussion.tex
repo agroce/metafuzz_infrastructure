@@ -31,8 +31,7 @@ This basic approach has proved extremely effective in finding bugs, and in the
 shape of OSSFuzz (supported by Google, the Core Infrastructure Initiative and 
 the OpenSSF), is used to probe a large number of critical open source systems, 
 finding over 8,900 vulnerabilities and 28,000 bugs across 850 projects, to date.
-
-Fuzzing has unsurprisingly become a major topic of academic security and 
+Fuzzing has thus unsurprisingly become a major topic of academic security and 
 testing research, as a result of the obvious power and success of the basic 
 technique.  Historically, most such research results in \emph{the development of a 
 new fuzzer.}  The most frequently seen kind of research paper in the field of fuzzing
@@ -51,7 +50,6 @@ inputs in intelligent ways.  However, the research team acknowledged that their
 implementation of more mundane aspects of fuzzing was somewhat \emph{ad hoc}.  The 
 second version of Eclipser moved to using the widely used AFL fuzzer~\cite{aflfuzz} to support 
 most aspects of fuzzing other than the core innovation.  
-%
 Moreover, fuzzing advances only appear in new fuzzers 
 if later fuzzer developers adopt them as standard practice. When a 
 fuzzing advance is not adopted, it can
@@ -103,15 +101,15 @@ if (x == y)
 \noindent where {\tt x} and {\tt y} are integer variables, and rewrite the code 
 as:
 
+{\scriptsize
 \begin{code}
 cmp\_x\_y = TRUE;
 bool cmp\_bit\_0 = bit(x, 0) == bit(y, 0);
 if (cmp\_bit\_0) \{cmp\_x\_y = FALSE;\}
-bool cmp\_bit\_1 = bit(x, 1) == bit(y, 0);
-if (cmp\_bit\_1) \{cmp\_x\_y = FALSE;\}
 $\ldots$
 if (cmp\_x\_y)
 \end{code}
+}
 
 \noindent Although inefficient relative to custom binary instrumentation, this
 approach has the key advantage it enables \emph{any fuzzer} to make use of the power of 
@@ -185,12 +183,14 @@ crashes.  More ambitiously, as in the prior work of PIs Groce and Le Goues, a
 transform may change the behavior of fuzzing algorithms.  Fuzzing program 
 mutants allows fuzzers to detect ways to cover branches that, without 
 transformation, would not have been executed yet, improving fuzzer 
-effectiveness dramatically in some cases.
+effectiveness dramatically in some cases.  A binary approach to target
+mutation, used for both fuzzing and fuzzer/technique evaluation, is in
+use by the Bitcoin core team, leveraging PI Groce's MuttFuzz~\cite{muttfuzz} prototype tool.
 
 \paragraph{Universalized Custom Mutators.}  One feature supported by
 the widely used fuzzers AFL++ and libFuzzer as well as the promising
-new fuzzer Centipede (which backs Google's FuzzTest
-project~\cite{fuzztest}) is the introduction of custom mutators:  user-written 
+new fuzzers Centipede (which backs Google's FuzzTest
+project~\cite{fuzztest}) and LibAFL~\cite{libafl} is the introduction of custom mutators:  user-written 
 additional ways to modify inputs to generate new inputs.  While changing the 
 mutation strategy of a particular fuzzer can be a highly fuzzer-specific 
 method, focusing on some unusual coverage or ``magic byte identification'' 
@@ -199,10 +199,14 @@ agnostic.  For example, PIs Groce and Le Goues introduced custom mutators for
 fuzzing compilers that resulted in the detection of hundreds of subtle compiler 
 bugs \cite{cc2022}. These were unfortunately implemented in a standalone variant of the 
 original AFL fuzzer, but would be more widely used and more effective if 
-implemented as custom mutators for libFuzzer, AFL++, and Centipede.  We propose to support 
-research along these lines by allowing users to write a single custom mutator 
-in a generic byte-based framework, and provide wrappers to integrate such 
-mutators into all fuzzers that support custom mutators.
+implemented as custom mutators for libFuzzer, AFL++, libAFL, and
+Centipede.  The implementation effort required at present to take such
+an approach is prohbitive; it is simply much easier to fork and modify
+AFL or AFL++.  We propose to support 
+researchers by allowing them to write \emph{a single custom mutator 
+in a generic byte-based framework} (with some extensions to support
+common operations), and generate fuzzer-specific wrappers to integrate such 
+mutators into \emph{all fuzzers} that support custom mutators.
 
 \paragraph{Domain-Specific Meta-Fuzzing.} The above summaries introduce 
 broad classes of meta-fuzzing approaches, and we briefly introduced  
@@ -237,16 +241,15 @@ $F'_1 \ldots F'_n$ (where some meta-fuzzing method has been applied), and
 determining the degree of improvement or degradation in effectiveness in each 
 case.  This alone would make support for benchmarking and comparing fuzzers an 
 important feature of any framework for meta-fuzzing research and development.  
-However, as noted above, future ensemble methods are likely to also make use of 
-fuzzer evaluations to allocate resources.  Therefore a major thrust of this 
+However, as noted above, ensemble methods will  make use of 
+fuzzer evaluations to \emph{allocate resources on the fly}.  Therefore a major thrust of this 
 effort is to adapt the aspects of the framework that support ensemble fuzzing 
-to support measurements of fuzzer effectiveness as well.  This feature of 
-course has applications beyond meta-fuzzing methods; traditional fuzzer 
-evaluations can also be expected to benefit from a systematic, 
+to support measurements of fuzzer effectiveness as well.  This has applications beyond meta-fuzzing methods; traditional fuzzer 
+evaluations will als  benefit from a systematic, 
 multi-measurement framework for running a set of fuzzers on multiple
-benchmarks.  However, our central motivation is that we expect that the complexities of running
+benchmarks.  However, our central motivation is that the complexities of running
 meta-fuzzer evaluations have tended to discourage implementation of
-clearly-meta-fuzzing ideas in any form but that of a single new fuzzer
+meta-fuzzing ideas in any form but that of a single new fuzzer
 or fuzzer fork.
 
 
@@ -331,13 +334,18 @@ in general. While he has been in academia since 2009, his research is informed
 by experience as the lead for testing fight software systems at NASA/JPL,
 including a lead role in testing the file systems for the Curiosity Rover. He
 has also continued to work on practical tools, as lead developer for four open
-source tools hosted on GitHub with over 100 stars (one with over 700
+source tools hosted on GitHub with over 100 stars (one with over 800
 stars). His expertise in fuzzing and
 practical testing is widely known, and in 2021 he was hired to perform an audit
 and contribute enhancements to the fuzz testing for the primary reference
 implementation for the Bitcoin blockchain, a critical system with more than 71
 thousand GitHub stars, on which the validity of billions of dollars worth of
-financial transactions relies.
+financial transactions relies.  In 2024, Groce was engaged by the
+Bitcoin core team again, with a particular focus on helping Bitcoin
+develop fuzzing evaluation strategies based on some of the
+binary-level meta-fuzzing mutation ideas in this proposal,
+specifically focusing on methods applicable to multiple fuzzers used
+by the Bitcoin fuzzing team.
 
 Co-PI Padhye has substantial expertise in grey-box fuzz testing~\cite{perffuzz,
 jqf, zest, fuzzfactory, rlcheck, bigfuzz, bonsai, naturalfuzz, mu2}. In
@@ -456,7 +464,14 @@ awareness of the instrumentation produced by various fuzzers is critical if
 transforms are to avoid modifying code that the fuzzer relies on working in a 
 certain way.  In the extreme case, rather than simply producing incorrect 
 instrumentation (e.g., coverage) results, such modifications could make a 
-target completely unusable, by always triggering a crash of the target.
+target completely unusable, by always triggering a crash of the
+target.
+
+The LibAFL~\cite{libafl} project is promising in terms of modularizing fuzzer
+implementation, but is essentially still a single fuzzer, and moreover adopts
+an approach fairly tied to the Rust-based architecture of the system;
+it expects new methods to live ``inside'' LibAFL, rather than
+potentially working ``outside'' the fuzzer implementation itself.
 
 \section{Infrastructure Description}
 
@@ -530,13 +545,20 @@ relatively simple, a transformation of a byte buffer; in contrast,
 AFL++ supports a complex API using standalone libraries for custom
 mutators, requiring substantial effort on the part of implementors at
 the gain of additional functionality.  A workable solution for fuzzing
-advances that can be represented as mutators (which might even extend
-to methods such as Eclipser's approximation of symbolic execution)
-needs to accomodate developers who only need a ``libFuzzer'' style
-mutator, and automatically supply AFL++ with derived versions for
-other calls, as well as those wishing to define the full AFL++ API but
-derive a libFuzzer mutator. For the former, automatically applying
-AFL++ {\tt afl\_realloc} calls when needed is also critical.
+advances that can be represented as mutators must 1) present a simple,
+easy-to-use interface such as that provided by libFuzzer, for
+reimplementing existing custom byte-level mutators but 2) allow more
+complex AFL++-like manipulations, generalized to an API that is less
+tied to the internals of the AFL++ fuzzer.  Our preliminary
+investigations of the libFuzzer and AFL++ APIs suggests that this is
+highly feasible, though reworking the AFL++ API into a more generic
+interface and providing the needed back-ends in libFuzzer and
+Centipede will require substantial investment of both implementation
+effort and requirements solicitation.  Among other benefits, this
+should give uses of libFuzzer, Centipede, and LibAFL the benefits of
+AFL++'s more sophisticated API. The modular approach taken in LibAFL,
+though specific to Rust (using Rust traits), may be useful in making a
+composable generalization of AFL++'s approach.
 
 As a first task in this thrust, we propose to re-implement the compiler-fuzzing 
 tool developed by PIs Groce and Le Goues as a custom mutator.  By focusing on a 
@@ -591,7 +613,7 @@ new forms of feedback to drive fuzzers, as well as their combination.
 \label{sec:user-services}
 \input{services}
 
-\subsection{Evaluation Metrics}
+\subsection{Evaluation metrics}
 \input{metrics}
 
 \subsection{Community engagement}
@@ -617,7 +639,22 @@ plans as well as plans for outreach activities to enhance community engagement.
 Note that we are dedicating a portion of the project's CloudBank allocation to
 the community, to enable them to both try out and use the framework for their
 purposes, which constitutes a portion of our community engagement strategy and
-will contribute to building a community and sustaining the project longer term. 
+will contribute to building a community and sustaining the project
+longer term.
+
+\paragraph{(Meta-)Fuzzing Community Slack.}  Using the focus of developing a more stable and
+open replacement for FuzzBench, we will bootstrap our connection to
+the fuzzing community by forming a Fuzzing Community Slack, to which
+we will invite all identifiable researchers who have submitted
+experiments to FuzzBench (this will include by definition all
+participants in the annual fuzzing competition at SBFT) in addition to
+additional industrial fuzzing researchers who may not participate in
+the competition due to IP concerns, and any authors of fuzzing-related
+papers from the three most recent ICSE, ASE, FSE, ISSTA, and USENIX
+Security conferences not covered by the previous points.  This Slack
+will serve to start a discussion of infrastructure needs for the
+community, and remain active throughout the project lifetime (and, we
+hope, beyond, as a support locus for the infrastructure).
 
 \paragraph{Community Advisory Board.} We have budgeted to invite a small group
 of senior stakeholders in the fuzzing and testing communities to serve as a
@@ -647,7 +684,9 @@ framework to the broader community, elicit feedback, and educate the community
 of the framework and its capabilities.  This second workshop will be co-located
 at a major conference in Software Engineering or Security, depending on timing
 and location, to ensure exposure to a broad audience of stakeholders in the
-relevant research communities. 
+relevant research communities.   Publicity and elictation of further
+ideas for workshop engagement will be fostered by the Fuzzing
+Community Slack.
 
 \paragraph{Evaluation and Improvement.} Our engagement with the Community
 Advisory Board and the community via the planned workshops will provide one set
@@ -700,7 +739,7 @@ have been implemented as a meta-fuzzing method, we expect a
 considerable fragment of future fuzzing research to 1) make
 use of our infrasructure to make implementation both much easier and
 more general and 2) to evaluate fuzzing research more effectively.
-Offering a solution to all fuzzing researchers to perform
+Offering a solution to \emph{all} fuzzing researchers to perform
 high-quality~\cite{FuzzerHicks} evaluations in any suitable
 environment, from local machine to any cloud platform, should increase
 the production of all fuzzing research and development, even when
@@ -709,7 +748,17 @@ one of the most active areas of research in computer science (note
 that the 2022 International Conference on Software Engineering, which
 covers a very broad array of SE topics, had more than 20 papers
 specifically on fuzzing), the impact on research productivity should
-be large.
+be large.  Further, while it is technically possible to run standalone
+private instances of Google's FuzzBench, we believe the difficulty of
+this use currently discourages industrial fuzzing researchers who may
+be concerned for IP (either of fuzzing techniques or of custom
+benchmarks) from making use of FuzzBench; our open evaluation
+infrastructure will be, by design, usable in settings where security
+or other concerns make FuzzBench impractical.  We thus expect to
+encourage the adoption of community evaluation standards for
+company-internal fuzzing R\&D.  The use of public infrastructure in
+such settings should enable easier later transition to making internal
+developments public when appropriate.
 
 \section{Project Management Plan}
 
@@ -733,7 +782,7 @@ be large.
     Source and Binary Transformations & Lead: CMU (Le
     Goues); Secondary: NAU and UVA (Binary Transformations)\\
    \hline
-    Universalized Custom Mutators & Lead: NAU\\
+    Universalized Custom Mutators & Lead: NAU (CMU Support)\\
    \hline
      Domain-Specific Fuzzers (Cross-Cutting) & Lead: CMU (Padhye) \\
    \hline
@@ -745,22 +794,19 @@ Table~\ref{tab:thrusts} shows a broad picture of the structuring of
 responsibility for the project.  A key feature of each component is early
 development of \emph{paradigmatic problems}, relatively simple but
 non-trivial exemplars of meta-fuzzing methods (simplified from the
-existing work on the topic) that can motivate tool and infrastructure design.
-
-By year, the activities will proceed as:
-
+existing work on the topic) that can motivate tool and infrastructure
+design.  By year, the activities will proceed as:
 
 \noindent\textbf{Year 1:} 
  \begin{itemize}[labelwidth=0.7em, labelsep=0.6em, topsep=0ex, itemsep=0ex,
   parsep=0ex, leftmargin=1.5em]
-  \item Requirement elicitation (including related outreach, e.g.,
-    initial workshop) (All)
+  \item Requirement elicitation (including outreach, e.g.,
+    Fuzzing Slack and initial workshop) (All)
   \item Design, construction of paradigmatic problems for all key components of
   infrastructure (UVA lead on overall framework, binary transformations; NAU lead on custom mutators; CMU lead on source-level transformations)
-  \item Significant initial progress on source-level target transformation (CMU lead,
-    NAU support)
-    \item Significant initial progress on universalized custom mutators (CMU lead,
-  NAU support)
+  \item Significant initial progress on: source-level target transformation (CMU lead,
+    NAU support); universalized custom mutators (NAU lead,
+  CMU support)
   \item Initial prototype implementation of overall system (NAU/UVA lead)
 \end{itemize}
 
@@ -768,9 +814,9 @@ By year, the activities will proceed as:
 \begin{itemize}[labelwidth=0.7em, labelsep=0.6em, topsep=0ex, itemsep=0ex,
   parsep=0ex, leftmargin=1.5em]
 \item Continue overall work on prototype implementations and ensure
-  coordination of tools (All according to respective responsibilities)
+  coordination of tools (All)
   \item Check sufficient progress on handling all paradigmatic
-    problems (All according to respective responsibilities)
+    problems (All)
  \item Significant initial progress on binary target transformation (UVA lead)
   \item Continue outreach and initiate initial use by the fuzzing community using CloudBank (All)
     \item Integrate tools in progress with 
@@ -783,14 +829,10 @@ By year, the activities will proceed as:
   parsep=0ex, leftmargin=1.5em]
   \item Final requirement elicitation (including related outreach and 
     full demonstrations, continued use by community via CloudBank) (All)   
-\item Complete implementation of overall system (NAU/UVA lead)
-  \item Complete implementation of source-level target transformations
-    (CMU lead, NAU support)
-    \item Complete implementation of binary-level target
-    transformations (UVA lead)
-    \item Complete implementation of universalized custom mutators
-      (NAU lead)
-      \item Complete implementation/integration of domain-specific
+\item Complete implementation of: overall system (NAU/UVA lead); source-level target transformations
+    (CMU lead, NAU support); binary-level target
+    transformations (UVA lead); universalized custom mutators
+      (NAU lead); domain-specific
         aspects (CMU lead)
   \item Ensure documentation is complete and thorough, including
     examples from users (All)    
@@ -834,10 +876,10 @@ underpinning of much future research in fuzzing, beyond meta-fuzzing.
 
 
 Some of the PIs are already actively collaborating.
-PIs Groce and Le Goues are the PIs on an ongoing NSF research project
+PIs Groce and Le Goues were the PIs on a just-concluded NSF research project
 that also concerns program transformations with applications to
 fuzzing, as discussed in Prior Support, and have now collaborated on
-five publications as well as two released tools available on GitHub,
+six publications as well as two released tools available on GitHub,
 each with more than 100 stars. 
 PI Le Goues, PIs Davidson and Senior Personnel Hiser and Nguyen-Tuong
 have previously collaborated on an Air Force project to automatically harden
@@ -881,9 +923,8 @@ total budget of \$500,000 from 9/2021 until 8/2024,
 a collaborative proposal between the two PIs. {\bf Intellectual Merit:} This project
 focuses on a synergistic approach for allowing developers
 to improve testing by using mutation testing to identify
-weaknesses in tests and to generate tests.  In its second
-year,  this project has already resulted in five
-publications~\cite{cc2022,seip2022,fuzzing22,fse23,issre23}. {\bf
+weaknesses in tests and to generate tests.  This project resulted in six
+publications~\cite{cc2022,seip2022,fuzzing22,fse23,issre23, FSE24UM}. {\bf
   Broader
   Impact:}  Work from this project has already
 resulted in the reporting and correction of multiple bugs in software
