@@ -72,7 +72,9 @@ many different, even sub-optimal, fuzzers is likely required for truly
 effective fuzzing~\cite{chen2019enfuzz,UsesDiversity,ensemble,pastis}, a key
 motivation for the infrastructure this project proposes to build.
 
-\paragraph{Meta-fuzzing.}
+
+\vspace{1ex}
+\noindent\textbf{Meta-fuzzing.}
 These previous efforts generally represent examples of 
 \emph{meta-fuzzing}, a promising overall approach to improving fuzzing by 
 \emph{moving the fuzzing technique outside the fuzzer itself.}  The simplest 
@@ -90,29 +92,17 @@ as modifications to the fuzzer's custom instrumentation approach.  However, the 
 idea can also be implemented by transforming the source code of a program to 
 expose the structure of a comparison.  The DeepState~\cite{DeepState} property-driven fuzzing 
 tool does this for its own assertion implementations, as does FuzzFactory in 
-its \texttt{CMP} domain.  Such a transform might take, e.g.:
-
-
-\begin{code}
-{\scriptsize
-  if (x == y)
-  }
-\end{code}
-
-
-
-\noindent where {\tt x} and {\tt y} are integer variables, and rewrite the code 
+its \texttt{CMP} domain.  Such a transform might take, e.g.: \lt{if (x == y)}, where \lt{x} and \lt{y} are integer variables, and rewrite the code 
 as:
 
-  \begin{code}
-    {\scriptsize
-cmp\_x\_y = TRUE;
-bool cmp\_bit\_0 = bit(x, 0) == bit(y, 0);
-if (cmp\_bit\_0) \{cmp\_x\_y = FALSE;\}
-$\ldots$
-if (cmp\_x\_y)
-}
-\end{code}
+\begin{lstlisting}
+cmp_x_y = TRUE;
+bool cmp_bit_0 = bit(x, 0) == bit(y, 0);
+if (cmp_bit_0) { cmp_x_y = FALSE; }
+...
+if (cmp_x_y)
+...
+\end{lstlisting}
 
 
 \noindent Although inefficient relative to custom binary instrumentation, this
@@ -151,7 +141,8 @@ FuzzFactory domains (such as breaking down CMP operations and tracking
 \texttt{malloc}'d memory), can produce results that are better than applying 
 each transformation individually.
 
-\paragraph{Ensemble Fuzzing.}   Ensemble fuzzing \cite{chen2019enfuzz,ensemble,pastis} is an 
+\vspace{1ex}
+\noindent\textbf{Ensemble Fuzzing.}   Ensemble fuzzing \cite{chen2019enfuzz,ensemble,pastis} is an 
 approach that recognizes the need for
 diverse methods for test generation, at least in the context of
 fuzzing.   Inspired by ensemble methods in machine learning 
@@ -171,7 +162,8 @@ allocating resources and sharing seeds. This
 project aims to make it easy to 
 experiment with \emph{sophisticated} ensemble fuzzing approaches.
 
-\paragraph{Target Transformations.}  While ensemble fuzzing is ``meta'' in that 
+\vspace{1ex}
+\noindent\textbf{Target Transformations.}  While ensemble fuzzing is ``meta'' in that 
 it uses multiple fuzzers largely as black boxes, another approach largely 
 dispenses with direct interaction with fuzzers at all.  As the example above 
 suggests, one fuzzer-agnostic way to change the behavior of a fuzzer is to 
@@ -189,7 +181,8 @@ effectiveness dramatically in some cases.  A binary approach to target
 mutation, used for both fuzzing and fuzzer/technique evaluation, is in
 use by the Bitcoin core team, leveraging PI Groce's MuttFuzz~\cite{muttfuzz} prototype tool.
 
-\paragraph{Universalized Custom Mutators.}  One feature supported by
+\vspace{1ex}
+\noindent\textbf{Universalized Custom Mutators.}  One feature supported by
 the widely used fuzzers AFL++ and libFuzzer as well as the promising
 new fuzzers Centipede (which backs Google's FuzzTest
 project~\cite{fuzztest}) and LibAFL~\cite{libafl} is the introduction of custom mutators:  user-written 
@@ -210,7 +203,8 @@ in a generic byte-based framework} (with some extensions to support
 common operations), and generate fuzzer-specific wrappers to integrate such 
 mutators into \emph{all fuzzers} that support custom mutators.
 
-\paragraph{Domain-Specific Meta-Fuzzing.} The above summaries introduce 
+\vspace{1ex}
+\noindent\textbf{Domain-Specific Meta-Fuzzing.} The above summaries introduce 
 broad classes of meta-fuzzing approaches, and we briefly introduced  
 general-purpose meta-fuzzing techniques (e.g., the use of program mutants to 
 explore branches non-chronologically).  Meta-fuzzing can also be used for more 
@@ -232,7 +226,8 @@ the locus of ``fuzzing Linux application binaries'' previously centered in
 fuzzing benchmarking.
 
 
-\paragraph{The Problem of Evaluation.} Evaluating fuzzers is, even in the 
+\vspace{1ex}
+\noindent\textbf{The Problem of Evaluation.} Evaluating fuzzers is, even in the 
 current common setting, where evaluation is usually of a single ``new'' fuzzer, 
 a complex problem. Many evaluations in the literature are insufficient or even 
 incorrect~\cite{FuzzerHicks}.  Evaluating meta-fuzzing adds a further quantitative (and to some 
@@ -266,7 +261,8 @@ meta-fuzzing ideas as such.
 \label{fig:meta}
 \end{figure}
 
-\paragraph{The Big Picture.}  Meta-fuzzing is perhaps best understood
+\vspace{1ex}
+\noindent\textbf{The Big Picture.}  Meta-fuzzing is perhaps best understood
 as follows: a modern fuzzer is a tool that, fundamentally, takes in
 two kinds of input, and produces tests (new inputs) as outputs.  The
 two kinds of inputs are:  the corpus inputs/tests, and (less
@@ -376,7 +372,7 @@ Key to ZAFL's efficacy is the integration and stacking of modular fuzzing-enhanc
 
 \subsection{Intellectual Merit and Broader Impacts}
 
-\paragraph{Intellectual merit.} The proposed work will advance the
+\noindent\textbf{Intellectual merit.} The proposed work will advance the
 knowledge and understanding of software testing by enabling
 researchers and developers to conduct scalable experiments in meta-fuzzing.  
 Meta-fuzzing approaches rely on the development of theories and heuristics 
@@ -386,7 +382,8 @@ fuzzing algorithms.  Such approaches therefore, in addition to providing
 practical tools for finding bugs in code, advance our knowledge of the behavior 
 of software systems.
 
-\paragraph{Broader impacts.} Advancing the effectiveness of fuzzing can improve 
+\vspace{1ex}
+\noindent\textbf{Broader impacts.} Advancing the effectiveness of fuzzing can improve 
 software testing in general and thus software quality, benefiting (directly or indirectly) all segments of society that depend on software.
 The project will include graduate and undergraduate students giving them experience with building software artifacts and performing empirical studies.
 All three institutions are dedicated to addressing underrepresentation in computing.
@@ -639,7 +636,9 @@ purposes, which constitutes a portion of our community engagement strategy and
 will contribute to building a community and sustaining the project
 longer term.
 
-\paragraph{(Meta-)Fuzzing Community Slack.}  Using the focus of developing a more stable and
+
+\vspace{1ex}
+\noindent\textbf{(Meta-)Fuzzing Community Slack.}  Using the focus of developing a more stable and
 open replacement for FuzzBench, we will bootstrap our connection to
 the fuzzing community by forming a Fuzzing Community Slack, to which
 we will invite all identifiable researchers who have submitted
@@ -653,7 +652,9 @@ will serve to start a discussion of infrastructure needs for the
 community, and remain active throughout the project lifetime (and, we
 hope, beyond, as a support locus for the infrastructure).
 
-\paragraph{Community Advisory Board.} We have budgeted to invite a small group
+
+\vspace{1ex}
+\noindent\textbf{Community Advisory Board.} We have budgeted to invite a small group
 of senior stakeholders in the fuzzing and testing communities to serve as a
 Community Advisory Board to the project.  We include budget for travel to an
 annual meeting, as well as an honorarium. We plan to co-locate these meetings with
@@ -666,7 +667,9 @@ and inform early revisions.  In the final meeting, we will focus on concretizing
 longer term open problems to be supported by future community or
 funded efforts.
 
-\paragraph{Workshops.}  We have budgeted and plan for two workshops to
+
+\vspace{1ex}
+\noindent\textbf{Workshops.}  We have budgeted and plan for two workshops to
 facilitate community engagement.  The first, in year 1 of the project, will be
 smaller and more focused, and likely invitation-only. The goal of the first workshop is
 to ideate with community stakeholders, specifically focusing on requirements
@@ -685,7 +688,9 @@ relevant research communities.   Publicity and elictation of further
 ideas for workshop engagement will be fostered by the Fuzzing
 Community Slack.
 
-\paragraph{Evaluation and Improvement.} Our engagement with the Community
+
+\vspace{1ex}
+\noindent\textbf{Evaluation and Improvement.} Our engagement with the Community
 Advisory Board and the community via the planned workshops will provide one set
 of avenues for eliciting feedback about the framework to inform ongoing
 iteration and keep track of progress (see Section~\ref{sec:metrics}).  
@@ -694,15 +699,16 @@ to use the framework will both build the community and enable means to elicit
 and quickly iterate on community feedback over the course of project
 development. 
 
-\paragraph{Long-term Sustainability.} Our deployment strategy uses
+\vspace{1ex}
+\noindent\textbf{Long-term Sustainability.} Our deployment strategy uses
 well-understood open source strategies, namely providing access to the framework
 via GitHub.  We will follow established mechanisms, integrated into GitHub's
 platform, for release management, continuous integration, and bug reporting and
 bug fixing, as well as for eliciting and accepting contributions from community
 members via feature and Pull Requests. 
 
-As described in Section~\ref{sec:user-services}, we will provide facilities to
-deploy the framework to several cloud providers and dedicate a portion of the
+As Section~\ref{sec:user-services} described, we will provide facilities to
+deploy the framework to cloud providers, and dedicate a portion of the
 project's CloudBank allocation to the community.  The provision of generic cloud
 deployment strategies will support long term usage beyond the scope of this
 project.
@@ -787,11 +793,10 @@ developments public when appropriate.
   \caption{\label {tab:thrusts} Project Components and Core Responsibilties}
 \end{table}
 
-Table~\ref{tab:thrusts} shows a broad picture of the structuring of
-responsibility for the project.  A key feature of each component is early
-development of \emph{paradigmatic problems}, relatively simple but
+Table~\ref{tab:thrusts} shows a broad picture of the responsibility structure for the project.  A key feature of each component is early
+development of \emph{paradigmatic problems},  simple but
 non-trivial exemplars of meta-fuzzing methods (simplified from the
-existing work on the topic) that can motivate tool and infrastructure
+existing work) that can motivate tool and infrastructure
 design.  By year, the activities will proceed as:
 
 \noindent\textbf{Year 1:} 
@@ -913,7 +918,8 @@ If the project was recently awarded and therefore no new results exist, describe
 }
 
 
-\paragraph{PI Groce and PI Le Goues:}
+\vspace{1ex}
+\noindent\textbf{PI Groce and PI Le Goues:}
 The most relevant prior NSF support for PI Groce and PI Le Goues is CCF-
 CCF-2129446/CCF-2129388, ``Feedback-Driven Mutation Testing for Any Language,'' with a 
 total budget of \$500,000 from 9/2021 until 8/2024,
@@ -927,26 +933,9 @@ publications~\cite{cc2022,seip2022,fuzzing22,fse23,issre23, FSE24UM}. {\bf
 resulted in the reporting and correction of multiple bugs in software
 systems, including widely used production compilers.
 
-\cut{
-\clg{Todo: probably merge these two.}
-\paragraph{PI Le Goues:}
-The most relevant prior NSF support for PI Le Goues is CCF-
-CCF-2129388, ``Feedback-Driven Mutation Testing for Any Language,'' with a 
-total budget of \$500,000 from 9/2021 until 8/2024,
-a collaborative proposal with PI Groce of Northern Arizona University. {\bf Intellectual Merit:} This project
-focuses on a synergistic approach for allowing developers
-to improve testing by using mutation testing to identify
-weaknesses in tests and to generate tests.  In its second
-year,  this project has already resulted in five
-publications~\todo{\cite{cc2022,seip2022,fuzzing22,fse23,issre23} really the same pubs as Groce?}. {\bf
-  Broader
-  Impact:}  Work from this project has already
-resulted in the reporting and correction of multiple bugs in software
-systems, including widely used production compilers.
-}
 
-\paragraph{Co-PI Padhye:}
-
+\vspace{1ex}
+\noindent\textbf{Co-PI Padhye:}
 Padhye is a PI on NSF award CCF-2120955 ``Future-Proof Test Corpus Synthesis for Evolving Software'',
 with a total budget of 	\$546,091 for the period 10/01/2021--09/30/2024 performed 
 at Carnegie Mellon University. 
@@ -1008,8 +997,8 @@ Graduate Students Supported: 1; Publications: 1~\cite{CCRI-Planning-Report}.
 }
 
 
-
-\paragraph{PI Jack Davidson:}  The most relevant prior NSF support for PI Davidson is  
+\vspace{1ex}
+\noindent\textbf{PI Jack Davidson:}  The most relevant prior NSF support for PI Davidson is  
 \textbf{CICI: UCSS: Helix++: Securing Open Science Platforms  
 NSF Award \#22115130; Amount: \$498,021; Period of Support: 08/01/2022 -- 07/31/2024}. 
 \textbf{Intellectual Merit}: This work's intellectual merit lies in the technical advances 
