@@ -16,7 +16,7 @@ Zafl also supports input-program mutation to enable faster fuzzing with techniqu
 (which converts word-length \textit{cmp} instructions to byte-compare instructions similar to what was 
 shown in Section~\ref{sec:intro}) or adding temporary breakpoint instructions to
 run most coverage tracing at zero overhead.~\cite{intel2016circumventing,nagy2021same}
-Zafl has the program mutation and instrumentation passes in separate Zipr plugins, allowing a user to mix-and-match
+Zafl allows a user to mix-and-match
 transforms (in a very meta-fuzzing manner) to suit the needs of their program.
 
 As part of this effort, we will integrate Zipr and Zafl and allow people to extend the binary-only fuzzing

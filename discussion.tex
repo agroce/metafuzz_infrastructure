@@ -204,7 +204,7 @@ original AFL fuzzer, but would be more widely used and more effective if
 implemented as custom mutators for libFuzzer, AFL++, libAFL, and
 Centipede.  The implementation effort required at present to take such
 an approach is prohbitive; it is simply much easier to fork and modify
-AFL or AFL++.  We propose to support 
+AFL or AFL++.  We will support 
 researchers by allowing them to write \emph{a single custom mutator 
 in a generic byte-based framework} (with some extensions to support
 common operations), and generate fuzzer-specific wrappers to integrate such 
@@ -247,12 +247,11 @@ However, as noted above, ensemble methods will  make use of
 fuzzer evaluations to \emph{allocate resources on the fly}.  Therefore a major thrust of this 
 effort is to adapt the aspects of the framework that support ensemble fuzzing 
 to support measurements of fuzzer effectiveness as well.  This has applications beyond meta-fuzzing methods; traditional fuzzer 
-evaluations will als  benefit from a systematic, 
+evaluations will also  benefit from a systematic, 
 multi-measurement framework for running a set of fuzzers on multiple
 benchmarks.  However, our central motivation is that the complexities of running
 meta-fuzzer evaluations have tended to discourage implementation of
-meta-fuzzing ideas in any form but that of a single new fuzzer
-or fuzzer fork.
+meta-fuzzing ideas as such.
 
 
 %\adg{Do we like this?   Jason can you draw a diagram if we do?}
@@ -504,7 +503,7 @@ transformations in natural syntax that is very close to the underlying source
 language. 
 
 To ease the use of Comby in this context, we will implement a set of wrapper
-macros for Comby customized to the particular task of converting desired
+macros customized to the particular task of converting desired
 properties into static, coverage-visible code constructs.  We will additionally
 produce a library of existing transformations that are useful or common in prior
 meta-fuzzing approaches, both to amortize uptake and demonstrate the use of the
@@ -555,7 +554,7 @@ Centipede will require substantial investment of both implementation
 effort and requirements solicitation.  Among other benefits, this
 should give uses of libFuzzer, Centipede, and LibAFL the benefits of
 AFL++'s more sophisticated API. The modular approach taken in LibAFL,
-though specific to Rust (using Rust traits), may be useful in making a
+though tied to Rust traits, may be useful in making a
 composable generalization of AFL++'s approach.
 
 As a first task in this thrust, we propose to re-implement the compiler-fuzzing 
@@ -578,7 +577,7 @@ carefully defining what a single fuzzing trial looks like. Finally, whether sour
 transforms are available, the behavior of programs in some domains may not be related to
 any sense of ``code coverage''. For example, in machine learning and data analytics domains,
 we may be more interested in the data-flow (e.g., neuron activations or 
-data-parallel join operations, respectively) rather than the control-flow in terms of 
+data-parallel join operations) rather than the control-flow in terms of 
 conditional jumps. For all these reasons, domain-specific fuzzing has so far been a niche where
 researchers are unable to use a common platform for exchanging results and re-using components
 such as algorithms, heuristics, and mutators.
